@@ -14,6 +14,13 @@ pub struct TreeNode {
 }
 type TreeNodeRef = Rc<RefCell<TreeNode>>;
 
+fn get_node_from_languoid(l: Box<Languoid>) -> TreeNode {
+    TreeNode {
+        val: SOME(l),
+        left: NONE,
+        right: NONE,
+    };
+}
 
 struct Languoid {
     languoid_name: String,

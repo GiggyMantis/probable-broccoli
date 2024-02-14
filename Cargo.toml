@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 bitflags = "2.4.2"
+edit-distance = "2.1.0"

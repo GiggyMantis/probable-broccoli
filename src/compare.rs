@@ -1,3 +1,4 @@
+use edit_distance;
 use std::cmp;
 
 // This Module (compare) compares two languages and returns a "distance" score.
@@ -7,6 +8,12 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     if lect_a == lect_b {
         return 0;
     }
+
+    let mut normalized_levenshtein_distance = 0;
+    for n in 0..100 {
+        normalized_levenshtein_distance += edit_distance(lect_a.leipzig_jakarta_list[n], lect_b.leipzig_jakarta_list[n]) / cmp::max(lect_a.leipzig_jakarta_list[n].len, lect_b.leipzig_jakarta_list[n].len);
+    }
+    
     1; //testing
 }
 
@@ -24,7 +31,7 @@ fn compare(lect_a: RefCell<TreeNode>, lect_b: RefCell<TreeNode>) -> u16 {
     return compare_fam_and_fam(lect_a, lect_b);
 }
 
-fn compare_fam_and_fam(lect_a: Box<TreeNode>, lect_b: RefCell<TreeNode>) -> u16 {
+fn compare_fam_and_fam(lect_a: RefCell<TreeNode>, lect_b: RefCell<TreeNode>) -> u16 {
     let left_distance = compare(lect_a.left.unwrap().borrow(), lect_b);
     let right_distance = compare(lect_a.right.unwrap().borrow(), lect_b);
     

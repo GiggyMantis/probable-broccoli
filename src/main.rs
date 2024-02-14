@@ -1,6 +1,7 @@
 use bitflags::bitflags;
 use std::{cell::RefCell, rc::Rc};
 pub mod compare;
+pub mod ipa_mapping;
 
 fn main() {
     println!("Hello, world!");

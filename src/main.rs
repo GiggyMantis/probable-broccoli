@@ -19,11 +19,45 @@ struct Grammar {
     prepositions: bool,
     pronominal_cases: u64,
     nominal_cases: u64,
-    
-
+    finitivity: Finitivity,
+    determiner_before_noun: bool,
+    word_classes: Vec<String>,
+    leipzig_jakarta_word_classes: [String, 100],
 }
 
-struct Phonology {}
+struct Phonology {
+    tone_count: u8,
+    vowel_length: bool,
+    nasal_vowels: bool,
+    rhotic_vowels: bool,
+    front_rounded_vowels: bool,
+    back_unrounded_vowels: bool,
+    schwa: bool,
+    reduction: bool,
+    accent_system: Accent,
+    plosive_series_count: u8,
+    fricative_voicedness_distinction: bool,
+    nasal_voicedness_distinction: bool,
+    has_laterals: bool,
+    has_phonemic_diphthongs: bool,
+    has_phonetic_diphthongs: bool,
+    basic_vowel_count: u8,
+    has_glottal: bool,
+    has_uvular: bool,
+    has_labiodental: bool,
+    has_linguodental: bool,
+    has_retroflex_or_postalveolar: bool,
+    has_palatal: bool
+    has_labial: bool,
+    has_velar: bool,
+    has_pharyngeal_or_epiglottal: bool,
+    has_vibrants: bool,
+    gemination: bool,
+    palatalization: bool,
+    velarization: bool,
+    labialization: bool,
+    emphatics: bool
+}
 
 enum PredicateWordOrder {
     SVO,
@@ -102,4 +136,22 @@ bitflags! {
         const TRANSLATIVE = 0x4000000000000000;
         const REFLEXIVE = 0x8000000000000000;
     }
+}
+
+enum Finitivity {
+    NONE,
+    DEFINITE_ARTICLES_ONLY,
+    INDEFINITE_ARTICLES_ONLY,
+    DEFINITE_AND_INDEFINITE_ARTICLES,
+    DEFINITE_DECLENSION_ONLY,
+    INDEFINITE_DECLENSION_ONLY,
+    DEFINITE_AND_INDEFINITE_DECLENSION
+}
+
+enum Accent {
+    NONE,
+    CONTRASTIVE_PITCH,
+    CONTRASTIVE_STRESS,
+    SYSTEMIC_PITCH,
+    SYSTEMIC_STRESS
 }

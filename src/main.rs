@@ -1,13 +1,22 @@
 use bitflags::bitflags;
+use slab_tree::*;
 pub mod compare;
 
 fn main() {
     println!("Hello, world!");
 }
 
+fn languoid_to_node(l: Languoid) -> Tree<Languoid> {
+    TreeBuilder::new().with_root(l).build();
+}
+
+fn join_languoids(a: Tree<Languoid>, b: Tree<Languoid>) {
+
+}
+
 struct Languoid {
     languoid_name: String,
-    year: i16,
+    year: i32,
     leipzig_jakarta_list: [String, 100],
     grammar: Grammar,
     phonology: Phonology
@@ -31,8 +40,9 @@ struct Grammar {
     obligate_contraction: bool,
     copula: Copula,
     part_of_speech_morphology: bool,
-    tense: Tense,
-    aspect: Aspect,
+    tenses: u8,
+    aspect: u32,
+    mood: u32,
     has_verbal_voice: bool,
     double_negatives_are_positive: bool,
     reduplication: bool,
@@ -153,6 +163,74 @@ bitflags! {
     }
 }
 
+bitflags! {
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    struct GrammaticalAspect: u32 {
+        const PERFECTIVE = 0x1;
+        const MOMENTANE = 0x2;
+        const PERFECT = 0x4;
+        const RECENT_PERECT = 0x8;
+        const DISCONTINOUS_PAST = 0x10;
+        const PROSPECTIVE = 0x20;
+        const IMPERFECTIVE = 0x40;
+        const HABITUAL = 0x80;
+        const CONTINUOUS = 0x100;
+        const PROGRESSIVE = 0x200;
+        const STATIVE = 0x400;
+        const GNOMIC = 0x800;
+        const EPISODIC = 0x1000;
+        const CONTINUATIVE = 0x2000;
+        const INGRESSIVE = 0x4000;
+        const INCHOACTIVE = 0x8000;
+        const CESSATIVE = 0x10000;
+        const DEFECTIVE = 0x20000;
+        const PAUSATIVE = 0x40000;
+        const RESUMPTIVE = 0x80000;
+        const PUNCTUAL = 0x100000;
+        const DURATIVE = 0x200000;
+        const PROTRACTIVE = 0x400000;
+        const ITERATIVE = 0x800000;
+        const FREQUENTIVE = 0x1000000;
+        const EXPERENTIAL = 0x2000000;
+        const INTENTIONAL = 0x4000000;
+        const ACCIDENTAL = 0x8000000;
+        const INTENSIVE = 0x10000000;
+        const MODERATIVE = 0x20000000;
+        const ATTENUATIVE = 0x40000000;
+        const SEGMENTATIVE = 0x80000000;
+    }
+}
+
+bitflags! {
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    struct GrammaticalMood: u32 {
+        const INDICATIVE = 0x1;
+        const ENERGETIC = 0x2;
+        const DECLARATIVE = 0x4;
+        const SUBJUNCTIVE = 0x8;
+        const CONDITIONAL = 0x10;
+        const OPTATIVE = 0x20;
+        const JUSSIVE = 0x40;
+        const POTENTIAL = 0x80;
+        const IMPERATIVE = 0x100;
+        const PROHIBITIVE = 0x200;
+        const DESIDERATIVE = 0x400;
+        const DUBITATIVE = 0x800;
+        const HYPOTHETICAL = 0x1000;
+        const PRESUMPTIVE = 0x2000;
+        const PERMISSIVE = 0x4000;
+        const ADMIRATIVE = 0x8000;
+        const HORTATIVE = 0x10000;
+        const PRECATIVE_VOLITIVE = 0x20000;
+        const INFERENTIAL = 0x40000;
+        const NECESSITATIVE = 0x80000;
+        const INTERROGATIVE = 0x100000;
+        const BENEDICTIVE = 0x200000;
+        const CONCESSIVE = 0x400000;
+        const PRESCRIPTIVE = 0x800000;
+    }
+}
+
 enum Finitivity {
     NONE,
     DEFINITE_ARTICLES_ONLY,
@@ -176,21 +254,4 @@ enum Copula {
     DROPPING,
     ONE,
     MULTIPLE
-}
-
-enum Tense {
-    NONE,
-    PAST_NONPAST,
-    PRESENT_NONPRESENT,
-    PAST_PRESENT_FUTURE,
-    PAST_PRESENT_FUTURE_AND_ONE_REMOTE,
-    REMOTEPAST_PAST_PRESENT_FUTURE_REMOTEFUTURE
-}
-
-enum Aspect {
-    NONE,
-    PERFECT_SIMPLE,
-    PERFECTIVE_IMPERFECTIVE,
-    PERFECT_SIMPLE_HABITUAL,
-    PROGRESSIVE_PERFECT_SIMPLE,
 }

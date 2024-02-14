@@ -22,7 +22,22 @@ struct Grammar {
     finitivity: Finitivity,
     determiner_before_noun: bool,
     word_classes: Vec<String>,
+    declensions: bool,
+    peronal_conjugation: bool,
     leipzig_jakarta_word_classes: [String, 100],
+    third_person_personal_pronouns: bool,
+    formality: bool,
+    contraction: bool,
+    obligate_contraction: bool,
+    copula: Copula,
+    part_of_speech_morphology: bool,
+    tense: Tense,
+    aspect: Aspect,
+    has_verbal_voice: bool,
+    double_negatives_are_positive: bool,
+    reduplication: bool,
+    has_augmentative: bool,
+    has_diminuative: bool
 }
 
 struct Phonology {
@@ -154,4 +169,28 @@ enum Accent {
     CONTRASTIVE_STRESS,
     SYSTEMIC_PITCH,
     SYSTEMIC_STRESS
+}
+
+enum Copula {
+    IMPLICIT,
+    DROPPING,
+    ONE,
+    MULTIPLE
+}
+
+enum Tense {
+    NONE,
+    PAST_NONPAST,
+    PRESENT_NONPRESENT,
+    PAST_PRESENT_FUTURE,
+    PAST_PRESENT_FUTURE_AND_ONE_REMOTE,
+    REMOTEPAST_PAST_PRESENT_FUTURE_REMOTEFUTURE
+}
+
+enum Aspect {
+    NONE,
+    PERFECT_SIMPLE,
+    PERFECTIVE_IMPERFECTIVE,
+    PERFECT_SIMPLE_HABITUAL,
+    PROGRESSIVE_PERFECT_SIMPLE,
 }

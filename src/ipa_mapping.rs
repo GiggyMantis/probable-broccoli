@@ -81,7 +81,13 @@ fn to_broccoli_sampa(s:String) -> String {
             'ǃ' => ret = ret.push_str("Cʈ!");
             'ǂ' => ret = ret.push_str("Dc!");
             'ǁ' => ret = ret.push_str("Ct!l");
-            'ʼ' => ret = ret.push_str();
+            'ʼ' => ret = ret.push_str("z");
+            'ɓ' => ret = ret.push_str("Lppvz");
+            'ɗ' => ret = ret.push_str("Ctpvz");
+            'ʄ' => ret = ret.push_str("Dcpfz");
+            'ɠ' => ret = ret.push_str("Dkpvz");
+            'ʛ' => ret = ret.push_str("Dqpvz");
+            'ɧ' => ret = ret.push_str("Cʈsfz");
 
             _ => ret = ret.push(c); 
         }

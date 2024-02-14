@@ -1,25 +1,26 @@
 use bitflags::bitflags;
-use slab_tree::*;
+use std::{cell::RefCell, rc::Rc};
 pub mod compare;
 
 fn main() {
     println!("Hello, world!");
 }
 
-fn languoid_to_node(l: Languoid) -> Tree<Languoid> {
-    TreeBuilder::new().with_root(l).build();
+#[derive(Debug, Clone)]
+pub struct TreeNode {
+    val: Option<Box<Languoid>>,
+    left: Option<TreeNodeRef>,
+    right: Option<TreeNodeRef>,
 }
+type TreeNodeRef = Rc<RefCell<TreeNode>>;
 
-fn join_languoids(a: Tree<Languoid>, b: Tree<Languoid>) {
-
-}
 
 struct Languoid {
     languoid_name: String,
     year: i32,
     leipzig_jakarta_list: [String, 100],
     grammar: Grammar,
-    phonology: Phonology
+    phonology: Phonology,
 }
 
 struct Grammar {
@@ -28,7 +29,9 @@ struct Grammar {
     prepositions: bool,
     pronominal_cases: u64,
     nominal_cases: u64,
-    finitivity: Finitivity,
+    pronominal_numbers: u8,
+    nominal_numbers: u8,
+    finitivity: u8,
     determiner_before_noun: bool,
     word_classes: Vec<String>,
     declensions: bool,
@@ -47,7 +50,7 @@ struct Grammar {
     double_negatives_are_positive: bool,
     reduplication: bool,
     has_augmentative: bool,
-    has_diminuative: bool
+    has_diminuative: bool,
 }
 
 struct Phonology {
@@ -81,7 +84,7 @@ struct Phonology {
     palatalization: bool,
     velarization: bool,
     labialization: bool,
-    emphatics: bool
+    emphatics: bool,
 }
 
 enum PredicateWordOrder {
@@ -90,7 +93,7 @@ enum PredicateWordOrder {
     VSO,
     VOS,
     OSV,
-    OVS
+    OVS,
 }
 
 bitflags! {
@@ -231,14 +234,29 @@ bitflags! {
     }
 }
 
-enum Finitivity {
-    NONE,
-    DEFINITE_ARTICLES_ONLY,
-    INDEFINITE_ARTICLES_ONLY,
-    DEFINITE_AND_INDEFINITE_ARTICLES,
-    DEFINITE_DECLENSION_ONLY,
-    INDEFINITE_DECLENSION_ONLY,
-    DEFINITE_AND_INDEFINITE_DECLENSION
+bitflags! {
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    struct GrammaticalNumber: u8 {
+        const SINGULAR = 0x1;
+        const DUAL = 0x2;
+        const TRIAL = 0x4;
+        const PAUCAL = 0x8;
+        const PLURAL = 0x10;
+        const QUADRAL = 0x20;
+        const SUPERPLURAL = 0x40;
+        const DISTRIBUTIVE_PLURAL = 0x80;
+
+    }
+}
+
+bitflags! {
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    struct Finitivity: u8 {
+        const HAS_ARTICLES = 0x1;
+        const DEFINITE = 0x2;
+        const INDEFINITE = 0x4;
+        const PARTITIVE = 0x8;
+    }
 }
 
 enum Accent {
@@ -246,12 +264,12 @@ enum Accent {
     CONTRASTIVE_PITCH,
     CONTRASTIVE_STRESS,
     SYSTEMIC_PITCH,
-    SYSTEMIC_STRESS
+    SYSTEMIC_STRESS,
 }
 
 enum Copula {
     IMPLICIT,
     DROPPING,
     ONE,
-    MULTIPLE
+    MULTIPLE,
 }

@@ -1,95 +1,166 @@
-fn to_broccoli_sampa(s:String) -> String {
-    let ret = String::new();
+pub(crate) fn to_broccoli_sampa(s:String) -> String {
+    let mut ret = String::new();
     for c in s.chars() {
         match c {
-            'p' => ret = ret.push_str("Lppf");
-            'b' => ret = ret.push_str("Lppv");
-            't' => ret = ret.push_str("Ctpf");
-            'd' => ret = ret.push_str("Ctpv");
-            'ʈ' => ret = ret.push_str("Cʈpf");
-            'ɖ' => ret = ret.push_str("Cʈpv");
-            'c' => ret = ret.push_str("Dcpf");
-            'ɟ' => ret = ret.push_str("Dcpv");
-            'k' => ret = ret.push_str("Dkpf")
-            'ɡ' => ret = ret.push_str("Dkpv");
-            'g' => ret = ret.push_str("Dkpv");
-            'q' => ret = ret.push_str("Dqpf");
-            'ɢ' => ret = ret.push_str("Dqpv");
-            'ʡ' => ret = ret.push_str("Gʡpf");
-            'ʔ' => ret = ret.push_str("Gʔpf");
+            'p' => ret.push_str("Lppf"),
+            'b' => ret.push_str("Lppv"),
+            't' => ret.push_str("Ctpf"),
+            'd' => ret.push_str("Ctpv"),
+            'ʈ' => ret.push_str("Cʈpf"),
+            'ɖ' => ret.push_str("Cʈpv"),
+            'c' => ret.push_str("Dcpf"),
+            'ɟ' => ret.push_str("Dcpv"),
+            'k' => ret.push_str("Dkpf"),
+            'ɡ' => ret.push_str("Dkpv"),
+            'g' => ret.push_str("Dkpv"),
+            'q' => ret.push_str("Dqpf"),
+            'ɢ' => ret.push_str("Dqpv"),
+            'ʡ' => ret.push_str("Gʡpf"),
+            'ʔ' => ret.push_str("Gʔpf"),
 
-            'm' => ret = ret.push_str("Lpmv");
-            'ɱ' => ret = ret.push_str("Lɱmv");
-            'n' => ret = ret.push_str("Ctmv");
-            'ɳ' => ret = ret.push_str("Cʈmv");
-            'ɲ' => ret = ret.push_str("Dcmv");
-            'ŋ' => ret = ret.push_str("Dkmv");
-            'ɴ' => ret = ret.push_str("Dqmv");
+            'm' => ret.push_str("Lpmv"),
+            'ɱ' => ret.push_str("Lɱmv"),
+            'n' => ret.push_str("Ctmv"),
+            'ɳ' => ret.push_str("Cʈmv"),
+            'ɲ' => ret.push_str("Dcmv"),
+            'ŋ' => ret.push_str("Dkmv"),
+            'ɴ' => ret.push_str("Dqmv"),
 
-            'ʙ' => ret = ret.push_str("Lprv");
-            'ⱱ' => ret = ret.push_str("Lɱⱱv");
-            'r' => ret = ret.push_str("Ctrv");
-            'ɾ' => ret = ret.push_str("Ctⱱv");
-            'ɽ' => ret = ret.push_str("Cʈⱱv");
-            'ʀ' => ret = ret.push_str("Dqrv");
-            'ɺ' => ret = ret.push_str("Ctⱱvl");
+            'ʙ' => ret.push_str("Lprv"),
+            'ⱱ' => ret.push_str("Lɱⱱv"),
+            'r' => ret.push_str("Ctrv"),
+            'ɾ' => ret.push_str("Ctⱱv"),
+            'ɽ' => ret.push_str("Cʈⱱv"),
+            'ʀ' => ret.push_str("Dqrv"),
+            'ɺ' => ret.push_str("Ctⱱvl"),
 
-            'ɸ' => ret = ret.push_str("Lpɸf");
-            'β' => ret = ret.push_str("Lpɸv");
-            'f' => ret = ret.push_str("Lɱɸf");
-            'v' => ret = ret.push_str("Lɱɸv");
-            'θ' => ret = ret.push_str("Ctɸf");
-            'ð' => ret = ret.push_str("Ctɸv");
-            's' => ret = ret.push_str("Ctsf");
-            'z' => ret = ret.push_str("Ctsv");
-            'ʃ' => ret = ret.push_str("Cʈsf");
-            'ʒ' => ret = ret.push_str("Cʈsv");
-            'ʂ' => ret = ret.push_str("Cʈɸf");
-            'ʐ' => ret = ret.push_str("Cʈɸv");
-            'ç' => ret = ret.push_str("Dcɸf");
-            'ʝ' => ret = ret.push_str("Dcɸv");
-            'ɕ' => ret = ret.push_str("Dcsf");
-            'ʑ' => ret = ret.push_str("Dcsv");
-            'x' => ret = ret.push_str("Dkɸf");
-            'ɣ' => ret = ret.push_str("Dkɸv");
-            'χ' => ret = ret.push_str("Dqɸf");
-            'ʁ' => ret = ret.push_str("Dqɸv");
-            'ħ' => ret = ret.push_str("Gʡɸf");
-            'ʕ' => ret = ret.push_str("Gʡɸv");
-            'ʜ' => ret = ret.push_str("Gʡsf"); 
-            'ʢ' => ret = ret.push_str("Gʡsv");
-            'h' => ret = ret.push_str("Gʔɸf");
-            'ɦ' => ret = ret.push_str("Gʔɸv");
+            'ɸ' => ret.push_str("Lpɸf"),
+            'β' => ret.push_str("Lpɸv"),
+            'f' => ret.push_str("Lɱɸf"),
+            'v' => ret.push_str("Lɱɸv"),
+            'θ' => ret.push_str("Ctɸf"),
+            'ð' => ret.push_str("Ctɸv"),
+            's' => ret.push_str("Ctsf"),
+            'z' => ret.push_str("Ctsv"),
+            'ʃ' => ret.push_str("Cʈsf"),
+            'ʒ' => ret.push_str("Cʈsv"),
+            'ʂ' => ret.push_str("Cʈɸf"),
+            'ʐ' => ret.push_str("Cʈɸv"),
+            'ç' => ret.push_str("Dcɸf"),
+            'ʝ' => ret.push_str("Dcɸv"),
+            'ɕ' => ret.push_str("Dcsf"),
+            'ʑ' => ret.push_str("Dcsv"),
+            'x' => ret.push_str("Dkɸf"),
+            'ɣ' => ret.push_str("Dkɸv"),
+            'χ' => ret.push_str("Dqɸf"),
+            'ʁ' => ret.push_str("Dqɸv"),
+            'ħ' => ret.push_str("Gʡɸf"),
+            'ʕ' => ret.push_str("Gʡɸv"),
+            'ʜ' => ret.push_str("Gʡsf"),
+            'ʢ' => ret.push_str("Gʡsv"),
+            'h' => ret.push_str("Gʔɸf"),
+            'ɦ' => ret.push_str("Gʔɸv"),
 
-            'ʍ' => ret = ret.push_str("Lkwf");
-            'w' => ret = ret.push_str("Lkwv");
-            'ʋ' => ret = ret.push_str("Lɱwv");
-            'ɥ' => ret = ret.push_str("Lcwv");
-            'ɹ' => ret = ret.push_str("Ctwv");
-            'ɻ' => ret = ret.push_str("Cʈwv");
-            'j' => ret = ret.push_str("Dcwv");
-            'ɰ' => ret = ret.push_str("Dkwv");
-            'ɬ' => ret = ret.push_str("Ctɸfl");
-            'ɮ' => ret = ret.push_str("Ctɸvl");
-            'l' => ret = ret.push_str("Ctwvl");
-            'ɫ' => ret = ret.push_str("Ctwvlg");
-            'ɭ' => ret = ret.push_str("Cʈwvl");
-            'ʎ' => ret = ret.push_str("Dcwvl");
-            'ʟ' => ret = ret.push_str("Dkwvl");
-            'ʘ' => ret = ret.push_str("Lp!");
-            'ǀ' => ret = ret.push_str("Ct!");
-            'ǃ' => ret = ret.push_str("Cʈ!");
-            'ǂ' => ret = ret.push_str("Dc!");
-            'ǁ' => ret = ret.push_str("Ct!l");
-            'ʼ' => ret = ret.push_str("z");
-            'ɓ' => ret = ret.push_str("Lppvz");
-            'ɗ' => ret = ret.push_str("Ctpvz");
-            'ʄ' => ret = ret.push_str("Dcpfz");
-            'ɠ' => ret = ret.push_str("Dkpvz");
-            'ʛ' => ret = ret.push_str("Dqpvz");
-            'ɧ' => ret = ret.push_str("Cʈsfz");
+            'ʍ' => ret.push_str("Lkwf"),
+            'w' => ret.push_str("Lkwv"),
+            'ʋ' => ret.push_str("Lɱwv"),
+            'ɥ' => ret.push_str("Lcwv"),
+            'ɹ' => ret.push_str("Ctwv"),
+            'ɻ' => ret.push_str("Cʈwv"),
+            'j' => ret.push_str("Dcwv"),
+            'ɰ' => ret.push_str("Dkwv"),
+            'ɬ' => ret.push_str("Ctɸfl"),
+            'ɮ' => ret.push_str("Ctɸvl"),
+            'l' => ret.push_str("Ctwvl"),
+            'ɫ' => ret.push_str("Ctwvlg"),
+            'ɭ' => ret.push_str("Cʈwvl"),
+            'ʎ' => ret.push_str("Dcwvl"),
+            'ʟ' => ret.push_str("Dkwvl"),
 
-            _ => ret = ret.push(c); 
+            'ʘ' => ret.push_str("Lp!"),
+            'ǀ' => ret.push_str("Ct!"),
+            'ǃ' => ret.push_str("Cʈ!"),
+            'ǂ' => ret.push_str("Dc!"),
+            'ǁ' => ret.push_str("Ct!l"),
+
+            'ʼ' => ret.push('z'),
+            'ɓ' => ret.push_str("Lppvz"),
+            'ɗ' => ret.push_str("Ctpvz"),
+            'ʄ' => ret.push_str("Dcpfz"),
+            'ɠ' => ret.push_str("Dkpvz"),
+            'ʛ' => ret.push_str("Dqpvz"),
+
+            'ɧ' => ret.push_str("Cʈsfz"),
+            'ʰ' => ret.push('h'),
+            'ⁿ' => ret.push('n'),
+            'ˤ' => ret.push('a'),
+            'ˠ' => ret.push('g'),
+            'ʲ' => ret.push('j'),
+            'ʷ' => ret.push('W'),
+
+            '̃' => ret.push('~'),
+            'ː' => ret.push(':'),
+            'ˑ' => ret.push(']'),
+            '̆' => ret.push('['),
+            'ˈ' => ret.push('^'),
+            'ˌ' => (),
+            '‿' => (),
+            '˞' => ret.push('R'),
+            '̊' => ret.push('F'),
+            '̥' => ret.push('F'),
+
+            'ꭧ' => ret.push_str("CʈɸfT"),
+            'ꭦ' => ret.push_str("CʈɸvT"),
+            'ʧ' => ret.push_str("CʈsfT"),
+            'ʤ' => ret.push_str("CʈsvT"),
+            'ʨ' => ret.push_str("DcsfT"),
+            'ʥ' => ret.push_str("DcsvT"),
+            'ʦ' => ret.push_str("CtsfT"),
+            'ʣ' => ret.push_str("CtsvT"),
+
+            'i' => ret.push_str("iiii"),
+            'y' => ret.push_str("iiiiW"),
+            'ɨ' => ret.push_str("iiuu"),
+            'ʉ' => ret.push_str("iiuuW"),
+            'ɯ' => ret.push_str("uuuu"),
+            'u' => ret.push_str("uuuuW"),
+            'ɪ' => ret.push_str("ii"),
+            'ʏ' => ret.push_str("iiW"),
+            'ʊ' => ret.push_str("uuW"),
+            'e' => ret.push_str("iia"),
+            'ø' => ret.push_str("iiaW"),
+            'ɘ' => ret.push_str("iu"),
+            'ɵ' => ret.push_str("iuW"),
+            'ɤ' => ret.push_str("uua"),
+            'o' => ret.push_str("uuaW"),
+            'ə' => ret.push_str("iua"),
+            'ɛ' => ret.push_str("ia"),
+            'œ' => ret.push_str("iaW"),
+            'ɜ' => ret.push_str("a"),
+            'ɞ' => ret.push_str("aW"),
+            'ʌ' => ret.push_str("ua"),
+            'ɔ' => ret.push_str("uaW"),
+            'ɐ' => ret.push_str("aa"),
+            'æ' => ret.push_str("iaa"),
+            'ɶ' => ret.push_str("iaaW"),
+            'a' => ret.push_str("aaaa"),
+            'ɑ' => ret.push_str("uaa"),
+            'ɒ' => ret.push_str("uaaW"),
+
+            'ɚ' => ret.push_str("iuaR"),
+            'ɝ' => ret.push_str("aR"),
+
+            '˥' => ret.push('5'),
+            '˦' => ret.push('4'),
+            '˧' => ret.push('3'),
+            '˨' => ret.push('2'),
+            '˩' => ret.push('1'),
+
+
+            _ => ret.push(c),
         }
+
+
     }
+    return ret;
 }

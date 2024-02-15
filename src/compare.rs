@@ -30,12 +30,13 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     }
 
     let mut normalized_levenshtein_distance = 0;
-    for n in 0..100 {
-        normalized_levenshtein_distance += normalized_levenshtein(&lect_a.leipzig_jakarta_list[n], &lect_b.leipzig_jakarta_list[n]) 
-    }
-    let mut lexicon_distance = LEXICON_MULTIPLIER * (normalized_levenshtein_distance as f64);
     let mut grammar_distance = 0.0;
     let mut phonological_distance = 0.0;
+    for n in 0..100 {
+        normalized_levenshtein_distance += normalized_levenshtein(&lect_a.leipzig_jakarta_list[n], &lect_b.leipzig_jakarta_list[n]) 
+        grammar_distance += 
+    }
+    let mut lexicon_distance = LEXICON_MULTIPLIER * (normalized_levenshtein_distance as f64);
 
     // Word Order
     grammar_distance += normalized_damerau_levenshtein(&lect_a.grammar.predicate_word_order, &lect_b.grammar.predicate_word_order);
@@ -82,9 +83,3 @@ fn compare_languoid_and_fam(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {
     (left_distance + right_distance) / 2
 }
 
-fn age_of_common_ancestor(distance: u16, age_a: i32, age_b: i32, language_change_rate: f64) -> i32 {
-    if distance == 0 {
-        return cmp::max(age_a, age_b);
-    }
-    1 //testing
-}

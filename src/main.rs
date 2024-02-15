@@ -6,6 +6,7 @@ use crate::ipa_mapping::to_broccoli_sampa;
 
 pub mod compare;
 pub mod ipa_mapping;
+pub mod model;
 
 fn main() {
     println!("{}", edit_distance(&*to_broccoli_sampa(String::from("ʤɪjɹʷ")), &*to_broccoli_sampa(String::from("çɪjɹʷ"))));
@@ -65,11 +66,13 @@ pub struct Grammar {
     numeric_base: u8,
     finitivity: u8,
     determiner_before_noun: bool,
-    word_classes: Vec<String>,
+    noun_classes: Vec<NounClass>,
+    pronoun_classes: Vec<NounClass>, // Note to not include neologisms or neopronouns unless they are in common usage, as they do not indicate language relationships.
+    has_inclusive_exclusive_distinction: bool,
     declensions: bool,
     personal_conjugation: bool,
     #[serde(with = "serde_arrays")]
-    leipzig_jakarta_word_classes: [String; 100],
+    leipzig_jakarta_word_classes: [NounClass; 100],
     third_person_personal_pronouns: bool,
     formality: bool,
     contraction: bool,
@@ -293,4 +296,29 @@ enum Accent {
     ContrastiveStress,
     SystemicPitch,
     SystemicStress,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+type NounClass = Vec<NounClassCatergories>;
+
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(tag = "t", content = "c")]
+enum NounClassCatergories {
+    None,
+    Neuter,
+    Feminine,
+    Masculine,
+    Epicene,
+    Common,
+    Animate,
+    Inanimate,
+    Count,
+    Mass,
+    Plural,
+    Vegetable,
+    Terrestrial,
+    Celestial,
+    Collective,
+    Other(u8),
 }

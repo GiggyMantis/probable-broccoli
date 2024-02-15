@@ -2,7 +2,6 @@ use bitflags::bitflags;
 use serde::{Serialize, Deserialize};
 use serde_arrays;
 use std::{cell::RefCell, rc::Rc};
-use edit_distance::edit_distance;
 use crate::ipa_mapping::to_broccoli_sampa;
 
 pub mod compare;
@@ -46,7 +45,6 @@ fn get_node_from_languoid(l: Box<Languoid>) -> TreeNode {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-
 struct Languoid {
     languoid_name: String,
     #[serde(with = "serde_arrays")]
@@ -56,8 +54,8 @@ struct Languoid {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-struct Grammar {
-    predicate_word_order: PredicateWordOrder,
+pub struct Grammar {
+    predicate_word_order: str,
     adjective_before_noun: bool,
     prepositions: bool,
     pronominal_cases: u64,
@@ -76,7 +74,8 @@ struct Grammar {
     formality: bool,
     contraction: bool,
     obligate_contraction: bool,
-    copula: Copula,
+    explicit_copula: bool,
+    ser_estar_distinction: bool,
     part_of_speech_morphology: bool,
     tenses: u8,
     aspect: u32,
@@ -89,7 +88,7 @@ struct Grammar {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-struct Phonology {
+pub struct Phonology {
     tone_count: u8,
     vowel_length: bool,
     nasal_vowels: bool,
@@ -122,15 +121,7 @@ struct Phonology {
     labialization: bool,
     emphatics: bool,
 }
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-enum PredicateWordOrder {
-    SVO,
-    SOV,
-    VSO,
-    VOS,
-    OSV,
-    OVS,
-}
+
 //
 // bitflags! {
 //     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -302,12 +293,4 @@ enum Accent {
     ContrastiveStress,
     SystemicPitch,
     SystemicStress,
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-enum Copula {
-    Implicit,
-    Dropping,
-    One,
-    Multiple,
 }

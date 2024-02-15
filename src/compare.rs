@@ -1,5 +1,5 @@
 use std::cmp;
-use edit_distance::edit_distance;
+use strsim::{normalized_levenshtein,normalized_damerau_levenshtein};
 use crate::*;
 
 // This Module (compare) compares two languages and returns a "distance" score.
@@ -15,6 +15,7 @@ const GRAMMAR_MULTIPLIER_GENDER : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_PRONOMINAL : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_CONJUGATION : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_MORPHOLOGY : f64 = 1.0;
+const GRAMMAR_MULTIPLIER_COPULA : f64 = 1.0;
 const PHONOLOGY_MULTIPLIER : f64 = 1.0;
 const PHONOLOGY_MULTIPLIER_TONE : f64 = 1.0;
 const PHONOLOGY_MULTIPLIER_VOWEL_MODIFIERS : f64 = 1.0;
@@ -30,13 +31,27 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
 
     let mut normalized_levenshtein_distance = 0;
     for n in 0..100 {
-        normalized_levenshtein_distance += edit_distance(&lect_a.leipzig_jakarta_list[n], &lect_b.leipzig_jakarta_list[n]) / cmp::max(lect_a.leipzig_jakarta_list[n].len(), lect_b.leipzig_jakarta_list[n].len());
+        normalized_levenshtein_distance += normalized_levenshtein(&lect_a.leipzig_jakarta_list[n], &lect_b.leipzig_jakarta_list[n]) 
     }
     let mut lexicon_distance = LEXICON_MULTIPLIER * (normalized_levenshtein_distance as f64);
     let mut grammar_distance = 0.0;
     let mut phonological_distance = 0.0;
 
-    return (lexicon_distance + grammar_distance) as u16; //testing
+    // Word Order
+    grammar_distance += normalized_damerau_levenshtein(&lect_a.grammar.predicate_word_order, &lect_b.grammar.predicate_word_order);
+    grammar_distance += if lect_a.grammar.adjective_before_noun != lect_b.grammar.adjective_before_noun {GRAMMAR_MULTIPLIER_WORD_ORDER} else {0.0};
+    grammar_distance += if lect_a.grammar.prepositions != lect_b.grammar.prepositions {GRAMMAR_MULTIPLIER_WORD_ORDER} else {0.0};
+
+    // Copula
+    grammar_distance += if lect_a.grammar.explicit_copula != lect_b.grammar.explicit_copula {GRAMMAR_MULTIPLIER_COPULA} else {0.0};
+    grammar_distance += if lect_a.grammar.ser_estar_distinction != lect_b.grammar.ser_estar_distinction {GRAMMAR_MULTIPLIER_COPULA} else {0.0};
+    grammar_distance += if lect_a.grammar.contraction != lect_b.grammar.contraction {GRAMMAR_MULTIPLIER_MORPHOLOGY} else {if lect_a.grammar.obligate_contraction != lect_b.grammar.obligate_contraction {GRAMMAR_MULTIPLIER_MORPHOLOGY} else {0.0}};
+
+
+
+    grammar_distance *= GRAMMAR_MULTIPLIER;
+    phonological_distance *= PHONOLOGY_MULTIPLIER;
+    return (lexicon_distance + grammar_distance + phonological_distance) as u16;
 }
 
 fn compare(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {

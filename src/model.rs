@@ -1,10 +1,9 @@
 use std::cmp;
-use array2d::Array2d;
 use crate::*;
 
 let mut languages: Vec<TreeNodeRef> = Vec::new();
 
-fn age_of_common_ancestor(distance: u16, age_a: i32, age_b: i32, language_change_rate: f64) -> i32 {
+fn age_of_common_ancestor(distance: u16, age_a: i32, age_b: i32) -> i32 {
     if distance == 0 {
         return cmp::max(age_a, age_b);
     }
@@ -40,5 +39,13 @@ fn iterate_minimum_distance_model() {
                 best_match = (i,j);
             }
         }
+    }
+
+    combine(best_match.0 as usize, best_match.1 as usize, age_of_common_ancestor(best_match_value, year(languages[best_match.0]), year(languages[best_match.1])));
+}
+
+fn minimum_distance_model() {
+    while languages.len() > 1 {
+        iterate_minimum_distance_model();
     }
 }

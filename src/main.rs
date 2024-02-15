@@ -1,4 +1,6 @@
 use bitflags::bitflags;
+use serde::{Serialize, Deserialize};
+use serde_arrays;
 use std::{cell::RefCell, rc::Rc};
 use edit_distance::edit_distance;
 use crate::ipa_mapping::to_broccoli_sampa;
@@ -38,17 +40,18 @@ fn get_node_from_languoid(l: Box<Languoid>) -> TreeNode {
     };
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 
 struct Languoid {
     languoid_name: String,
     year: i32,
+    #[serde(with = "serde_arrays")]
     leipzig_jakarta_list: [String; 100],
     grammar: Grammar,
     phonology: Phonology,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 struct Grammar {
     predicate_word_order: PredicateWordOrder,
     adjective_before_noun: bool,
@@ -62,6 +65,7 @@ struct Grammar {
     word_classes: Vec<String>,
     declensions: bool,
     personal_conjugation: bool,
+    #[serde(with = "serde_arrays")]
     leipzig_jakarta_word_classes: [String; 100],
     third_person_personal_pronouns: bool,
     formality: bool,
@@ -79,7 +83,7 @@ struct Grammar {
     has_diminutive: bool,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 struct Phonology {
     tone_count: u8,
     vowel_length: bool,
@@ -113,7 +117,7 @@ struct Phonology {
     labialization: bool,
     emphatics: bool,
 }
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 enum PredicateWordOrder {
     SVO,
     SOV,
@@ -286,7 +290,7 @@ enum PredicateWordOrder {
 //     }
 //}
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 enum Accent {
     None,
     ContrastivePitch,
@@ -295,7 +299,7 @@ enum Accent {
     SystemicStress,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 enum Copula {
     Implicit,
     Dropping,

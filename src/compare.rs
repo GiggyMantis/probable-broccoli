@@ -5,8 +5,6 @@ use crate::*;
 // This Module (compare) compares two languages and returns a "distance" score.
 // The higher a distance score is, the more *distantly* two languages are related.
 
-const
-
 fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     if lect_a == lect_b {
         return 0;

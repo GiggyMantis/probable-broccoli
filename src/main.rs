@@ -17,6 +17,7 @@ pub struct TreeNode {
     val: Option<Box<Languoid>>,
     left: Option<TreeNodeRef>,
     right: Option<TreeNodeRef>,
+    year: i32,
 }
 type TreeNodeRef = Rc<RefCell<TreeNode>>;
 
@@ -32,6 +33,10 @@ fn left(t:&TreeNodeRef) -> Option<TreeNodeRef> {
     return <RefCell<TreeNode> as Clone>::clone(&t).into_inner().left;
 }
 
+fn year(t:&TreeNodeRef) -> i32 {
+    return <RefCell<TreeNode> as Clone>::clone(&t).into_inner().year;
+}
+
 fn get_node_from_languoid(l: Box<Languoid>) -> TreeNode {
     return TreeNode {
         val: Some(l),
@@ -44,7 +49,6 @@ fn get_node_from_languoid(l: Box<Languoid>) -> TreeNode {
 
 struct Languoid {
     languoid_name: String,
-    year: i32,
     #[serde(with = "serde_arrays")]
     leipzig_jakarta_list: [String; 100],
     grammar: Grammar,
@@ -60,6 +64,7 @@ struct Grammar {
     nominal_cases: u64,
     pronominal_numbers: u8,
     nominal_numbers: u8,
+    numeric_base: u8,
     finitivity: u8,
     determiner_before_noun: bool,
     word_classes: Vec<String>,

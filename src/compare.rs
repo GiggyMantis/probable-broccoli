@@ -5,6 +5,24 @@ use crate::*;
 // This Module (compare) compares two languages and returns a "distance" score.
 // The higher a distance score is, the more *distantly* two languages are related.
 
+const LEXICON_MULTIPLIER : f64 = 1.0;
+const GRAMMAR_MULTIPLIER : f64 = 1.0;
+const GRAMMAR_MULTIPLIER_WORD_ORDER : f64 = 1.0;
+const GRAMMAR_MULTIPLIER_CASES : f64 = 1.0;
+const GRAMMAR_MULTIPLIER_NUMBER : f64 = 1.0;
+const GRAMMAR_MULTIPLIER_DETERMINATION : f64 = 1.0;
+const GRAMMAR_MULTIPLIER_GENDER : f64 = 1.0;
+const GRAMMAR_MULTIPLIER_PRONOMINAL : f64 = 1.0;
+const GRAMMAR_MULTIPLIER_CONJUGATION : f64 = 1.0;
+const GRAMMAR_MULTIPLIER_MORPHOLOGY : f64 = 1.0;
+const PHONOLOGY_MULTIPLIER : f64 = 1.0;
+const PHONOLOGY_MULTIPLIER_TONE : f64 = 1.0;
+const PHONOLOGY_MULTIPLIER_VOWEL_MODIFIERS : f64 = 1.0;
+const PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES : f64 = 1.0;
+const PHONOLOGY_MULTIPLIER_CONSONANTS : f64 = 1.0;
+const PHONOLOGY_MULTIPLIER_ACCENT : f64 = 1.0;
+
+
 fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     if lect_a == lect_b {
         return 0;
@@ -14,8 +32,11 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     for n in 0..100 {
         normalized_levenshtein_distance += edit_distance(&lect_a.leipzig_jakarta_list[n], &lect_b.leipzig_jakarta_list[n]) / cmp::max(lect_a.leipzig_jakarta_list[n].len(), lect_b.leipzig_jakarta_list[n].len());
     }
-    
-    1 //testing
+    let mut lexicon_distance = LEXICON_MULTIPLIER * (normalized_levenshtein_distance as f64);
+    let mut grammar_distance = 0.0;
+    let mut phonological_distance = 0.0;
+
+    return (lexicon_distance + grammar_distance) as u16; //testing
 }
 
 fn compare(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {

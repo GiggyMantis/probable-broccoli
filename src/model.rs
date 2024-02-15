@@ -1,4 +1,5 @@
 use std::cmp;
+use array2d::Array2d;
 use crate::*;
 
 let mut languages: Vec<TreeNodeRef> = Vec::new();
@@ -29,5 +30,15 @@ fn combine(a: usize, b: usize, new_year: i32) {
 }
 
 fn iterate_minimum_distance_model() {
-
+    let mut best_match = (0, 0);
+    let mut best_match_value: u16 = u16::MAX;
+    for i in 0..(languages.len()-1) {
+        for j in (i+1)..languages.len() {
+            let this_match_value = compare::compare(languages[i], languages[j]);
+            if this_match_value < best_match_value {
+                best_match_value = this_match_value;
+                best_match = (i,j);
+            }
+        }
+    }
 }

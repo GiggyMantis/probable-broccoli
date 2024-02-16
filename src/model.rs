@@ -1,12 +1,15 @@
 use std::cmp;
 use crate::*;
 
+const RATE_OF_LANGUAGE_CHANGE: f32 = 1.0;
 
 fn age_of_common_ancestor(distance: u16, age_a: i32, age_b: i32) -> i32 {
+    let max = cmp::max(age_a, age_b);
     if distance == 0 {
-        return cmp::max(age_a, age_b);
+        return max;
     }
-    1 //testing
+    
+    cmp::max(max, RATE_OF_LANGUAGE_CHANGE * (distance as f32) + max - (f32::abs((age_a - age_b) as f32))) as i32
 }
 
 fn combine(a: usize, b: usize, new_year: i32, languages: &mut Vec<TreeNodeRef>) {

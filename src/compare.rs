@@ -1,4 +1,3 @@
-use std::cmp;
 use strsim::{normalized_levenshtein,normalized_damerau_levenshtein};
 use crate::*;
 
@@ -33,8 +32,7 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     let mut grammar_distance = 0.0;
     let mut phonological_distance = 0.0;
     for n in 0..100 {
-        normalized_levenshtein_distance += normalized_levenshtein(&lect_a.leipzig_jakarta_list[n], &lect_b.leipzig_jakarta_list[n]) 
-        grammar_distance += 
+        normalized_levenshtein_distance += normalized_levenshtein(&lect_a.leipzig_jakarta_list[n], &lect_b.leipzig_jakarta_list[n])
     }
     let mut lexicon_distance = LEXICON_MULTIPLIER * (normalized_levenshtein_distance as f64);
 
@@ -55,7 +53,7 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     return (lexicon_distance + grammar_distance + phonological_distance) as u16;
 }
 
-fn compare(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {
+pub(crate) fn compare(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {
     if val(&lect_a) != None && val(&lect_b) != None {
         return compare_individual(val(&lect_a).unwrap(), val(&lect_b).unwrap());
     }

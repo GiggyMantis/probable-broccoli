@@ -1,15 +1,12 @@
-use bitflags::bitflags;
 use serde::{Serialize, Deserialize};
 use serde_arrays;
 use std::{cell::RefCell, rc::Rc};
-use crate::ipa_mapping::to_broccoli_sampa;
 
 pub mod compare;
 pub mod ipa_mapping;
 pub mod model;
 
 fn main() {
-    println!("{}", edit_distance(&*to_broccoli_sampa(String::from("ʤɪjɹʷ")), &*to_broccoli_sampa(String::from("çɪjɹʷ"))));
 }
 
 #[derive(Debug, Clone)]
@@ -37,11 +34,12 @@ fn year(t:&TreeNodeRef) -> i32 {
     return <RefCell<TreeNode> as Clone>::clone(&t).into_inner().year;
 }
 
-fn get_node_from_languoid(l: Box<Languoid>) -> TreeNode {
+fn get_node_from_languoid(l: Box<Languoid>, year: i32) -> TreeNode {
     return TreeNode {
         val: Some(l),
         left: None,
         right: None,
+        year,
     };
 }
 
@@ -298,7 +296,6 @@ enum Accent {
     SystemicStress,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 type NounClass = Vec<NounClassCatergories>;
 
 

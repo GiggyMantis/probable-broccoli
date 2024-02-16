@@ -91,5 +91,3 @@ fn age_of_common_ancestor(distance: u16, age_a: i32, age_b: i32) -> i32 {
     
     cmp::max(max, RATE_OF_LANGUAGE_CHANGE * (distance as f32) + max - (f32::abs((age_a - age_b) as f32))) as i32
 }
-
-

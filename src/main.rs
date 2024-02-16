@@ -34,18 +34,19 @@ impl TreeNodeRef {
 
 }
 
-fn get_node_from_languoid(l: Box<Languoid>, year: i32) -> TreeNode {
+fn get_node_from_languoid(l: Box<Languoid>) -> TreeNode {
     return TreeNode {
         val: Some(l),
         left: None,
         right: None,
-        year,
+        year: l.year,
     };
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 struct Languoid {
     languoid_name: String,
+    year: i32,
     #[serde(with = "serde_arrays")]
     leipzig_jakarta_list: [String; 100],
     grammar: Grammar,

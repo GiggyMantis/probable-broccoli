@@ -106,8 +106,6 @@ pub(crate) fn to_broccoli_sampa(s:String) -> String {
             'ˌ' => (),
             '‿' => (),
             '˞' => ret.push('R'),
-            '̊' => ret.push('F'),
-            '̥' => ret.push('F'),
 
             'ꭧ' => ret.push_str("CʈɸfT"),
             'ꭦ' => ret.push_str("CʈɸvT"),
@@ -161,5 +159,8 @@ pub(crate) fn to_broccoli_sampa(s:String) -> String {
 
 
     }
+
+
+
     return ret;
 }

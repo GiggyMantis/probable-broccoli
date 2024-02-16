@@ -18,20 +18,20 @@ pub struct TreeNode {
 }
 type TreeNodeRef = Rc<RefCell<TreeNode>>;
 
-fn val(t:&TreeNodeRef) -> Option<Box<Languoid>> {
-    return <RefCell<TreeNode> as Clone>::clone(&t).into_inner().val;
-}
+impl TreeNodeRef {
+    pub fn val(&self) -> Option<Box<Languoid>> {
+        <RefCell<TreeNode> as Clone>::clone(self).into_inner().val
+    }
+    pub fn right(&self) -> Option<TreeNodeRef> {
+        <RefCell<TreeNode> as Clone>::clone(self).into_inner().right
+    }
+    pub fn left(&self) -> Option<TreeNodeRef> {
+        <RefCell<TreeNode> as Clone>::clone(self).into_inner().left
+    }
+    pub fn year(&self) -> i32 {
+        <RefCell<TreeNode> as Clone>::clone(self).into_inner().year
+    }
 
-fn right(t:&TreeNodeRef) -> Option<TreeNodeRef> {
-    return <RefCell<TreeNode> as Clone>::clone(&t).into_inner().right;
-}
-
-fn left(t:&TreeNodeRef) -> Option<TreeNodeRef> {
-    return <RefCell<TreeNode> as Clone>::clone(&t).into_inner().left;
-}
-
-fn year(t:&TreeNodeRef) -> i32 {
-    return <RefCell<TreeNode> as Clone>::clone(&t).into_inner().year;
 }
 
 fn get_node_from_languoid(l: Box<Languoid>, year: i32) -> TreeNode {

@@ -54,13 +54,13 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
 }
 
 pub(crate) fn compare(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {
-    if val(&lect_a) != None && val(&lect_b) != None {
-        return compare_individual(val(&lect_a).unwrap(), val(&lect_b).unwrap());
+    if lect_a.val() != None && lect_b.val() != None {
+        return compare_individual(lect_a.val().unwrap(), lect_b.val().unwrap());
     }
-    if val(&lect_a) != None {
+    if lect_a.val() != None {
         return compare_languoid_and_fam(lect_a, lect_b);
     }
-    if val(&lect_b) != None {
+    if lect_b.val() != None {
         return compare_languoid_and_fam(lect_b, lect_a);
     }
 
@@ -68,15 +68,15 @@ pub(crate) fn compare(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {
 }
 
 fn compare_fam_and_fam(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {
-    let left_distance = compare(left(&lect_a).unwrap(), lect_b.clone());
-    let right_distance = compare(right(&lect_a).unwrap(), lect_b.clone());
+    let left_distance = compare(lect_a.left().unwrap(), lect_b.clone());
+    let right_distance = compare(lect_a.right().unwrap(), lect_b.clone());
     
     (left_distance + right_distance) / 2
 }
 
 fn compare_languoid_and_fam(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {
-    let left_distance = compare(lect_a.clone(), left(&lect_b).unwrap());
-    let right_distance = compare(lect_a.clone(), right(&lect_b).unwrap());
+    let left_distance = compare(lect_a.clone(), lect_b.left().unwrap());
+    let right_distance = compare(lect_a.clone(), lect_b.right().unwrap());
 
     (left_distance + right_distance) / 2
 }

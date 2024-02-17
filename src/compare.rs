@@ -24,20 +24,21 @@ const PHONOLOGY_MULTIPLIER_ACCENT : f64 = 1.0;
 
 
 fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
-    if lect_a == lect_b {
+    if lect_a.as_ref() == lect_b.as_ref() {
+        println!("Same langs");
         return 0;
     }
 
-    let mut normalized_levenshtein_distance = 0;
+    let mut normalized_levenshtein_distance = 0.0;
     let mut grammar_distance = 0.0;
     let mut phonological_distance = 0.0;
     for n in 0..100 {
-        normalized_levenshtein_distance += normalized_levenshtein(&lect_a.leipzig_jakarta_list[n], &lect_b.leipzig_jakarta_list[n])
+        normalized_levenshtein_distance += 1.0 - normalized_levenshtein(&lect_a.leipzig_jakarta_list[n].0, &lect_b.leipzig_jakarta_list[n].0)
     }
     let mut lexicon_distance = LEXICON_MULTIPLIER * (normalized_levenshtein_distance as f64);
 
     // Word Order
-    grammar_distance += normalized_damerau_levenshtein(&lect_a.grammar.predicate_word_order, &lect_b.grammar.predicate_word_order);
+    grammar_distance += 1.0 - normalized_damerau_levenshtein(&lect_a.grammar.predicate_word_order, &lect_b.grammar.predicate_word_order);
     grammar_distance += if lect_a.grammar.adjective_before_noun != lect_b.grammar.adjective_before_noun {GRAMMAR_MULTIPLIER_WORD_ORDER} else {0.0};
     grammar_distance += if lect_a.grammar.prepositions != lect_b.grammar.prepositions {GRAMMAR_MULTIPLIER_WORD_ORDER} else {0.0};
 

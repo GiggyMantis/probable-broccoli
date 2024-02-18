@@ -1,5 +1,6 @@
 pub(crate) fn to_broccoli_sampa(s: &String) -> String {
     let mut ret = String::new();
+    // TODO: Make long diacritic repeat the letter
     for c in s.chars() {
         match c {
             'p' => ret.push_str("Lppf"),

@@ -31,6 +31,8 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     let mut normalized_levenshtein_distance = 0.0;
     let mut grammar_distance = 0.0;
     let mut phonological_distance = 0.0;
+
+    // Loops over every word in the Leipzig-Jakarta List
     for n in 0..100 {
         normalized_levenshtein_distance += 1.0 - normalized_levenshtein(&*ipa_mapping::to_broccoli_sampa(&lect_a.leipzig_jakarta_list[n].0), &*ipa_mapping::to_broccoli_sampa(&lect_b.leipzig_jakarta_list[n].0))
         // TODO: Add in distance for differing noun classes
@@ -80,6 +82,9 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     grammar_distance += GRAMMAR_MULTIPLIER_MORPHOLOGY * (lect_a.grammar.reduplication ^ lect_b.grammar.reduplication) as u8 as f64;
     grammar_distance += GRAMMAR_MULTIPLIER_MORPHOLOGY * (lect_a.grammar.has_augmentative ^ lect_b.grammar.has_augmentative) as u8 as f64;
     grammar_distance += GRAMMAR_MULTIPLIER_MORPHOLOGY * (lect_a.grammar.has_diminutive ^ lect_b.grammar.has_diminutive) as u8 as f64;
+
+    // Vowels
+    phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_MODIFIERS * (lect_a.phonology.vowel_length ^ lect_b.phonology.vowel_length) as u8 as f64;
 
     grammar_distance *= GRAMMAR_MULTIPLIER;
     phonological_distance *= PHONOLOGY_MULTIPLIER;

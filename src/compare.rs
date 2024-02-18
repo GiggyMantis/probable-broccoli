@@ -33,7 +33,7 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     let mut grammar_distance = 0.0;
     let mut phonological_distance = 0.0;
     for n in 0..100 {
-        normalized_levenshtein_distance += 1.0 - normalized_levenshtein(&lect_a.leipzig_jakarta_list[n].0, &lect_b.leipzig_jakarta_list[n].0)
+        normalized_levenshtein_distance += 1.0 - normalized_levenshtein(&*ipa_mapping::to_broccoli_sampa(&lect_a.leipzig_jakarta_list[n].0), &*ipa_mapping::to_broccoli_sampa(&lect_b.leipzig_jakarta_list[n].0))
     }
     let mut lexicon_distance = LEXICON_MULTIPLIER * (normalized_levenshtein_distance as f64);
 

@@ -1,4 +1,4 @@
-pub(crate) fn to_broccoli_sampa(s:String) -> String {
+pub(crate) fn to_broccoli_sampa(s: &String) -> String {
     let mut ret = String::new();
     for c in s.chars() {
         match c {
@@ -105,7 +105,7 @@ pub(crate) fn to_broccoli_sampa(s:String) -> String {
             'ˈ' => ret.push('^'),
             'ˌ' => (),
             '‿' => (),
-            '˞' => ret.push('R'),
+            '˞' => ret.push_str("Ctwv"),
 
             'ꭧ' => ret.push_str("CʈɸfT"),
             'ꭦ' => ret.push_str("CʈɸvT"),
@@ -160,7 +160,7 @@ pub(crate) fn to_broccoli_sampa(s:String) -> String {
 
     }
 
-
+    // TODO: Make the voiceless diacritics work.
 
     return ret;
 }

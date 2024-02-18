@@ -41,13 +41,12 @@ impl BinaryTree {
             {
                 let this_match_value = compare::compare(self.val[i].clone(), self.val[j].clone());
                 if this_match_value < best_match_value {
-                    println!("{}", this_match_value);
                     best_match_value = this_match_value;
                     best_match = (i,j);
                 }
             }
         }
-
+        println!("{} {}", best_match.0, best_match.1);
         self.combine(best_match.0, best_match.1, age_of_common_ancestor(best_match_value, self.val[best_match.0].year(), self.val[best_match.1].year()));
     }
 
@@ -56,7 +55,7 @@ impl BinaryTree {
     // this approach assumes all languages are related, which may be false in the case of conlangs and is debated in the case of natural languages.
     // https://en.wikipedia.org/wiki/Minimum-distance_estimation
     // Does not allow for this: https://en.wikipedia.org/wiki/Language_isolate
-    fn naive_minimum_distance_model(&mut self) {
+    pub fn naive_minimum_distance_model(&mut self) {
         while self.val.len() > 1 {
             self.iterate_minimum_distance_model();
         }
@@ -90,10 +89,10 @@ impl BinaryTree {
 }
 
 fn age_of_common_ancestor(distance: u16, age_a: i32, age_b: i32) -> i32 {
-    let max = cmp::max(age_a, age_b);
+    let min = cmp::min(age_a, age_b);
     if distance == 0 {
-        return max;
+        return min;
     }
     
-    cmp::max(max, (RATE_OF_LANGUAGE_CHANGE * (distance as f32) + (max as f32) - (f32::abs((age_a - age_b) as f32))) as i32)
+    cmp::min(min, (RATE_OF_LANGUAGE_CHANGE * -(distance as f32) + (min as f32) - (f32::abs((age_a - age_b) as f32))) as i32)
 }

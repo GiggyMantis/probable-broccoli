@@ -11,7 +11,6 @@ const GRAMMAR_MULTIPLIER_CASES : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_NUMBER : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_DETERMINATION : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_GENDER : f64 = 1.0;
-const GRAMMAR_MULTIPLIER_PRONOMINAL : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_CONJUGATION : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_MORPHOLOGY : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_COPULA : f64 = 1.0;
@@ -60,6 +59,17 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     // Determination
     grammar_distance += GRAMMAR_MULTIPLIER_DETERMINATION * (lect_a.grammar.finitivity ^ lect_b.grammar.finitivity).count_ones() as f64;
     grammar_distance += GRAMMAR_MULTIPLIER_DETERMINATION * (lect_a.grammar.determiner_before_noun ^ lect_b.grammar.determiner_before_noun) as u8 as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_DETERMINATION * (lect_a.grammar.third_person_personal_pronouns ^ lect_b.grammar.third_person_personal_pronouns) as u8 as f64;
+
+    // Gender
+    // TODO: Gender
+
+    // Conjugation
+    grammar_distance += GRAMMAR_MULTIPLIER_CONJUGATION * (lect_a.grammar.personal_conjugation ^ lect_b.grammar.personal_conjugation) as u8 as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_CONJUGATION * (lect_a.grammar.aspect ^ lect_b.grammar.aspect).count_ones() as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_CONJUGATION * (lect_a.grammar.mood ^ lect_b.grammar.mood).count_ones() as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_CONJUGATION * i16::abs(lect_a.grammar.tenses as i16 - lect_b.grammar.tenses as i16) as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_CONJUGATION * i16::abs(lect_a.grammar.evidentials as i16 - lect_b.grammar.evidentials as i16) as f64;
 
 
     grammar_distance *= GRAMMAR_MULTIPLIER;

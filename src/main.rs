@@ -109,7 +109,7 @@ pub struct Grammar {
     reduplication: bool,
     has_augmentative: bool,
     has_diminutive: bool,
-    pub evidentials: i32,
+    evidentials: i32,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

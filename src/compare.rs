@@ -7,13 +7,13 @@ use crate::*;
 const LEXICON_MULTIPLIER : f64 = 1.0;
 const GRAMMAR_MULTIPLIER : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_WORD_ORDER : f64 = 1.0;
+const GRAMMAR_MULTIPLIER_COPULA : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_CASES : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_NUMBER : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_DETERMINATION : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_GENDER : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_CONJUGATION : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_MORPHOLOGY : f64 = 1.0;
-const GRAMMAR_MULTIPLIER_COPULA : f64 = 1.0;
 const PHONOLOGY_MULTIPLIER : f64 = 1.0;
 const PHONOLOGY_MULTIPLIER_TONE : f64 = 1.0;
 const PHONOLOGY_MULTIPLIER_VOWEL_MODIFIERS : f64 = 1.0;
@@ -70,7 +70,16 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     grammar_distance += GRAMMAR_MULTIPLIER_CONJUGATION * (lect_a.grammar.mood ^ lect_b.grammar.mood).count_ones() as f64;
     grammar_distance += GRAMMAR_MULTIPLIER_CONJUGATION * i16::abs(lect_a.grammar.tenses as i16 - lect_b.grammar.tenses as i16) as f64;
     grammar_distance += GRAMMAR_MULTIPLIER_CONJUGATION * i16::abs(lect_a.grammar.evidentials as i16 - lect_b.grammar.evidentials as i16) as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_CONJUGATION * (lect_a.grammar.has_verbal_voice ^ lect_a.grammar.has_verbal_voice) as u8 as f64;
 
+    // Morphology
+    grammar_distance += GRAMMAR_MULTIPLIER_MORPHOLOGY * (lect_a.grammar.contraction ^ lect_b.grammar.contraction) as u8 as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_MORPHOLOGY * (lect_a.grammar.obligate_contraction ^ lect_b.grammar.obligate_contraction) as u8 as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_MORPHOLOGY * (lect_a.grammar.part_of_speech_morphology ^ lect_b.grammar.part_of_speech_morphology) as u8 as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_MORPHOLOGY * (lect_a.grammar.double_negatives_are_positive ^ lect_b.grammar.double_negatives_are_positive) as u8 as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_MORPHOLOGY * (lect_a.grammar.reduplication ^ lect_b.grammar.reduplication) as u8 as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_MORPHOLOGY * (lect_a.grammar.has_augmentative ^ lect_b.grammar.has_augmentative) as u8 as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_MORPHOLOGY * (lect_a.grammar.has_diminutive ^ lect_b.grammar.has_diminutive) as u8 as f64;
 
     grammar_distance *= GRAMMAR_MULTIPLIER;
     phonological_distance *= PHONOLOGY_MULTIPLIER;

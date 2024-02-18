@@ -34,6 +34,7 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     let mut phonological_distance = 0.0;
     for n in 0..100 {
         normalized_levenshtein_distance += 1.0 - normalized_levenshtein(&*ipa_mapping::to_broccoli_sampa(&lect_a.leipzig_jakarta_list[n].0), &*ipa_mapping::to_broccoli_sampa(&lect_b.leipzig_jakarta_list[n].0))
+        // TODO: Add in distance for differing noun classes
     }
     let mut lexicon_distance = LEXICON_MULTIPLIER * (normalized_levenshtein_distance as f64);
 
@@ -47,6 +48,18 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     grammar_distance += if lect_a.grammar.ser_estar_distinction != lect_b.grammar.ser_estar_distinction {GRAMMAR_MULTIPLIER_COPULA} else {0.0};
     grammar_distance += if lect_a.grammar.contraction != lect_b.grammar.contraction {GRAMMAR_MULTIPLIER_MORPHOLOGY} else {if lect_a.grammar.obligate_contraction != lect_b.grammar.obligate_contraction {GRAMMAR_MULTIPLIER_MORPHOLOGY} else {0.0}};
 
+    // Cases
+    grammar_distance += GRAMMAR_MULTIPLIER_CASES * (lect_a.grammar.pronominal_cases ^ lect_b.grammar.pronominal_cases).count_ones() as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_CASES * (lect_a.grammar.nominal_cases ^ lect_b.grammar.nominal_cases).count_ones() as f64;
+
+    // Number
+    grammar_distance += GRAMMAR_MULTIPLIER_NUMBER * (lect_a.grammar.pronominal_numbers ^ lect_b.grammar.pronominal_numbers).count_ones() as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_NUMBER * (lect_a.grammar.nominal_numbers ^ lect_b.grammar.pronominal_numbers).count_ones() as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_NUMBER * i16::abs(lect_a.grammar.numeric_base as i16 - lect_b.grammar.numeric_base as i16) as f64;
+
+    // Determination
+    grammar_distance += GRAMMAR_MULTIPLIER_DETERMINATION * (lect_a.grammar.finitivity ^ lect_b.grammar.finitivity).count_ones() as f64;
+    grammar_distance += GRAMMAR_MULTIPLIER_DETERMINATION * (lect_a.grammar.determiner_before_noun ^ lect_b.grammar.determiner_before_noun) as u8 as f64;
 
 
     grammar_distance *= GRAMMAR_MULTIPLIER;

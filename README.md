@@ -20,3 +20,4 @@ Goals for this project:
 
 # Eventual Plans
 - Use the same MCMC method to establish sound changes to allow for the most accurate results.
+- Note this requires using *cognate lists* instead of *lexical sets* as is currently implemented.

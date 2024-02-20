@@ -404,7 +404,7 @@
     ]
   ],
   "grammar": {
-    "predicate_word_order": "V2",
+    "predicate_word_order": "XVX",
     "adjective_before_noun": true,
     "prepositions": true,
     "pronominal_cases": 87995323514880,

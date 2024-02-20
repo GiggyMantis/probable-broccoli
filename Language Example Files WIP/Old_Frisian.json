@@ -408,11 +408,11 @@
     "adjective_before_noun": true,
     "prepositions": true,
     "pronominal_cases": 87995323514880,
-    "nominal_cases": 88012503384064,
+    "nominal_cases": 87995323514880,
     "pronominal_numbers": 19,
     "nominal_numbers": 17,
     "numeric_base": 10,
-    "finitivity": 3,
+    "finitivity": 7,
     "determiner_before_noun": true,
     "noun_classes": [
       [
@@ -449,7 +449,7 @@
       ],
       [
         {
-          "t": "Epicene"
+          "t": "Neuter"
         }
       ]
     ],
@@ -458,16 +458,16 @@
     "personal_conjugation": true,
     "third_person_personal_pronouns": true,
     "formality": false,
-    "contraction": false,
-    "obligate_contraction": false,
+    "contraction": true,
+    "obligate_contraction": true,
     "explicit_copula": true,
-    "ser_estar_distinction": true,
+    "ser_estar_distinction": false,
     "part_of_speech_morphology": true,
     "tenses": 2,
     "aspect": 277,
     "mood": 265,
-    "has_verbal_voice": false,
-    "double_negatives_are_positive": true,
+    "has_verbal_voice": true,
+    "double_negatives_are_positive": false,
     "reduplication": true,
     "has_augmentative": false,
     "has_diminutive": false,
@@ -478,18 +478,18 @@
     "vowel_length": true,
     "nasal_vowels": false,
     "rhotic_vowels": false,
-    "front_rounded_vowels": true,
+    "front_rounded_vowels": false,
     "back_unrounded_vowels": false,
     "schwa": false,
-    "reduction": true,
+    "reduction": false,
     "accent_system": "ContrastiveStress",
-    "plosive_series_count": 4,
-    "fricative_voicedness_distinction": false,
-    "nasal_voicedness_distinction": true,
+    "plosive_series_count": 3,
+    "fricative_voicedness_distinction": true,
+    "nasal_voicedness_distinction": false,
     "has_laterals": true,
     "has_phonemic_diphthongs": true,
     "has_phonetic_diphthongs": false,
-    "basic_vowel_count": 7,
+    "basic_vowel_count": 5,
     "has_glottal": true,
     "has_uvular": false,
     "has_labiodental": true,
@@ -501,10 +501,10 @@
     "has_pharyngeal_or_epiglottal": false,
     "has_vibrants": true,
     "gemination": true,
-    "palatalization": true,
-    "velarization": true,
+    "palatalization": false,
+    "velarization": false,
     "labialization": false,
     "emphatics": false,
-    "mora_timed": true
+    "mora_timed": false
   }
 }

@@ -12,7 +12,7 @@ fn main() {
 
     let lang: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Old_English.json").unwrap()).unwrap();
     let lang2: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Latin.json").unwrap()).unwrap();
-    let lang3: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/American_English.json").unwrap()).unwrap();
+    let lang3: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Old_Frisian.json").unwrap()).unwrap();
     let lang4: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Ancient_Greek.json").unwrap()).unwrap();
 
     let mut model: BinaryTree = BinaryTree {

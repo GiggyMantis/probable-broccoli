@@ -86,6 +86,8 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     // Vowels
     phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_MODIFIERS * (lect_a.phonology.vowel_length ^ lect_b.phonology.vowel_length) as u8 as f64;
 
+    // TODO: More Phonological Comparison
+
     grammar_distance *= GRAMMAR_MULTIPLIER;
     phonological_distance *= PHONOLOGY_MULTIPLIER;
     return (lexicon_distance + grammar_distance + phonological_distance) as u16;

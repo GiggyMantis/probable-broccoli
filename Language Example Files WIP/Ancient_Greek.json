@@ -275,144 +275,144 @@
       3
     ],
     [
-      "TO SUCK - Break",
+      "myzdˈaeːn",
       0
     ],
     [
-      "fˈɛrrɛ",
+      "pʰereːn",
       0
     ],
     [
-      "fɔrmˈiːka",
-      1
+      "mˈyrmɛːks",
+      2
     ],
     [
-      "ɡrˈawɪs",
+      "barˈys",
       0
     ],
     [
-      "kˈapɛrɛ",
+      "lambˈaneːn",
       0
     ],
     [
-      "wˈɛtʊs",
+      "palajˈos",
       0
     ],
     [
-      "ˈɛdɛrɛ",
+      "ˈédeːn",
       0
     ],
     [
-      "fˈɛmʊr",
+      "mɛːrˈos",
+      2
+    ],
+    [
+      "pyknˈos",
+      0
+    ],
+    [
+      "makrˈos",
+      0
+    ],
+    [
+      "ˈaɛːmaj",
+      0
+    ],
+    [
+      "ksˈylon",
       3
     ],
     [
-      "krˈassʊs",
+      "trˈekʰeːn",
       0
     ],
     [
-      "ɫˈɔŋɡʊs",
+      "piˈipteːn",
       0
     ],
     [
-      "fɫˈaːrɛ",
-      0
-    ],
-    [
-      "lʲˈɪŋnʊm",
-      3
-    ],
-    [
-      "kˈʊrrɛrɛ",
-      0
-    ],
-    [
-      "kˈadɛrɛ",
-      0
-    ],
-    [
-      "ˈɔkʊɫ̪ʊs",
+      "opʰtʰalmˈos",
       2
     ],
     [
-      "kˈɪnɪs",
+      "spodˈos",
       1
     ],
     [
-      "kˈawda",
+      "uːraˈa",
       1
     ],
     [
-      "kˈanɪs",
+      "kˈyɔːn",
       2
     ],
     [
-      "fɫˈeːrɛ",
+      "klaˈajeːn",
       0
     ],
     [
-      "lˈɪɡaːrɛ",
+      "dˈeeːn",
       0
     ],
     [
-      "wɪdˈeːrɛ",
+      "horˈaeːn",
       0
     ],
     [
-      "dˈʊɫkɪs",
+      "ɡlykˈys",
       0
     ],
     [
-      "fˈuːnɪs",
+      "skʰˈojnos",
       2
     ],
     [
-      "ˈʊmbra",
+      "skiaˈa",
       1
     ],
     [
-      "ˈawɪs",
-      1
-    ],
-    [
-      "saːɫ",
+      "ˈorniːs",
       2
     ],
     [
-      "pˈarwʊs",
+      "hals",
+      2
+    ],
+    [
+      "miːkrˈos",
       0
     ],
     [
-      "ɫˈaːtʊs",
+      "ewrˈys",
       0
     ],
     [
-      "stˈeːllʲa",
-      1
+      "astɛˈɛr",
+      2
     ],
     [
-      "ɪn",
+      "en",
       0
     ],
     [
-      "dˈuːrʊs",
+      "sklɛːrˈos",
       0
     ],
     [
-      "pˈiːnsɛrɛ",
+      "alˈeeːn",
       0
     ]
   ],
   "grammar": {
-    "predicate_word_order": "SOV",
+    "predicate_word_order": "SVO",
     "adjective_before_noun": true,
     "prepositions": true,
-    "pronominal_cases": 87995323515904,
-    "nominal_cases": 72145589361443872,
-    "pronominal_numbers": 17,
-    "nominal_numbers": 17,
+    "pronominal_cases": 87995323514880,
+    "nominal_cases": 72145589361442816,
+    "pronominal_numbers": 19,
+    "nominal_numbers": 19,
     "numeric_base": 10,
-    "finitivity": 0,
+    "finitivity": 3,
     "determiner_before_noun": true,
     "noun_classes": [
       [
@@ -458,18 +458,18 @@
     "personal_conjugation": true,
     "third_person_personal_pronouns": true,
     "formality": false,
-    "contraction": false,
+    "contraction": true,
     "obligate_contraction": false,
     "explicit_copula": true,
     "ser_estar_distinction": false,
     "part_of_speech_morphology": true,
     "tenses": 3,
     "aspect": 65,
-    "mood": 265,
+    "mood": 297,
     "has_verbal_voice": true,
     "double_negatives_are_positive": true,
     "reduplication": false,
-    "has_augmentative": false,
+    "has_augmentative": true,
     "has_diminutive": true,
     "evidentials": 0
   },
@@ -481,29 +481,29 @@
     "front_rounded_vowels": true,
     "back_unrounded_vowels": false,
     "schwa": false,
-    "reduction": true,
-    "accent_system": "ContrastiveStress",
-    "plosive_series_count": 4,
+    "reduction": false,
+    "accent_system": "ContrastivePitch",
+    "plosive_series_count": 3,
     "fricative_voicedness_distinction": false,
     "nasal_voicedness_distinction": false,
     "has_laterals": true,
     "has_phonemic_diphthongs": true,
     "has_phonetic_diphthongs": false,
-    "basic_vowel_count": 6,
+    "basic_vowel_count": 8,
     "has_glottal": true,
     "has_uvular": false,
     "has_labiodental": true,
     "has_linguodental": false,
     "has_retroflex_or_postalveolar": false,
-    "has_palatal": false,
+    "has_palatal": true,
     "has_labial": true,
     "has_velar": true,
     "has_pharyngeal_or_epiglottal": false,
     "has_vibrants": true,
     "gemination": true,
-    "palatalization": true,
-    "velarization": true,
-    "labialization": true,
+    "palatalization": false,
+    "velarization": false,
+    "labialization": false,
     "emphatics": false,
     "mora_timed": true
   }

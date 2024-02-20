@@ -495,7 +495,7 @@
     "has_labiodental": true,
     "has_linguodental": false,
     "has_retroflex_or_postalveolar": false,
-    "has_palatal": false,
+    "has_palatal": true,
     "has_labial": true,
     "has_velar": true,
     "has_pharyngeal_or_epiglottal": false,

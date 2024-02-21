@@ -14,9 +14,10 @@ fn main() {
     let lang2: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Latin.json").unwrap()).unwrap();
     let lang3: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Old_Frisian.json").unwrap()).unwrap();
     let lang4: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Ancient_Greek.json").unwrap()).unwrap();
+    let lang5: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Gothic.json").unwrap()).unwrap();
 
     let mut model: BinaryTree = BinaryTree {
-        val: vec![get_node_from_languoid(Box::new(lang.clone())), get_node_from_languoid(Box::new(lang2.clone())), get_node_from_languoid(Box::new(lang3.clone())), get_node_from_languoid(Box::new(lang4.clone()))],
+        val: vec![get_node_from_languoid(Box::new(lang.clone())), get_node_from_languoid(Box::new(lang2.clone())), get_node_from_languoid(Box::new(lang3.clone())), get_node_from_languoid(Box::new(lang4.clone())), get_node_from_languoid(Box::new(lang5.clone()))],
     };
 
     model.naive_minimum_distance_model();

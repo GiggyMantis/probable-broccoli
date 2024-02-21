@@ -40,13 +40,14 @@ impl BinaryTree {
                 j in i+1..self.val.len()
             {
                 let this_match_value = compare::compare(self.val[i].clone(), self.val[j].clone());
+                // println!("Testing {} and {}. Distance = {}", i, j, this_match_value);
                 if this_match_value < best_match_value {
                     best_match_value = this_match_value;
                     best_match = (i,j);
                 }
             }
         }
-        println!("{} {}", best_match.0, best_match.1);
+        println!("Joining {} and {}. Distance = {}", best_match.0, best_match.1, best_match_value);
         self.combine(best_match.0, best_match.1, age_of_common_ancestor(best_match_value, self.val[best_match.0].year(), self.val[best_match.1].year()));
     }
 

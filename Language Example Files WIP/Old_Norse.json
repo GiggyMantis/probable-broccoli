@@ -1,65 +1,65 @@
 {
-  "languoid_name": "Gothic",
-  "year": 250,
+  "languoid_name": "Old Norse",
+  "year": 700,
   "leipzig_jakarta_list": [
     [
-      "ɸoːn",
-      3
-    ],
-    [
-      "nˈasa",
-      1
-    ],
-    [
-      "ɡˈaŋɡan",
-      0
-    ],
-    [
-      "wˈatoː",
-      3
-    ],
-    [
-      "munθs",
+      "eldr",
       2
     ],
     [
-      "tˈunɡoː",
-      1
-    ],
-    [
-      "bloːθ",
+      "nef",
       3
     ],
     [
-      "bain",
+      "ɡˈaŋɡa",
+      0
+    ],
+    [
+      "watn",
       3
     ],
     [
-      "θu",
-      0
+      "munnr",
+      2
     ],
     [
-      "wɔrts",
+      "tˈuŋɡa",
       1
     ],
     [
-      "kʷˈiman",
-      0
-    ],
-    [
-      "brusts",
-      1
-    ],
-    [
-      "riɡn",
+      "bloːð",
       3
     ],
     [
-      "ik",
+      "bejn",
+      3
+    ],
+    [
+      "θuː",
       0
     ],
     [
-      "nˈamoː",
+      "roːt",
+      1
+    ],
+    [
+      "kˈoma",
+      0
+    ],
+    [
+      "brjoːst",
+      3
+    ],
+    [
+      "reɡn",
+      3
+    ],
+    [
+      "ek",
+      0
+    ],
+    [
+      "nafn",
       3
     ],
     [
@@ -67,27 +67,27 @@
       1
     ],
     [
-      "ɸˈiθra",
-      1
-    ],
-    [
-      "mims",
-      3
-    ],
-    [
-      "arms",
+      "wɛːŋɡr",
       2
     ],
     [
-      "ɸliˈugo",
+      "kjɒnt",
       3
     ],
     [
-      "nahts",
+      "armr",
+      2
+    ],
+    [
+      "fljˈuːga",
+      3
+    ],
+    [
+      "noːtt",
       1
     ],
     [
-      "ˈɔːsoː",
+      "ˈejra",
       3
     ],
     [
@@ -95,111 +95,111 @@
       2
     ],
     [
-      "ɸˈɛrra",
+      "fjˈarri",
       0
     ],
     [
-      "gaskˈapjan",
+      "gˈera",
       0
     ],
     [
-      "rasn",
+      "huːs",
       3
     ],
     [
-      "stɛːns",
+      "stɛjn",
       2
     ],
     [
-      "bɛːtrs",
+      "bitr",
       0
     ],
     [
-      "kʷˈiθan",
+      "sˈegja",
       0
     ],
     [
-      "tˈunθus",
-      2
+      "tɒnnn",
+      1
     ],
     [
-      "skuɸta",
+      "haːr",
       3
     ],
     [
-      "mˈikils",
+      "stoːrr",
       0
     ],
     [
-      "ɛːns",
+      "ɛjnn",
       0
     ],
     [
-      "ʍas",
-      2
+      "ʍar",
+      0
     ],
     [
-      "ita",
+      "ðat",
       3
     ],
     [
-      "slahan",
+      "bˈerja",
       0
     ],
     [
-      "ɸoːtus",
+      "leggr",
       2
     ],
     [
-      "hɔrn",
+      "horn",
       3
     ],
     [
-      "sa",
+      "ðˈetta",
+      3
+    ],
+    [
+      "fiskr",
+      2
+    ],
+    [
+      "iː.ɡˈɛr",
+      2
+    ],
+    [
+      "drˈekka",
       0
     ],
     [
-      "ɸisks",
-      2
-    ],
-    [
-      "gˈistradagis",
-      2
-    ],
-    [
-      "drˈinkan",
+      "swartr",
       0
     ],
     [
-      "swarts",
+      "nˈafli",
+      2
+    ],
+    [
+      "stˈanda",
       0
     ],
     [
-      "nˈabala",
-      2
-    ],
-    [
-      "stˈandan",
+      "bˈiːta",
       0
     ],
     [
-      "bˈiːtan",
-      0
-    ],
-    [
-      "baka",
+      "bak",
       2
     ],
     [
-      "winds",
+      "windr",
       2
     ],
     [
-      "rɔːks",
+      "rejkr",
       2
     ],
     [
-      "ʍa",
+      "ʍat",
       0
     ],
     [
@@ -207,19 +207,19 @@
       3
     ],
     [
-      "ada",
+      "egg",
       3
     ],
     [
-      "ɡˈiban",
+      "gˈeva",
       0
     ],
     [
-      "nˈiwjis",
+      "nyːr",
       0
     ],
     [
-      "brˈinnan",
+      "TO BURN - Break",
       0
     ],
     [
@@ -492,7 +492,7 @@
     "basic_vowel_count": 7,
     "has_glottal": true,
     "has_uvular": false,
-    "has_labiodental": false,
+    "has_labiodental": true,
     "has_linguodental": true,
     "has_retroflex_or_postalveolar": false,
     "has_palatal": true,

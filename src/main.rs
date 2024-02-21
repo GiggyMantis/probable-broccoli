@@ -305,6 +305,7 @@ const FINITIVITY_HAS_ARTICLES: u8 = 0x1;
 const FINITIVITY_DEFINITE: u8 = 0x2;
 const FINITIVITY_INDEFINITE: u8 = 0x4;
 const FINITIVITY_PARTITIVE: u8 = 0x8;
+const FINITIVITy_NEGATIVE: u8 = 0x10;
 // Finitivity End
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

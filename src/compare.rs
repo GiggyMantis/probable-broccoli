@@ -85,8 +85,16 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
 
     // Vowels
     phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_MODIFIERS * (lect_a.phonology.vowel_length ^ lect_b.phonology.vowel_length) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_MODIFIERS * (lect_a.phonology.nasal_vowels ^ lect_b.phonology.nasal_vowels) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_MODIFIERS * (lect_a.phonology.rhotic_vowels ^ lect_b.phonology.rhotic_vowels) as u8 as f64;
+  
+    phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.front_rounded_vowels ^ lect_b.phonology.front_rounded_vowels) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.back_unrounded_vowels ^ lect_b.phonology.back_unrounded_vowels) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.schwa ^ lect_b.phonoloy.schwa) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (i16::abs(lect_a.phonology.basic_vowel_count as i16 - lect_b.phonology.basic_vowel_count as i16) as f64);
 
     // TODO: More Phonological Comparison
+    
 
     grammar_distance *= GRAMMAR_MULTIPLIER;
     phonological_distance *= PHONOLOGY_MULTIPLIER;
@@ -94,13 +102,13 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
 }
 
 pub(crate) fn compare(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {
-    if lect_a.val() != None && lect_b.val() != None {
+    if lect_a.val().is_some() && lect_b.val().is_some() {
         return compare_individual(lect_a.val().unwrap(), lect_b.val().unwrap());
     }
-    if lect_a.val() != None {
+    if lect_a.val().is_some() {
         return compare_languoid_and_fam(lect_a, lect_b);
     }
-    if lect_b.val() != None {
+    if lect_b.val().is_some() {
         return compare_languoid_and_fam(lect_b, lect_a);
     }
 

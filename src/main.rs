@@ -2,7 +2,6 @@ use serde::{Serialize, Deserialize};
 use serde_arrays;
 use std::{cell::RefCell, rc::Rc, fs};
 use crate::model::BinaryTree;
-use crate::NounClassCatergories::{Epicene, Feminine, Masculine};
 
 pub mod compare;
 pub mod ipa_mapping;

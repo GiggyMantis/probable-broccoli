@@ -59,7 +59,7 @@ impl BinaryTree {
                 }
             }
         }
-        println!("Joining {} and {}. Distance = {}", best_match.0, best_match.1, best_match_value);
+        // println!("Joining {} and {}. Distance = {}", best_match.0, best_match.1, best_match_value);
         self.combine(best_match.0, best_match.1, age_of_common_ancestor(best_match_value, self.val[best_match.0].year(), self.val[best_match.1].year()));
     }
 

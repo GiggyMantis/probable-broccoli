@@ -162,6 +162,9 @@ pub(crate) fn to_broccoli_sampa(s: &String) -> String {
     }
 
     // TODO: Make the voiceless diacritics work.
+    // TODO: Make aspirates closer to fricatives
+    // TODO: Make e and o colored vowels closer to a colored vowels
+    // TODO: Make geminates work
 
     return ret;
 }

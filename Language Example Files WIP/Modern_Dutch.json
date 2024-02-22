@@ -1,6 +1,6 @@
 {
   "languoid_name": "Dutch",
-  "year": 2000,
+  "year": 1900,
   "leipzig_jakarta_list": [
     [
       "vʏːr",
@@ -455,8 +455,8 @@
     "declensions": false,
     "personal_conjugation": true,
     "third_person_personal_pronouns": true,
-    "formality": false,
-    "contraction": false,
+    "formality": true,
+    "contraction": true,
     "obligate_contraction": true,
     "explicit_copula": true,
     "ser_estar_distinction": false,

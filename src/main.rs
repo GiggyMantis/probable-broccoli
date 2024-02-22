@@ -15,19 +15,20 @@ fn main() {
     let lang3: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Old_Frisian.json").unwrap()).unwrap();
     let lang4: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Ancient_Greek.json").unwrap()).unwrap();
     let lang5: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Gothic.json").unwrap()).unwrap();
+    let lang6: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Old_Norse.json").unwrap()).unwrap();
+    let lang7: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Modern_Dutch.json").unwrap()).unwrap();
 
     let mut model: BinaryTree = BinaryTree {
-        val: vec![get_node_from_languoid(Box::new(lang.clone())), get_node_from_languoid(Box::new(lang2.clone())), get_node_from_languoid(Box::new(lang3.clone())), get_node_from_languoid(Box::new(lang4.clone())), get_node_from_languoid(Box::new(lang5.clone()))],
+        val: vec![get_node_from_languoid(Box::new(lang.clone())), get_node_from_languoid(Box::new(lang2.clone())), get_node_from_languoid(Box::new(lang3.clone())), get_node_from_languoid(Box::new(lang4.clone())), get_node_from_languoid(Box::new(lang5.clone())), get_node_from_languoid(Box::new(lang6.clone())), get_node_from_languoid(Box::new(lang7.clone()))],
     };
 
     model.naive_minimum_distance_model();
 
 
-    println!("{:?}", model);
+    println!("{}", model.get_debug_representation());
     //println!("{}", serde_json::to_string_pretty(&lang.clone()).unwrap());
 
 }
-
 #[derive(Debug, Clone)]
 pub struct TreeNode {
     val: Option<Box<Languoid>>,
@@ -305,7 +306,7 @@ const FINITIVITY_HAS_ARTICLES: u8 = 0x1;
 const FINITIVITY_DEFINITE: u8 = 0x2;
 const FINITIVITY_INDEFINITE: u8 = 0x4;
 const FINITIVITY_PARTITIVE: u8 = 0x8;
-const FINITIVITy_NEGATIVE: u8 = 0x10;
+const FINITIVITY_NEGATIVE: u8 = 0x10;
 // Finitivity End
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

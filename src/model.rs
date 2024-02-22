@@ -8,6 +8,18 @@ pub struct BinaryTree {
     pub(crate) val: Vec<TreeNodeRef>,
 }
 impl BinaryTree {
+    pub fn get_debug_representation(&self) -> String {
+        return Self::get_debug_representation_of_node(self.val.first().unwrap());
+    }
+
+    fn get_debug_representation_of_node(n: &TreeNodeRef) -> String {
+        return if n.val().is_some() {
+            n.val().unwrap().languoid_name
+        } else {
+            format!("({}, {})", Self::get_debug_representation_of_node(&n.left().unwrap()), Self::get_debug_representation_of_node(&n.right().unwrap()))
+        }
+    }
+
     pub fn combine(&mut self, a: usize, b: usize, new_year: i32) {
         let new_node: TreeNode = TreeNode {
             val: None,

@@ -90,7 +90,7 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
   
     phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.front_rounded_vowels ^ lect_b.phonology.front_rounded_vowels) as u8 as f64;
     phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.back_unrounded_vowels ^ lect_b.phonology.back_unrounded_vowels) as u8 as f64;
-    phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.schwa ^ lect_b.phonoloy.schwa) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.schwa ^ lect_b.phonology.schwa) as u8 as f64;
     phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (i16::abs(lect_a.phonology.basic_vowel_count as i16 - lect_b.phonology.basic_vowel_count as i16) as f64);
 
     // TODO: More Phonological Comparison

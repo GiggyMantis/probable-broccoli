@@ -75,7 +75,7 @@
       1
     ],
     [
-      "brˈakkʰiʊm",
+      "hɪr",
       3
     ],
     [
@@ -461,7 +461,7 @@
     "contraction": false,
     "obligate_contraction": false,
     "explicit_copula": true,
-    "ser_estar_distinction": false,
+    "ser_estar_distinction": true,
     "part_of_speech_morphology": true,
     "tenses": 3,
     "aspect": 65,
@@ -489,7 +489,7 @@
     "has_laterals": true,
     "has_phonemic_diphthongs": true,
     "has_phonetic_diphthongs": false,
-    "basic_vowel_count": 6,
+    "basic_vowel_count": 5,
     "has_glottal": true,
     "has_uvular": false,
     "has_labiodental": true,

@@ -21,3 +21,4 @@ Goals for this project:
 # Eventual Plans
 - Use the same MCMC method to establish sound changes to allow for the most accurate results.
 - Note this requires using *cognate lists* instead of *lexical sets* as is currently implemented.
+- Implement a basic comparative method system which auto-identifies phonological changes in hopes of matching languages that are removed by many generations. 

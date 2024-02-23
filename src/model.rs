@@ -8,6 +8,16 @@ pub struct BinaryTree {
     pub(crate) val: Vec<TreeNodeRef>,
 }
 impl BinaryTree {
+    pub fn from(folder: str, filepaths: Vec<str>) -> BinaryTree {
+        let mut v = Vec<TreeNodeRef>::new();
+        for fp in filepaths.as_iter() {
+            v.push(get_node_from_languoid(Box::new(serde_json::from_str(&*fs::read_to_string(format!("{}/{}.json", folder, fp)).unwrap()).unwrap())));
+        }
+        return BinaryTree {
+            val: v,
+        };
+    }
+
     pub fn get_debug_representation(&self) -> String {
         return Self::get_debug_representation_of_node(self.val.first().unwrap());
     }

@@ -8,21 +8,7 @@ pub mod ipa_mapping;
 pub mod model;
 
 fn main() {
-
-    let lang: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Old_English.json").unwrap()).unwrap();
-    let lang2: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Latin.json").unwrap()).unwrap();
-    let lang3: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Old_Frisian.json").unwrap()).unwrap();
-    let lang4: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Ancient_Greek.json").unwrap()).unwrap();
-    let lang5: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Gothic.json").unwrap()).unwrap();
-    let lang6: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Old_Norse.json").unwrap()).unwrap();
-    let lang7: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Modern_Dutch.json").unwrap()).unwrap();
-    let lang8: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Afrikaans.json").unwrap()).unwrap();
-    let lang9: Languoid = serde_json::from_str(&*fs::read_to_string("Language Example Files WIP/Old_High_German.json").unwrap()).unwrap();
-
-
-    let mut model: BinaryTree = BinaryTree {
-        val: vec![get_node_from_languoid(Box::new(lang.clone())), get_node_from_languoid(Box::new(lang2.clone())), get_node_from_languoid(Box::new(lang3.clone())), get_node_from_languoid(Box::new(lang4.clone())), get_node_from_languoid(Box::new(lang5.clone())), get_node_from_languoid(Box::new(lang6.clone())), get_node_from_languoid(Box::new(lang7.clone())), get_node_from_languoid(Box::new(lang8.clone())), get_node_from_languoid(Box::new(lang9.clone()))],
-    };
+    let mut model = BinaryTree::from("Languag Examples Files WIP", vec!["Old_English", "Latin", "Old_Frisian", "Ancient_Greek", "Gothic", "Old_Norse", "Modern_Dutch", "Afrikaans", "Old_High_German"]);
 
     model.naive_minimum_distance_model();
 
@@ -344,4 +330,3 @@ enum NounClassCatergories {
     Collective,
     Other(u8),
 }
-

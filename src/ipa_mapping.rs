@@ -1,7 +1,14 @@
+use regex::{Regex};
+
 pub(crate) fn to_broccoli_sampa(s: &String) -> String {
+    let mut formatted_string = s;
+    // Gemination
+    for r in Regex::new(r"(.)ː").unwrap().captures_iter(formatted_string).unwrap() {
+        formatted_string.replace(r, format!("{}{}", "r,r"));
+    }
+
     let mut ret = String::new();
-    // TODO: Make long diacritic repeat the letter
-    for c in s.chars() {
+    for c in formatted_string.chars() {
         match c {
             'p' => ret.push_str("Lppf"),
             'b' => ret.push_str("Lppv"),
@@ -161,10 +168,12 @@ pub(crate) fn to_broccoli_sampa(s: &String) -> String {
 
     }
 
+    // Gemination Diacritics
+
+
     // TODO: Make the voiceless diacritics work.
     // TODO: Make aspirates closer to fricatives
     // TODO: Make e and o colored vowels closer to a colored vowels
-    // TODO: Make geminates work
 
     return ret;
 }

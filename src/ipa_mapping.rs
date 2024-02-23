@@ -1,10 +1,10 @@
 use regex::{Regex};
 
 pub(crate) fn to_broccoli_sampa(s: &String) -> String {
-    let mut formatted_string = s;
+    let mut formatted_string = s.clone();
     // Gemination
-    for r in Regex::new(r"(.)ː").unwrap().captures_iter(formatted_string).unwrap() {
-        formatted_string.replace(r, format!("{}{}", "r,r"));
+    for r in Regex::new(r"(.)ː").unwrap().captures_iter(&*formatted_string) {
+        formatted_string = formatted_string.replace(&r[0], &*format!("{}{}", &r[1], &r[1]));
     }
 
     let mut ret = String::new();

@@ -1,4 +1,5 @@
-use strsim::{normalized_levenshtein,normalized_damerau_levenshtein};
+use indicatif::ProgressBar;
+use strsim::{normalized_levenshtein, normalized_damerau_levenshtein};
 use crate::*;
 
 // This Module (compare) compares two languages and returns a "distance" score.

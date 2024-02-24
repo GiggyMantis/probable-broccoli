@@ -1,11 +1,7 @@
 use regex::{Regex};
 
 pub(crate) fn to_broccoli_sampa(s: &String) -> String {
-    let mut formatted_string: String = s.clone();
-    // Gemination
-    for r in Regex::new(r"(.)ː").unwrap().captures_iter(formatted_string.clone().as_str()) {
-        formatted_string = formatted_string.replace(&r[0], &*format!("{}{}", &r[1], &r[1]));
-    }
+    let mut formatted_string: String = geminate(s);
 
     let mut ret = String::new();
     for c in formatted_string.chars() {
@@ -175,4 +171,17 @@ pub(crate) fn to_broccoli_sampa(s: &String) -> String {
     // TODO: (maybe) make l closer to w
 
     return ret;
+}
+
+fn geminate(input_string: &String) -> String {
+    let mut output_string = String::new();
+    for current_char in input_string.chars().rev().peekable() {
+        output_string.push(
+            match (current_char, *input_string.chars().rev().peekable().peek().unwrap()) {
+                ('ː', prev) => prev,      //if current char is 'ː', push previous
+                (current, _) => current,  //otherwise, push current
+            }
+        )
+    }
+    return output_string.chars().rev().collect();  //re-reverse the string to be forward again
 }

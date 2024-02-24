@@ -1,5 +1,8 @@
 use std::cmp;
 use std::fs::read_to_string;
+use std::time::Duration;
+use indicatif;
+use indicatif::{ProgressBar, ProgressDrawTarget, ProgressFinish, ProgressStyle};
 use crate::*;
 
 const RATE_OF_LANGUAGE_CHANGE: f32 = 1.0;
@@ -12,7 +15,6 @@ impl BinaryTree {
     pub fn from(folder: &str, filepaths: Vec<&str>) -> BinaryTree {
         let mut v = Vec::<TreeNodeRef>::new();
         for fp in filepaths.iter() {
-            println!("{}/{}.json", folder, fp);
             v.push(get_node_from_languoid(Box::new(serde_json::from_str(&*read_to_string(format!("{}/{}.json", folder, fp)).unwrap()).unwrap())));
         }
         return BinaryTree {
@@ -53,6 +55,15 @@ impl BinaryTree {
     // Iterates one time on the binary tree using the minimum distance model.
     // The two closest languages are joined and returned back to the tree.
     pub fn iterate_minimum_distance_model(&mut self) {
+        let pb = ProgressBar::new(((0.5) * (self.val.len() as f64) * ((self.val.len() - 1) as f64)) as u64);
+        pb.set_style(
+            ProgressStyle::default_bar()
+                .template("{percent:>2}% [{bar}] [{elapsed_precise}] [eta {eta_precise}] {pos:>6}/{len:6} ")
+                .unwrap()
+                .progress_chars("█▓ "),
+        );
+        pb.set_draw_target(ProgressDrawTarget::stderr());
+        pb.set_position(0);
         let mut best_match = (0, 0);
         let mut best_match_value: u16 = u16::MAX;
         for //(i, lang_a) in
@@ -64,13 +75,15 @@ impl BinaryTree {
                 j in i+1..self.val.len()
             {
                 let this_match_value = compare::compare(self.val[i].clone(), self.val[j].clone());
-                println!(" - Testing node {} and node {}.", i, j);
+
+                pb.inc(1);
                 if this_match_value < best_match_value {
                     best_match_value = this_match_value;
                     best_match = (i,j);
                 }
             }
         }
+        pb.finish_and_clear();
         // println!("Joining {} and {}. Distance = {}", best_match.0, best_match.1, best_match_value);
         self.combine(best_match.0, best_match.1, age_of_common_ancestor(best_match_value, self.val[best_match.0].year(), self.val[best_match.1].year()));
     }

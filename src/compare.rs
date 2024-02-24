@@ -25,7 +25,6 @@ const PHONOLOGY_MULTIPLIER_ACCENT : f64 = 1.0;
 
 fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     if lect_a.as_ref() == lect_b.as_ref() {
-        println!("Same langs");
         return 0;
     }
 

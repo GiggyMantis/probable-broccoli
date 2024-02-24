@@ -9,7 +9,7 @@ pub mod ipa_mapping;
 pub mod model;
 
 fn main() {
-    let mut model = BinaryTree::from("Languages", vec!["Old_English", "Latin", "Old_Frisian", "Ancient_Greek", "Gothic", "Old_Norse", "Modern_Dutch", "Afrikaans", "Old_High_German", "Old_Low_German"]);
+    let mut model = BinaryTree::from("Languages", vec!["Old_English", "Latin", "Old_Frisian", "Ancient_Greek", "Gothic", "Old_Norse", "Modern_Dutch", "Afrikaans", "Old_High_German", "Old_Polish"]);
 
     model.naive_minimum_distance_model();
 
@@ -17,7 +17,7 @@ fn main() {
     println!("{}", model.get_debug_representation());
     //println!("{}", serde_json::to_string_pretty(&lang.clone()).unwrap());
 
-    //println!("{}", MOOD_OPTATIVE + MOOD_INDICATIVE + MOOD_IMPERATIVE)
+    //println!("{}", MOOD_IMPERATIVE + MOOD_DECLARATIVE)
 }
 #[derive(Debug, Clone)]
 pub struct TreeNode {
@@ -147,10 +147,6 @@ fn array_str_to_nongendered_array_string(a: [&str; 100]) -> [(String, usize); 10
 
 fn array_str_to_gendered_array_string(a: [(&str, usize); 100]) -> [(String, usize); 100] {
     a.iter().map(|&x| (x.0.to_string(), x.1)).collect::<Vec<(String, usize)>>().try_into().unwrap()
-}
-
-fn has_bitflag(val: &usize, flag: &usize) -> bool {
-    (val & flag) != 0
 }
 
 // #Constants

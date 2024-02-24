@@ -169,6 +169,7 @@ pub(crate) fn to_broccoli_sampa(s: &String) -> String {
     // TODO: Make affricates closer to plosives
     // TODO: Make e and o colored vowels closer to a colored vowels
     // TODO: (maybe) make l closer to w
+    // TODO: Make nasal vowels closer to nasal consonants
 
     return ret;
 }

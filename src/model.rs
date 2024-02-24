@@ -55,15 +55,15 @@ impl BinaryTree {
     // Iterates one time on the binary tree using the minimum distance model.
     // The two closest languages are joined and returned back to the tree.
     pub fn iterate_minimum_distance_model(&mut self) {
-        let pb = ProgressBar::new(((0.5) * (self.val.len() as f64) * ((self.val.len() - 1) as f64)) as u64);
+        let matchups: u64 = ((0.5) * (self.val.len() as f64) * ((self.val.len() - 1) as f64)) as u64;
+        let pb = ProgressBar::new(matchups).with_position(0);
         pb.set_style(
             ProgressStyle::default_bar()
-                .template("{percent:>2}% [{bar}] [{elapsed_precise}] [eta {eta_precise}] {pos:>6}/{len:6} ")
+                .template("{percent:>2}% [{bar}] {pos:>9}/{len:9} [{elapsed_precise}] [ eta {eta} ]")
                 .unwrap()
-                .progress_chars("█▓ "),
+                .progress_chars("█▉▊▋▌▍▎▏  "),
         );
         pb.set_draw_target(ProgressDrawTarget::stderr());
-        pb.set_position(0);
         let mut best_match = (0, 0);
         let mut best_match_value: u16 = u16::MAX;
         for //(i, lang_a) in

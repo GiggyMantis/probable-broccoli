@@ -102,10 +102,7 @@ pub(crate) fn to_broccoli_sampa(s: &String) -> String {
             'ʲ' => ret.push('j'),
             'ʷ' => ret.push('W'),
 
-            '̃' => ret.push('~'),
-            'ː' => ret.push(':'),
-            'ˑ' => ret.push(']'),
-            '̆' => ret.push('['),
+            '̃' => ret.push('n'),
             'ˈ' => ret.push('^'),
             'ˌ' => (),
             '‿' => (),
@@ -157,6 +154,9 @@ pub(crate) fn to_broccoli_sampa(s: &String) -> String {
             '˧' => ret.push('3'),
             '˨' => ret.push('2'),
             '˩' => ret.push('1'),
+
+            '.' => (),
+            ' ' => (),
 
             _ => ret.push(c),
         }

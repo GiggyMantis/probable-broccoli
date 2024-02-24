@@ -1,4 +1,5 @@
 use std::cmp;
+use std::fs::read_to_string;
 use crate::*;
 
 const RATE_OF_LANGUAGE_CHANGE: f32 = 1.0;
@@ -8,10 +9,11 @@ pub struct BinaryTree {
     pub(crate) val: Vec<TreeNodeRef>,
 }
 impl BinaryTree {
-    pub fn from(folder: str, filepaths: Vec<str>) -> BinaryTree {
-        let mut v = Vec<TreeNodeRef>::new();
-        for fp in filepaths.as_iter() {
-            v.push(get_node_from_languoid(Box::new(serde_json::from_str(&*fs::read_to_string(format!("{}/{}.json", folder, fp)).unwrap()).unwrap())));
+    pub fn from(folder: &str, filepaths: Vec<&str>) -> BinaryTree {
+        let mut v = Vec::<TreeNodeRef>::new();
+        for fp in filepaths.iter() {
+            println!("{}/{}.json", folder, fp);
+            v.push(get_node_from_languoid(Box::new(serde_json::from_str(&*read_to_string(format!("{}/{}.json", folder, fp)).unwrap()).unwrap())));
         }
         return BinaryTree {
             val: v,
@@ -62,7 +64,7 @@ impl BinaryTree {
                 j in i+1..self.val.len()
             {
                 let this_match_value = compare::compare(self.val[i].clone(), self.val[j].clone());
-                // println!("Testing {} and {}. Distance = {}", i, j, this_match_value);
+                println!(" - Testing node {} and node {}.", i, j);
                 if this_match_value < best_match_value {
                     best_match_value = this_match_value;
                     best_match = (i,j);
@@ -79,7 +81,9 @@ impl BinaryTree {
     // https://en.wikipedia.org/wiki/Minimum-distance_estimation
     // Does not allow for this: https://en.wikipedia.org/wiki/Language_isolate
     pub fn naive_minimum_distance_model(&mut self) {
+        let original_length = self.val.len();
         while self.val.len() > 1 {
+            println!("Working... Step {} / {}", original_length - self.val.len() + 1, original_length - 1);
             self.iterate_minimum_distance_model();
         }
     }

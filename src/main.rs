@@ -1,6 +1,7 @@
 use serde::{Serialize, Deserialize};
 use serde_arrays;
 use std::{cell::RefCell, rc::Rc, fs};
+use std::fs::read_to_string;
 use crate::model::BinaryTree;
 
 pub mod compare;
@@ -8,7 +9,7 @@ pub mod ipa_mapping;
 pub mod model;
 
 fn main() {
-    let mut model = BinaryTree::from("Languag Examples Files WIP", vec!["Old_English", "Latin", "Old_Frisian", "Ancient_Greek", "Gothic", "Old_Norse", "Modern_Dutch", "Afrikaans", "Old_High_German"]);
+    let mut model = BinaryTree::from("Languages", vec!["Old_English", "Latin", "Old_Frisian", "Ancient_Greek", "Gothic", "Old_Norse", "Modern_Dutch", "Afrikaans", "Old_High_German"]);
 
     model.naive_minimum_distance_model();
 
@@ -16,7 +17,7 @@ fn main() {
     println!("{}", model.get_debug_representation());
     //println!("{}", serde_json::to_string_pretty(&lang.clone()).unwrap());
 
-    println!("{}", MOOD_OPTATIVE + MOOD_INDICATIVE + MOOD_IMPERATIVE)
+    //println!("{}", MOOD_OPTATIVE + MOOD_INDICATIVE + MOOD_IMPERATIVE)
 }
 #[derive(Debug, Clone)]
 pub struct TreeNode {

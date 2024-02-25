@@ -9,7 +9,7 @@ pub mod ipa_mapping;
 pub mod model;
 
 fn main() {
-    let mut model = BinaryTree::from("Languages", vec!["Old_English", "Latin", "Old_Frisian", "Ancient_Greek", "Gothic", "Old_Norse", "Modern_Dutch", "Afrikaans", "Old_High_German", "Old_Polish", "Old_Irish"]);
+    let mut model = BinaryTree::from("Languages", vec!["Old_English", "Latin", "Old_Frisian", "Ancient_Greek", "Gothic", "Old_Norse", "Modern_Dutch", "Afrikaans", "Old_High_German", "Old_Polish", "Old_Irish", "Old_Czech"]);
 
     model.naive_minimum_distance_model();
 
@@ -17,7 +17,7 @@ fn main() {
     println!("{}", model.get_debug_representation());
     //println!("{}", serde_json::to_string_pretty(&lang.clone()).unwrap());
 
-    //println!("{}", MOOD_INDICATIVE + MOOD_SUBJUNCTIVE + MOOD_CONDITIONAL + MOOD_IMPERATIVE)
+    //println!("{}", MOOD_INDICATIVE + MOOD_IMPERATIVE)
 }
 #[derive(Debug, Clone)]
 pub struct TreeNode {

@@ -17,7 +17,7 @@ fn main() {
     println!("{}", model.get_debug_representation());
     //println!("{}", serde_json::to_string_pretty(&lang.clone()).unwrap());
 
-    //println!("{}", MOOD_IMPERATIVE + MOOD_DECLARATIVE)
+    //println!("{}", MOOD_INDICATIVE + MOOD_SUBJUNCTIVE + MOOD_CONDITIONAL + MOOD_IMPERATIVE)
 }
 #[derive(Debug, Clone)]
 pub struct TreeNode {
@@ -208,7 +208,7 @@ const CASE_SOCIATIVE: u64 = 0x10000000000000;
 const CASE_SUBSTITUTIVE: u64 = 0x20000000000000;
 const CASE_PARTITIVE: u64 = 0x40000000000000;
 const CASE_PREPOSITIONAL: u64 = 0x80000000000000;
-const CASE_VOCATIVE: u64 = 0x100000000000000;
+const CASE_VOCATIVE_OR_EMPHATIC: u64 = 0x100000000000000;
 const CASE_ADVERBIAL: u64 = 0x200000000000000;
 const CASE_COMPARATIVE: u64 = 0x400000000000000;
 const CASE_EXESSIVE: u64 = 0x800000000000000;

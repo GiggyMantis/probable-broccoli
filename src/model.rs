@@ -34,6 +34,50 @@ impl BinaryTree {
         }
     }
 
+    pub fn get_svg_representation(&self, connections: Vec<(usize, usize, i32)) -> svg::Document {
+        dendrogram::generate(
+            TreeKeyString {
+                get_languoid_names_and_years,
+                connections,
+            };
+        )
+    }
+
+    pub fn get_languoid_names_and_years(&self) -> Vec<(String, i32)> {
+        let mut ret: Vec<(String, i32)> = Vec::new();
+        let mut todo_list: Vec<TreeNodeRef> = Vec::new();
+        todo_list.push(self.val[0]);
+        while (todo_list.len > 0) {
+            let tuple = get_children(todo_list.pop().unwrap());
+            if tuple.0.is_some() {
+                ret.push(tuple.0.clone());
+            }
+            if tuple.1.is_some() {
+                todo_list.push(tuple.1.clone());
+            }
+            if tuple.2.is_some() {
+                todo_list.push(tuple.2.clone());
+            }
+        } 
+
+        ret
+    }
+
+    fn get_children(t: TreeNodeRef) -> (Option<(String, i32)>, Option<TreeNodeRef>, Option<TreeNodeRef>) {
+        let mut ret = (Option<(String, i32)>, Option<TreeNodeRef>, Option<TreeNodeRef>); 
+        if t.val().is_some() {
+            ret.0 = Some(t.val().unwrap().languoid_name, t.val().unwrap().year);
+        }
+        if t.left().is_some() {
+            ret.1 = t.left().unwrap();
+        }
+        if t.right().is_some() {
+            ret.2 = t.right().unwrap();
+        }
+        
+        ret
+    }
+
     pub fn combine(&mut self, a: usize, b: usize, new_year: i32) {
         let new_node: TreeNode = TreeNode {
             val: None,
@@ -54,17 +98,17 @@ impl BinaryTree {
 
     // Iterates one time on the binary tree using the minimum distance model.
     // The two closest languages are joined and returned back to the tree.
-    pub fn iterate_minimum_distance_model(&mut self) {
+    pub fn iterate_minimum_distance_model(&mut self) -> (usize, usize, i32) {
         let matchups: u64 = ((0.5) * (self.val.len() as f64) * ((self.val.len() - 1) as f64)) as u64;
         let pb = ProgressBar::new(matchups).with_position(0);
         pb.set_style(
             ProgressStyle::default_bar()
-                .template("{percent:>2}% [{bar}] {pos:>9}/{len:9} [{elapsed_precise}] [ eta {eta} ]")
+        //        .template("{percent:>2}% [{bar}] {pos:>9}/{len:9} [{elapsed_precise}] [ eta {eta} ]")
                 .unwrap()
                 .progress_chars("█▉▊▋▌▍▎▏  "),
         );
         pb.set_draw_target(ProgressDrawTarget::stderr());
-        let mut best_match = (0, 0);
+        let mut best_match = (0usize, 0usize);
         let mut best_match_value: u16 = u16::MAX;
         for //(i, lang_a) in
             //self.val.into_iter().rev().skip(1).rev() // For every node in the tree except the last one
@@ -86,6 +130,8 @@ impl BinaryTree {
         pb.finish_and_clear();
         // println!("Joining {} and {}. Distance = {}", best_match.0, best_match.1, best_match_value);
         self.combine(best_match.0, best_match.1, age_of_common_ancestor(best_match_value, self.val[best_match.0].year(), self.val[best_match.1].year()));
+        
+        (best_match.0, best_match.1, age_of_common_ancestor(age_of_common_ancestor(best_match_value, self.val[best_match.0].year(), self.val[best_match.1].year())))
     }
 
     // Naive Minimum Distance Model
@@ -93,12 +139,15 @@ impl BinaryTree {
     // this approach assumes all languages are related, which may be false in the case of conlangs and is debated in the case of natural languages.
     // https://en.wikipedia.org/wiki/Minimum-distance_estimation
     // Does not allow for this: https://en.wikipedia.org/wiki/Language_isolate
-    pub fn naive_minimum_distance_model(&mut self) {
+    pub fn naive_minimum_distance_model(&mut self) -> Vec<(usize, usize, i32)> {
+        let mut ret: Vec<(usize, usize)> = Vec::new();
         let original_length = self.val.len();
         while self.val.len() > 1 {
             println!("Working... Step {} / {}", original_length - self.val.len() + 1, original_length - 1);
-            self.iterate_minimum_distance_model();
+            ret.push(self.iterate_minimum_distance_model());
         }
+
+        ret
     }
 
     // TODO: Chronic Minimum Distance Model

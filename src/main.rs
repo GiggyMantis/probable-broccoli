@@ -19,6 +19,8 @@ fn main() {
 
     //println!("{}", MOOD_INDICATIVE + MOOD_CONDITIONAL + MOOD_IMPERATIVE)
 }
+
+// TODO: Prevent potential memory leak by creating functions to check for infinite loops
 #[derive(Debug, Clone)]
 pub struct TreeNode {
     val: Option<Box<Languoid>>,

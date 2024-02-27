@@ -1,10 +1,10 @@
-using svg::{Document, Path};
+use svg::{Document, Path};
+use svg::node::element::Path;
+use svg::node::element::path::Data;
 
-pub(crate) struct TreeKeyString {
-    pub(crate) languoids: Vec<(String, i32)>,
-    pub(crate) connections: Vec<(usize, usize, i32)>,
-}
 
-pub fn generate(tks: TreeKeyString) -> Document {
+pub fn generate(languoids: Vec<(String, i32)>, connections: Vec<(usize, usize, i32)>) -> Document {
+    let mut ret = Document::new();
 
+    ret
 }

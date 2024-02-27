@@ -36,10 +36,8 @@ impl BinaryTree {
 
     pub fn get_svg_representation(&self, connections: Vec<(usize, usize, i32)) -> svg::Document {
         dendrogram::generate(
-            TreeKeyString {
-                get_languoid_names_and_years,
-                connections,
-            };
+            get_languoid_names_and_years,
+            connections
         )
     }
 

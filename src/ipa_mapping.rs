@@ -1,7 +1,7 @@
 use regex::{Regex};
 
 pub(crate) fn to_broccoli_sampa(s: &String) -> String {
-    let mut formatted_string: String = geminate(&s.replace("r̝", "ʒ˞"));
+    let mut formatted_string: String = geminate(&s.replace("r̝̊", "ʃ˞").replace("r̝", "ʒ˞"));
 
     let mut ret = String::new();
     for c in formatted_string.chars() {
@@ -149,14 +149,17 @@ pub(crate) fn to_broccoli_sampa(s: &String) -> String {
             'ɚ' => ret.push_str("Ctwv@-R"),
             'ɝ' => ret.push_str("Dʔwv@-R"),
 
-            '˥' => ret.push('5'),
-            '˦' => ret.push('4'),
-            '˧' => ret.push('3'),
-            '˨' => ret.push('2'),
-            '˩' => ret.push('1'),
+            '˥' => ret.push('|----'),
+            '˦' => ret.push('|---0'),
+            '˧' => ret.push('|--00'),
+            '˨' => ret.push('|-000'),
+            '˩' => ret.push('|0000'),
 
             '.' => (),
             ' ' => (),
+            '[' => (),
+            ']' => (),
+            '/' => (),
 
             _ => ret.push(c),
         }
@@ -170,10 +173,13 @@ pub(crate) fn to_broccoli_sampa(s: &String) -> String {
     // TODO: Make e and o colored vowels closer to a colored vowels
     // TODO: (maybe) make l closer to w
     // TODO: Make nasal vowels closer to nasal consonants
+    // TODO: Make the rhotic fricatives closer to palatalized trill
+    // TODO: Make "-ized" consonants closer to their modifier
 
     return ret;
 }
 
+// TODO: Make the geminate function properly geminate affricates into plosive+affricate and not affricate+affricate
 fn geminate(input_string: &String) -> String {
     let mut output_string = String::new();
     for current_char in input_string.chars().rev().peekable() {

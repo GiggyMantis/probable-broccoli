@@ -149,11 +149,11 @@ pub(crate) fn to_broccoli_sampa(s: &String) -> String {
             'ɚ' => ret.push_str("Ctwv@-R"),
             'ɝ' => ret.push_str("Dʔwv@-R"),
 
-            '˥' => ret.push('|----'),
-            '˦' => ret.push('|---0'),
-            '˧' => ret.push('|--00'),
-            '˨' => ret.push('|-000'),
-            '˩' => ret.push('|0000'),
+            '˥' => ret.push_str("|----"),
+            '˦' => ret.push_str("|---0"),
+            '˧' => ret.push_str("|--00"),
+            '˨' => ret.push_str("|-000"),
+            '˩' => ret.push_str("|0000"),
 
             '.' => (),
             ' ' => (),

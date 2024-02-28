@@ -179,6 +179,98 @@ pub(crate) fn to_broccoli_sampa(s: &String) -> String {
     return ret;
 }
 
+pub(crate) fn to_binary_vec(s: &String) -> Vec<u16> {
+    let mut ret: Vec<u16> = Vec::new();
+    // TODO: Seperate out modifiers
+    for c in geminate(s).chars() {
+        ret.push(to_binary(c, &""));
+    }
+    ret
+}
+
+pub(crate) fn to_binary(c: &char, modifiers: &str) -> u16 {
+    /* Bitwise Layout of Phonemes (Little Endian)
+        Four Bits - representing this enum [Bilabial, Labiodental, Alveolar/Dental, Retroflex/Postalveolar/Alveolopalatal, Palatal/Palatalalveolar, Velar, Uvular, Pharyngeal/Epiglottal, Glottal]
+        Four Bits - representing this enum [Click, Implosive, Tap, Plosive, Aspirate/Breathy-voiced Plosive, Ejected Plosive, Affricate, Aspirate Affricate, Fricative, Sibilant Fric, Ejected Fricative, Fricative-Trill, Trill, True Sonorant, True Vowel]
+        One Bit   - 0 or 1, representing whether it is labialized (round)
+        One Bit   - 0 or 1, representing whether it is palatalized
+        One Bit   - 0 or 1, representing whether it is velarized
+        One Bit   - 0 or 1, representing whether it is emphatic (uvularized/pharyngealized)
+        One Bit   - 0 or 1, representing whether it is glotallized
+        One Bit   - 0 or 1, representing whether it is lateral
+        One Bit   - 0 or 1, representing whether it is nasal(ized)
+        One Bit   - 0 or 1, representing whether it is rhotic 
+    */
+    let mut ret = 0u16;
+    if "qrɾɽʀʁɹɻɺɚɝ".contains(c) || modifiers.contains('˞') {
+        ret = 1u16;
+    }
+    if "mɱnɳɲŋɴ".contains(c) || modifiers.contains('̃') || modifiers.contains('ⁿ') {
+        ret |= 2u16;
+    }
+    if "ɬɮlɭʎʟɫɺǁ".contains(c) || modifiers.contains('ˡ') {
+        ret |= 4u16;
+    }
+    if "hɦʔ".contains(c) || modifiers.contains('̰') || modifiers.contains('ˀ') {
+        ret |= 8u16;
+    }
+    if "qɢɴʀχʁħʕʛʜʢʡ".contains(c) || modifiers.contains('ˤ') {
+        ret |= 16u16;
+    }
+    if "kɡgŋxɣɰʟɠʍw".contains(c) || modifiers.contains('ˠ') {
+        ret |= 32u16;
+    }
+    if "cɟɲçʝjʎʄɥɕʑ".contains(c) || modifiers.contains('ʲ') {
+        ret |= 64u16;
+    }
+    if "pbmɱʙⱱɸβfvʋʘʍwɥyʉuʊʏøɵoœɞɔɶɒ".contains(c) || modifiers.contains('ʷ') {
+        ret |= 128u16;
+    }
+
+    // ʘǀǃǂǁ (clicks are by default 0 which is why they have no if statement here)
+
+    if "ɓɗʄɠʛ".contains(c) {
+        ret |= 256u16; // 1
+    } else if "ⱱɾɽɺ".contains(c) {
+        ret |= 512u16; // 10
+    } else if "pbtdʈɖcɟkɡgqɢʔʢʡ".contains(c) && modifiers.contains('ʰ') {
+        ret |= 1024u16; // 100
+    } else if "pbtdʈɖcɟkɡgqɢʔʢʡ".contains(c) && modifiers.contains('ʼ') {
+        ret |= 1280u16; // 101
+    } else if "pbtdʈɖcɟkɡgqɢʔʢʡ".contains(c) {
+        ret |= 768u16; // 11
+    } else if "ʧʨʦꭧʤʥʣꭦ".contains(c) && modifiers.contains('ʰ') {
+        ret |= 1792u16; // 111
+    } else if "ʧʨʦꭧʤʥʣꭦ".contains(c) && modifiers.contains('ʼ') {
+        ret |= 2048u16; // 1000
+    } else if "ʧʨʦꭧʤʥʣꭦ".contains(c) {
+        ret |= 1536u16; // 110
+    } else if "ɸβfvθðʂʐçʝxɣχʁħʕhɦɧʜszʃʒɕʑ".contains(c) && modifiers.contains('ʼ') {
+        ret |= 2816u16; // 1011
+    } else if "ɸβfvθðʂʐçʝxɣχʁħʕhɦɧʜ".contains(c) {
+        ret |= 2304u16; // 1001
+    } else if "szʃʒɕʑ".contains(c) {
+        ret |= 2560u16; // 1010
+    } else if "ʙrʀ".contains(c) && modifiers.contains('̝') {
+        ret |= 3072u16; // 1100
+    } else if "ʙrʀ" {
+        ret |= 3328u16; // 1101
+    } else if "mɱnɳɲŋɴʋɹɻjɰlɭʎʟʍwɥ" {
+        ret |= 3584u16; // 1110
+    } else if "iyɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶɑɒ" {
+        ret |= 3840u16; // 1111
+    }
+
+    // Bilabial sounds are by default 0 so they have no if statement here
+    if "ɱⱱfvʋ".contains(c) {
+        ret |= 4096u16; // 1
+    } else if "tdnrɾθðszɹɬɮlǀǃ!|".contains(c) {
+        ret |= 8192u16; // 10
+    } //TODO: continue
+
+    ret
+}
+
 // TODO: Make the geminate function properly geminate affricates into plosive+affricate and not affricate+affricate
 fn geminate(input_string: &String) -> String {
     let mut output_string = String::new();

@@ -191,7 +191,7 @@
       2
     ],
     [
-      "vʲˈatɐr]",
+      "vʲˈatɐr",
       2
     ],
     [
@@ -299,95 +299,95 @@
       0
     ],
     [
-      "TO EAT - Break",
+      "jam",
       0
     ],
     [
-      "bʲɪdrˈo",
+      "bɛdrˈɔ",
       3
     ],
     [
-      "tˈoɫstɨj",
+      "pɫˈɤtɛn",
       0
     ],
     [
-      "dlʲˈinnɨj",
+      "dˈɤɫɐk",
       0
     ],
     [
-      "dutʲ",
+      "dˈuxɐm",
       0
     ],
     [
-      "drʲɪvʲɪsʲˈinə",
-      1
-    ],
-    [
-      "bʲɪʐˈatʲ",
-      0
-    ],
-    [
-      "pˈadətʲ",
-      0
-    ],
-    [
-      "ˈokə",
+      "dɐrvˈɔ",
       3
     ],
     [
-      "pʲˈepʲɪɫ",
-      2
+      "bʲˈaɡɐm",
+      0
     ],
     [
-      "xvost",
-      2
+      "pˈadɐm",
+      0
     ],
     [
-      "sɐbˈakə",
+      "okˈɔ",
+      3
+    ],
+    [
+      "pˈɛpɛɫ",
       1
     ],
     [
-      "pɫˈakətʲ",
-      0
-    ],
-    [
-      "vʲɪzˈatʲ",
-      0
-    ],
-    [
-      "vʲˈidʲɪtʲ",
-      0
-    ],
-    [
-      "sɐɫˈotkʲɪj",
-      0
-    ],
-    [
-      "vʲɪrʲˈɵfkə",
+      "opˈaʃkɐ",
       1
     ],
     [
-      "tʲenʲ",
-      1
+      "kˈuʧɛ",
+      3
     ],
     [
-      "ptax",
-      2
-    ],
-    [
-      "solʲ",
-      1
-    ],
-    [
-      "mˈaɫɨj",
+      "pɫˈaʧɐ",
       0
     ],
     [
-      "ʂɨrˈokʲɪj",
+      "vrˈɤzvɐm",
       0
     ],
     [
-      "zvʲɪzdˈa",
+      "vˈiʒdɐm",
+      0
+    ],
+    [
+      "sɫˈadɐk",
+      0
+    ],
+    [
+      "vɐʒˈɛ",
+      3
+    ],
+    [
+      "sʲˈaŋkɐ",
+      1
+    ],
+    [
+      "ptˈiʦɐ",
+      1
+    ],
+    [
+      "sɔɫ",
+      1
+    ],
+    [
+      "mˈaɫɐk",
+      0
+    ],
+    [
+      "ʃirˈɔk",
+      0
+    ],
+    [
+      "zvɛzdˈa",
       1
     ],
     [
@@ -395,24 +395,24 @@
       0
     ],
     [
-      "ʐˈostkʲɪj",
+      "tvɤrt",
       0
     ],
     [
-      "mɐɫˈotʲ",
+      "mˈaʧkɐm",
       0
     ]
   ],
   "grammar": {
-    "predicate_word_order": "SVO",
+    "predicate_word_order": "XXX",
     "adjective_before_noun": true,
     "prepositions": true,
-    "pronominal_cases": 36116809522348032,
-    "nominal_cases": 36116809522348032,
+    "pronominal_cases": 34393292800,
+    "nominal_cases": 72057628397666304,
     "pronominal_numbers": 17,
     "nominal_numbers": 17,
     "numeric_base": 10,
-    "finitivity": 0,
+    "finitivity": 2,
     "determiner_before_noun": true,
     "noun_classes": [
       [
@@ -454,24 +454,24 @@
       ]
     ],
     "has_inclusive_exclusive_distinction": false,
-    "declensions": true,
+    "declensions": false,
     "personal_conjugation": true,
     "third_person_personal_pronouns": true,
     "formality": false,
-    "contraction": true,
+    "contraction": false,
     "obligate_contraction": false,
     "explicit_copula": false,
     "ser_estar_distinction": false,
     "part_of_speech_morphology": true,
-    "tenses": 2,
-    "aspect": 65,
-    "mood": 25,
+    "tenses": 3,
+    "aspect": 69,
+    "mood": 265,
     "has_verbal_voice": true,
     "double_negatives_are_positive": false,
     "reduplication": false,
     "has_augmentative": false,
     "has_diminutive": true,
-    "evidentials": 0
+    "evidentials": 4
   },
   "phonology": {
     "tone_count": 0,
@@ -479,8 +479,8 @@
     "nasal_vowels": false,
     "rhotic_vowels": false,
     "front_rounded_vowels": false,
-    "back_unrounded_vowels": false,
-    "schwa": true,
+    "back_unrounded_vowels": true,
+    "schwa": false,
     "reduction": true,
     "accent_system": "ContrastiveStress",
     "plosive_series_count": 4,
@@ -489,7 +489,7 @@
     "has_laterals": true,
     "has_phonemic_diphthongs": true,
     "has_phonetic_diphthongs": false,
-    "basic_vowel_count": 5,
+    "basic_vowel_count": 6,
     "has_glottal": false,
     "has_uvular": false,
     "has_labiodental": true,

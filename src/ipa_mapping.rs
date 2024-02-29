@@ -1,4 +1,7 @@
+use std::cmp;
+use simple_matrix::Matrix;
 use regex::{Regex};
+use strsim::{normalized_damerau_levenshtein, normalized_levenshtein};
 
 pub(crate) fn to_broccoli_sampa(s: &String) -> String {
     let mut formatted_string: String = geminate(&s.replace("r̝̊", "ʃ˞").replace("r̝", "ʒ˞"));
@@ -179,17 +182,40 @@ pub(crate) fn to_broccoli_sampa(s: &String) -> String {
     return ret;
 }
 
-pub(crate) fn to_binary_vec(s: &String) -> Vec<u16> {
-    let mut ret: Vec<u16> = Vec::new();
-    // TODO: Seperate out modifiers
-    for c in geminate(s).chars() {
-        ret.push(to_binary(c, &""));
+pub(crate) fn compare(s1: &String, s2: &String) -> f64 {
+    1.0 - normalized_levenshtein(&*format_binary_vec(to_binary_vec(s1)), &*format_binary_vec(to_binary_vec(s2)))
+}
+
+fn format_binary_vec(v: Vec<u32>) -> String {
+    let mut ret = String::new();
+    for i in v.iter().rev() {
+        ret.push_str(&*i.to_string());
     }
     ret
 }
 
-pub(crate) fn to_binary(c: &char, modifiers: &str) -> u16 {
+pub(crate) fn to_binary_vec(s: &String) -> Vec<u32> {
+    let mut ret: Vec<u32> = Vec::new();
+    let mut ch = '\\';
+    let mut mods = String::new();
+    for c in geminate(s).chars() {
+        if "ˈ˩˨˧˦˥ʼʰⁿˡˤˠʲʷ̰̝̊̃˞".contains(c) {
+            mods.push(c);
+            continue;
+        }
+        if ch != '\\' {
+            ret.push(to_binary(ch, &*mods));
+        }
+        ch = c;
+    }
+    ret
+}
+
+pub(crate) fn to_binary(c: char, modifiers: &str) -> u32 {
     /* Bitwise Layout of Phonemes (Little Endian)
+        Rest of Bits store 5digit base-6 tone information. (0 is no tone, then increasing in order of low to high pitch)
+        One Bit   - 0 or 1, representing whether it is stressed (vowels only)
+        One Bit   - 0 or 1, representing whether it is voiced
         Four Bits - representing this enum [Bilabial, Labiodental, Alveolar/Dental, Retroflex/Postalveolar/Alveolopalatal, Palatal/Palatalalveolar, Velar, Uvular, Pharyngeal/Epiglottal, Glottal]
         Four Bits - representing this enum [Click, Implosive, Tap, Plosive, Aspirate/Breathy-voiced Plosive, Ejected Plosive, Affricate, Aspirate Affricate, Fricative, Sibilant Fric, Ejected Fricative, Fricative-Trill, Trill, True Sonorant, True Vowel]
         One Bit   - 0 or 1, representing whether it is labialized (round)
@@ -201,74 +227,113 @@ pub(crate) fn to_binary(c: &char, modifiers: &str) -> u16 {
         One Bit   - 0 or 1, representing whether it is nasal(ized)
         One Bit   - 0 or 1, representing whether it is rhotic 
     */
-    let mut ret = 0u16;
+    let mut ret = 0u32;
     if "qrɾɽʀʁɹɻɺɚɝ".contains(c) || modifiers.contains('˞') {
-        ret = 1u16;
+        ret = 1u32;
     }
     if "mɱnɳɲŋɴ".contains(c) || modifiers.contains('̃') || modifiers.contains('ⁿ') {
-        ret |= 2u16;
+        ret |= 2u32;
     }
     if "ɬɮlɭʎʟɫɺǁ".contains(c) || modifiers.contains('ˡ') {
-        ret |= 4u16;
+        ret |= 4u32;
     }
     if "hɦʔ".contains(c) || modifiers.contains('̰') || modifiers.contains('ˀ') {
-        ret |= 8u16;
+        ret |= 8u32;
     }
     if "qɢɴʀχʁħʕʛʜʢʡ".contains(c) || modifiers.contains('ˤ') {
-        ret |= 16u16;
+        ret |= 16u32;
     }
     if "kɡgŋxɣɰʟɠʍw".contains(c) || modifiers.contains('ˠ') {
-        ret |= 32u16;
+        ret |= 32u32;
     }
     if "cɟɲçʝjʎʄɥɕʑ".contains(c) || modifiers.contains('ʲ') {
-        ret |= 64u16;
+        ret |= 64u32;
     }
     if "pbmɱʙⱱɸβfvʋʘʍwɥyʉuʊʏøɵoœɞɔɶɒ".contains(c) || modifiers.contains('ʷ') {
-        ret |= 128u16;
+        ret |= 128u32;
     }
 
-    // ʘǀǃǂǁ (clicks are by default 0 which is why they have no if statement here)
+    // Clicks are by default 0 which is why they have no if statement here
 
     if "ɓɗʄɠʛ".contains(c) {
-        ret |= 256u16; // 1
+        ret |= 256u32; // 1
     } else if "ⱱɾɽɺ".contains(c) {
-        ret |= 512u16; // 10
+        ret |= 512u32; // 10
     } else if "pbtdʈɖcɟkɡgqɢʔʢʡ".contains(c) && modifiers.contains('ʰ') {
-        ret |= 1024u16; // 100
+        ret |= 1024u32; // 100
     } else if "pbtdʈɖcɟkɡgqɢʔʢʡ".contains(c) && modifiers.contains('ʼ') {
-        ret |= 1280u16; // 101
+        ret |= 1280u32; // 101
     } else if "pbtdʈɖcɟkɡgqɢʔʢʡ".contains(c) {
-        ret |= 768u16; // 11
+        ret |= 768u32; // 11
     } else if "ʧʨʦꭧʤʥʣꭦ".contains(c) && modifiers.contains('ʰ') {
-        ret |= 1792u16; // 111
+        ret |= 1792u32; // 111
     } else if "ʧʨʦꭧʤʥʣꭦ".contains(c) && modifiers.contains('ʼ') {
-        ret |= 2048u16; // 1000
+        ret |= 2048u32; // 1000
     } else if "ʧʨʦꭧʤʥʣꭦ".contains(c) {
-        ret |= 1536u16; // 110
+        ret |= 1536u32; // 110
     } else if "ɸβfvθðʂʐçʝxɣχʁħʕhɦɧʜszʃʒɕʑ".contains(c) && modifiers.contains('ʼ') {
-        ret |= 2816u16; // 1011
+        ret |= 2816u32; // 1011
     } else if "ɸβfvθðʂʐçʝxɣχʁħʕhɦɧʜ".contains(c) {
-        ret |= 2304u16; // 1001
+        ret |= 2304u32; // 1001
     } else if "szʃʒɕʑ".contains(c) {
-        ret |= 2560u16; // 1010
+        ret |= 2560u32; // 1010
     } else if "ʙrʀ".contains(c) && modifiers.contains('̝') {
-        ret |= 3072u16; // 1100
-    } else if "ʙrʀ" {
-        ret |= 3328u16; // 1101
-    } else if "mɱnɳɲŋɴʋɹɻjɰlɭʎʟʍwɥ" {
-        ret |= 3584u16; // 1110
-    } else if "iyɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶɑɒ" {
-        ret |= 3840u16; // 1111
+        ret |= 3072u32; // 1100
+    } else if "ʙrʀ".contains(c) {
+        ret |= 3328u32; // 1101
+    } else if "mɱnɳɲŋɴʋɹɻjɰlɭʎʟʍwɥ".contains(c) {
+        ret |= 3584u32; // 1110
+    } else if "iyɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶɑɒ".contains(c) {
+        ret |= 3840u32; // 1111
     }
 
-    // Bilabial sounds are by default 0 so they have no if statement here
+    // Bilabial sounds are by default 0, so they have no if statement here
     if "ɱⱱfvʋ".contains(c) {
-        ret |= 4096u16; // 1
-    } else if "tdnrɾθðszɹɬɮlǀǃ!|".contains(c) {
-        ret |= 8192u16; // 10
-    } //TODO: continue
+        ret |= 4096u32; // 1
+    } else if "tdnrɾθðszɹɬɮlɫǀǃ!|ɗ".contains(c) {
+        ret |= 8192u32; // 10
+    } else if "ʈɖɳɽʂʐʃʒɻɭ".contains(c) {
+        ret |= 12288u32; // 11
+    } else if "cɟɲçʝjʎɕʑǂʄɥ".contains(c) {
+        ret |= 16384u32; // 100
+    } else if "kɡgŋxɣɰʟɠɧ".contains(c) {
+        ret |= 20480u32; // 101
+    } else if "qɢɴʀχʁʛ".contains(c) {
+        ret |= 24576u32; // 110
+    } else if "ħʕʜʢʡ".contains(c) {
+        ret |= 28672u32; // 111
+    } else if "ʔhɦ".contains(c) {
+        ret |= 32768u32; // 1000
+    }
 
-    ret
+    if !("ptʈckqʔɸfθsʃʂçxχħhɬʘǀǃǂǁʍʜʡɕɧ".contains(c) || modifiers.contains('̊')) {
+        ret |= 65536u32;
+    }
+    if modifiers.contains('ˈ') {
+        ret |= 131072u32;
+    }
+
+    let re = Regex::new(r"[˩˨˧˦˥]").unwrap();
+
+    if !re.is_match(modifiers) {
+        return ret;
+    }
+    let mut alltones = 0u16;
+    let mut power_of_six = 1u16;
+    for i in re.captures_iter(modifiers) {
+        alltones +=
+            match &i[0] {
+                "˩" => 1u16,
+                "˨" => 2u16,
+                "˧" => 3u16,
+                "˦" => 4u16,
+                "˥" => 5u16,
+                _ => 0u16,
+            } * power_of_six;
+        power_of_six *= 6u16;
+    }
+
+    ret + ((alltones as u32) << 18)
 }
 
 // TODO: Make the geminate function properly geminate affricates into plosive+affricate and not affricate+affricate
@@ -284,3 +349,32 @@ fn geminate(input_string: &String) -> String {
     }
     return output_string.chars().rev().collect();  //re-reverse the string to be forward again
 }
+/*
+// https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm
+fn wagner_fischer(s: Vec<u32>, t: Vec<u32>) -> u32 {
+    let mut d: Matrix<u32> = Matrix::new(s.len()+1,t.len()+1);
+
+    for i in 0..s.len()+1 {
+        d.set(i, 0, i as u32);
+    }
+    for j in 0..t.len()+1 {
+        d.set(0, j, j as u32);
+    }
+
+    for j in 0..t.len() {
+        for i in 0..s.len() {
+            let substitution_cost = // s[i] ^ t[j];
+                if s[i] == t[j] {0u32} else {1u32};
+
+            d.set(i+1, j+1, cmp::min(cmp::min(
+                *d.get(i, j+1).unwrap() + 1,
+                *d.get(i+1, j).unwrap() + 1, ),
+                *d.get(i, j).unwrap() + substitution_cost)
+            );
+
+        }
+    }
+
+    return *d.get(s.len(), t.len()).unwrap();
+}
+*/

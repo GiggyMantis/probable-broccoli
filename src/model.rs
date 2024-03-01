@@ -4,7 +4,8 @@ use std::fs::read_to_string;
 use std::time::Duration;
 use indicatif;
 use indicatif::{ProgressBar, ProgressDrawTarget, ProgressFinish, ProgressStyle};
-use crate::*;
+use crate::*; // TODO: Fix this unecessary all import
+use crate::dendrogram::ConnectionTuple;
 
 const RATE_OF_LANGUAGE_CHANGE: f32 = 1.0;
 
@@ -13,6 +14,7 @@ pub struct BinaryTree {
     pub(crate) val: Vec<TreeNodeRef>,
 }
 impl BinaryTree {
+    /// 
     pub fn from(folder: &str, filepaths: Vec<&str>) -> BinaryTree {
         let mut v = Vec::<TreeNodeRef>::new();
         for fp in filepaths.iter() {
@@ -35,7 +37,7 @@ impl BinaryTree {
         }
     }
 
-    pub fn get_svg_representation(&self, connections: Vec<(usize, usize, i32)>) -> svg::Document {
+    pub fn get_svg_representation(&self, connections: Vec<ConnectionTuple>) -> svg::Document {
         dendrogram::generate(
             self.get_languoid_names_and_years(),
             connections
@@ -82,7 +84,7 @@ impl BinaryTree {
 
     // Iterates one time on the binary tree using the minimum distance model.
     // The two closest languages are joined and returned back to the tree.
-    pub fn iterate_minimum_distance_model(&mut self) -> (usize, usize, i32) {
+    pub fn iterate_minimum_distance_model(&mut self) -> ConnectionTuple {
         let matchups: u64 = ((0.5) * (self.val.len() as f64) * ((self.val.len() - 1) as f64)) as u64;
         let pb = ProgressBar::new(matchups).with_position(0);
         pb.set_style(
@@ -120,8 +122,8 @@ impl BinaryTree {
     // this approach assumes all languages are related, which may be false in the case of conlangs and is debated in the case of natural languages.
     // https://en.wikipedia.org/wiki/Minimum-distance_estimation
     // Does not allow for this: https://en.wikipedia.org/wiki/Language_isolate
-    pub fn naive_minimum_distance_model(&mut self) -> Vec<(usize, usize, i32)> {
-        let mut ret: Vec<(usize, usize, i32)> = Vec::new();
+    pub fn naive_minimum_distance_model(&mut self) -> Vec<ConnectionTuple> {
+        let mut ret: Vec<ConnectionTuple> = Vec::new();
         let original_length = self.val.len();
         while self.val.len() > 1 {
             println!("Working... Step {} / {}", original_length - self.val.len() + 1, original_length - 1);

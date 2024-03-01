@@ -1,8 +1,10 @@
+#![crate_name = "probable_broccoli"]
+
 use serde::{Serialize, Deserialize};
 use serde_arrays;
-use std::{cell::RefCell, rc::Rc, fs};
-use std::fs::read_to_string;
+use std::{cell::RefCell, rc::Rc, fs, fs::read_to_string, collections::HashMap};
 use crate::model::BinaryTree;
+use crate::dendrogram::ConnectionTuple;
 
 pub mod compare;
 pub mod ipa_mapping;
@@ -12,7 +14,7 @@ pub mod dendrogram;
 fn main() {
     let mut model = BinaryTree::from("Languages", vec!["Old_English", "Latin", "Old_Frisian", "Ancient_Greek", "Gothic", "Old_Norse", "Modern_Dutch", "Afrikaans", "Old_High_German", "Old_Polish", "Old_Irish", "Old_Czech", "Generic_Romani", "Russian", "Bulgarian"]);
 
-    let connections: Vec<(usize, usize, i32)> = model.naive_minimum_distance_model();
+    let connections: Vec<ConnectionTuple> = model.naive_minimum_distance_model();
 
     println!("{}", model.get_debug_representation());
     println!("{:?}", connections)
@@ -22,7 +24,7 @@ fn main() {
 }
 
 // TODO: Prevent potential memory leak by creating functions to check for infinite loops
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Hash)]
 pub struct TreeNode {
     val: Option<Box<Languoid>>,
     left: Option<TreeNodeRef>,
@@ -36,24 +38,43 @@ trait TreeNodeTrait {
     fn right(&self) -> Option<TreeNodeRef>;
     fn left(&self) -> Option<TreeNodeRef>;
     fn year(&self) -> i32;
+    fn check_for_loops(&self) -> bool;
 }
 
 impl TreeNodeTrait for TreeNodeRef {
+    /// Returns the Languoid, if a languoid is associated with this node at all.
     fn val(&self) -> Option<Box<Languoid>> {
         <RefCell<TreeNode> as Clone>::clone(self).into_inner().val
     }
+    /// Returns the TreeNodeRef that is down and right in the binary tree.
     fn right(&self) -> Option<TreeNodeRef> {
         <RefCell<TreeNode> as Clone>::clone(self).into_inner().right
     }
+    /// Returns the TreeNodeRef that is down and left in the binary tree.
     fn left(&self) -> Option<TreeNodeRef> {
         <RefCell<TreeNode> as Clone>::clone(self).into_inner().left
     }
+    /// Returns the year of thre TreeNodeRef.
     fn year(&self) -> i32 {
         <RefCell<TreeNode> as Clone>::clone(self).into_inner().year
+    }
+    /// Returns true if the TreeNodeRef is recursive at any point in its branch.
+    /// This helps prevent memory leaks.
+    fn check_for_loops(&self) -> bool {
+        let mut tree_search_stack: Vec<TreeNodeRef> = Vec::new().push(self.clone());
+        let mut all_nodes = collections::HashMap::new();
+        while tree_search_stack.len() != 0 {
+            let ns = tree_search_stack.pop();
+            if all_nodes.insert(ns, true).is_some() {
+                return true;
+            }
+        }
+        false
     }
 
 }
 
+/// Creates a *new* TreeNodeRef (not already in the tree) using the languoid *l*.
 fn get_node_from_languoid(l: Box<Languoid>) -> TreeNodeRef {
     return Rc::new(RefCell::new(TreeNode {
         year: l.year.clone(),
@@ -63,7 +84,7 @@ fn get_node_from_languoid(l: Box<Languoid>) -> TreeNodeRef {
     }));
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Hash)]
 struct Languoid {
     languoid_name: String,
     year: i32,
@@ -73,7 +94,7 @@ struct Languoid {
     phonology: Phonology,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Hash)]
 pub struct Grammar {
     predicate_word_order: String,
     adjective_before_noun: bool,
@@ -108,7 +129,7 @@ pub struct Grammar {
     evidentials: i32,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Hash)]
 pub struct Phonology {
     tone_count: u8,
     vowel_length: bool,
@@ -155,147 +176,147 @@ fn array_str_to_gendered_array_string(a: [(&str, usize); 100]) -> [(String, usiz
 // #Constants
 
 // Cases Start
-const CASE_ADESSIVE: u64 = 0x1;
-const CASE_ANTESSIVE: u64 = 0x2;
-const CASE_ADUPESSIVE: u64 = 0x4;
-const CASE_INESSIVE: u64 = 0x8;
-const CASE_INTRATIVE: u64 = 0x10;
-const CASE_LOCATIVE: u64 = 0x20;
-const CASE_PERTINGENT: u64 = 0x40;
-const CASE_POSTESSIVE: u64 = 0x80;
-const CASE_SUBESSIVE: u64 = 0x100;
-const CASE_SUPERESSIVE: u64 = 0x200;
-const CASE_ABLATIVE: u64 = 0x400;
-const CASE_ADELATIVE: u64 = 0x800;
-const CASE_DELATIVE: u64 = 0x1000;
-const CASE_EGRESSIVE: u64 = 0x2000;
-const CASE_ELATIVE: u64 = 0x4000;
-const CASE_INITIATIVE: u64 = 0x8000;
-const CASE_POSTELATIVE: u64 = 0x10000;
-const CASE_ALLATIVE: u64 = 0x20000;
-const CASE_ILLATIVE: u64 = 0x40000;
-const CASE_LATIVE: u64 = 0x80000;
-const CASE_SUBLATIVE: u64 = 0x100000;
-const CASE_SUPERLATIVE: u64 = 0x200000;
-const CASE_TERMINATIVE: u64 = 0x400000;
-const CASE_PERLATIVE: u64 = 0x800000;
-const CASE_PROLATIVE: u64 = 0x1000000;
-const CASE_ACCUSATIVE: u64 = 0x2000000;
-const CASE_ESSIVE: u64 = 0x4000000;
-const CASE_LIMITATIVE: u64 = 0x8000000;
-const CASE_TEMPORAL: u64 = 0x10000000;
-const CASE_ABSOLUTIVE: u64 = 0x20000000;
-const CASE_AGENTIVE: u64 = 0x40000000;
-const CASE_DIRECT: u64 = 0x80000000;
-const CASE_ERGATIVE: u64 = 0x100000000;
-const CASE_INSTRUCTIVE: u64 = 0x200000000;
-const CASE_INSTRUMENTAL: u64 = 0x400000000;
-const CASE_NOMINATIVE: u64 = 0x800000000;
-const CASE_OBLIQUE: u64 = 0x1000000000;
-const CASE_INTRANSITIVE: u64 = 0x2000000000;
-const CASE_PEGATIVE: u64 = 0x4000000000;
-const CASE_AVERSISVE: u64 = 0x8000000000;
-const CASE_BENEFACTIVE: u64 = 0x10000000000;
-const CASE_CARITATIVE: u64 = 0x20000000000;
-const CASE_CAUSAL: u64 = 0x40000000000;
-const CASE_COMITATIVE: u64 = 0x80000000000;
-const CASE_DATIVE: u64 = 0x100000000000;
-const CASE_DISTRIBUTIVE: u64 = 0x200000000000;
-const CASE_GENITIVE: u64 = 0x400000000000;
-const CASE_ORNATIVE: u64 = 0x800000000000;
-const CASE_POSSESSED: u64 = 0x1000000000000;
-const CASE_POSSESSIVE: u64 = 0x2000000000000;
-const CASE_ABESSIVE: u64 = 0x4000000000000;
-const CASE_SEMBLATIVE: u64 = 0x8000000000000;
-const CASE_SOCIATIVE: u64 = 0x10000000000000;
-const CASE_SUBSTITUTIVE: u64 = 0x20000000000000;
-const CASE_PARTITIVE: u64 = 0x40000000000000;
-const CASE_ADPOSITIONAL: u64 = 0x80000000000000;
-const CASE_VOCATIVE_OR_EMPHATIC: u64 = 0x100000000000000;
-const CASE_ADVERBIAL: u64 = 0x200000000000000;
-const CASE_COMPARATIVE: u64 = 0x400000000000000;
-const CASE_EXESSIVE: u64 = 0x800000000000000;
-const CASE_ORIENTATIVE: u64 = 0x1000000000000000;
-const CASE_REVERTIVE: u64 = 0x2000000000000000;
-const CASE_TRANSLATIVE: u64 = 0x4000000000000000;
-const CASE_REFLEXIVE: u64 = 0x8000000000000000;
+const _CASE_ADESSIVE: u64 = 0x1;
+const _CASE_ANTESSIVE: u64 = 0x2;
+const _CASE_ADUPESSIVE: u64 = 0x4;
+const _CASE_INESSIVE: u64 = 0x8;
+const _CASE_INTRATIVE: u64 = 0x10;
+const _CASE_LOCATIVE: u64 = 0x20;
+const _CASE_PERTINGENT: u64 = 0x40;
+const _CASE_POSTESSIVE: u64 = 0x80;
+const _CASE_SUBESSIVE: u64 = 0x100;
+const _CASE_SUPERESSIVE: u64 = 0x200;
+const _CASE_ABLATIVE: u64 = 0x400;
+const _CASE_ADELATIVE: u64 = 0x800;
+const _CASE_DELATIVE: u64 = 0x1000;
+const _CASE_EGRESSIVE: u64 = 0x2000;
+const _CASE_ELATIVE: u64 = 0x4000;
+const _CASE_INITIATIVE: u64 = 0x8000;
+const _CASE_POSTELATIVE: u64 = 0x10000;
+const _CASE_ALLATIVE: u64 = 0x20000;
+const _CASE_ILLATIVE: u64 = 0x40000;
+const _CASE_LATIVE: u64 = 0x80000;
+const _CASE_SUBLATIVE: u64 = 0x100000;
+const _CASE_SUPERLATIVE: u64 = 0x200000;
+const _CASE_TERMINATIVE: u64 = 0x400000;
+const _CASE_PERLATIVE: u64 = 0x800000;
+const _CASE_PROLATIVE: u64 = 0x1000000;
+const _CASE_ACCUSATIVE: u64 = 0x2000000;
+const _CASE_ESSIVE: u64 = 0x4000000;
+const _CASE_LIMITATIVE: u64 = 0x8000000;
+const _CASE_TEMPORAL: u64 = 0x10000000;
+const _CASE_ABSOLUTIVE: u64 = 0x20000000;
+const _CASE_AGENTIVE: u64 = 0x40000000;
+const _CASE_DIRECT: u64 = 0x80000000;
+const _CASE_ERGATIVE: u64 = 0x100000000;
+const _CASE_INSTRUCTIVE: u64 = 0x200000000;
+const _CASE_INSTRUMENTAL: u64 = 0x400000000;
+const _CASE_NOMINATIVE: u64 = 0x800000000;
+const _CASE_OBLIQUE: u64 = 0x1000000000;
+const _CASE_INTRANSITIVE: u64 = 0x2000000000;
+const _CASE_PEGATIVE: u64 = 0x4000000000;
+const _CASE_AVERSISVE: u64 = 0x8000000000;
+const _CASE_BENEFACTIVE: u64 = 0x10000000000;
+const _CASE_CARITATIVE: u64 = 0x20000000000;
+const _CASE_CAUSAL: u64 = 0x40000000000;
+const _CASE_COMITATIVE: u64 = 0x80000000000;
+const _CASE_DATIVE: u64 = 0x100000000000;
+const _CASE_DISTRIBUTIVE: u64 = 0x200000000000;
+const _CASE_GENITIVE: u64 = 0x400000000000;
+const _CASE_ORNATIVE: u64 = 0x800000000000;
+const _CASE_POSSESSED: u64 = 0x1000000000000;
+const _CASE_POSSESSIVE: u64 = 0x2000000000000;
+const _CASE_ABESSIVE: u64 = 0x4000000000000;
+const _CASE_SEMBLATIVE: u64 = 0x8000000000000;
+const _CASE_SOCIATIVE: u64 = 0x10000000000000;
+const _CASE_SUBSTITUTIVE: u64 = 0x20000000000000;
+const _CASE_PARTITIVE: u64 = 0x40000000000000;
+const _CASE_ADPOSITIONAL: u64 = 0x80000000000000;
+const _CASE_VOCATIVE_OR_EMPHATIC: u64 = 0x100000000000000;
+const _CASE_ADVERBIAL: u64 = 0x200000000000000;
+const _CASE_COMPARATIVE: u64 = 0x400000000000000;
+const _CASE_EXESSIVE: u64 = 0x800000000000000;
+const _CASE_ORIENTATIVE: u64 = 0x1000000000000000;
+const _CASE_REVERTIVE: u64 = 0x2000000000000000;
+const _CASE_TRANSLATIVE: u64 = 0x4000000000000000;
+const _CASE_REFLEXIVE: u64 = 0x8000000000000000;
 // Cases End
 // Aspects Start
-const ASPECT_PERFECTIVE: u32 = 1;
-const ASPECT_MOMENTANE: u32 = 2;
-const ASPECT_PERFECT: u32 = 4;
-const ASPECT_RECENT_PERFECT: u32 = 8;
-const ASPECT_IMPERFECT: u32 = 16;
-const ASPECT_PROSPECTIVE: u32 = 32;
-const ASPECT_IMPERFECTIVE: u32 = 64;
-const ASPECT_HABITUAL: u32 = 128;
-const ASPECT_CONTINUOUS: u32 = 256;
-const ASPECT_PROGRESSIVE: u32 = 512;
-const ASPECT_STATIVE: u32 = 1024;
-const ASPECT_GNOMIC: u32 = 2048;
-const ASPECT_EPISODIC: u32 = 4096;
-const ASPECT_CONTINUATIVE: u32 = 8192;
-const ASPECT_INGRESSIVE: u32 = 0x4000;
-const ASPECT_INCHOACTIVE: u32 = 0x8000;
-const ASPECT_CESSATIVE: u32 = 0x10000;
-const ASPECT_DEFECTIVE: u32 = 0x20000;
-const ASPECT_PAUSATIVE: u32 = 0x40000;
-const ASPECT_RESUMPTIVE: u32 = 0x80000;
-const ASPECT_PUNCTUAL: u32 = 0x100000;
-const ASPECT_DURATIVE: u32 = 0x200000;
-const ASPECT_PROTRACTIVE: u32 = 0x400000;
-const ASPECT_ITERATIVE: u32 = 0x800000;
-const ASPECT_FREQUENTIVE: u32 = 0x1000000;
-const ASPECT_EXPERENTIAL: u32 = 0x2000000;
-const ASPECT_INTENTIONAL: u32 = 0x4000000;
-const ASPECT_ACCIDENTAL: u32 = 0x8000000;
-const ASPECT_INTENSIVE: u32 = 0x10000000;
-const ASPECT_MODERATIVE: u32 = 0x20000000;
-const ASPECT_ATTENUATIVE: u32 = 0x40000000;
-const ASPECT_SEGMENTATIVE: u32 = 0x80000000;
+const _ASPECT_PERFECTIVE: u32 = 1;
+const _ASPECT_MOMENTANE: u32 = 2;
+const _ASPECT_PERFECT: u32 = 4;
+const _ASPECT_RECENT_PERFECT: u32 = 8;
+const _ASPECT_IMPERFECT: u32 = 16;
+const _ASPECT_PROSPECTIVE: u32 = 32;
+const _ASPECT_IMPERFECTIVE: u32 = 64;
+const _ASPECT_HABITUAL: u32 = 128;
+const _ASPECT_CONTINUOUS: u32 = 256;
+const _ASPECT_PROGRESSIVE: u32 = 512;
+const _ASPECT_STATIVE: u32 = 1024;
+const _ASPECT_GNOMIC: u32 = 2048;
+const _ASPECT_EPISODIC: u32 = 4096;
+const _ASPECT_CONTINUATIVE: u32 = 8192;
+const _ASPECT_INGRESSIVE: u32 = 0x4000;
+const _ASPECT_INCHOACTIVE: u32 = 0x8000;
+const _ASPECT_CESSATIVE: u32 = 0x10000;
+const _ASPECT_DEFECTIVE: u32 = 0x20000;
+const _ASPECT_PAUSATIVE: u32 = 0x40000;
+const _ASPECT_RESUMPTIVE: u32 = 0x80000;
+const _ASPECT_PUNCTUAL: u32 = 0x100000;
+const _ASPECT_DURATIVE: u32 = 0x200000;
+const _ASPECT_PROTRACTIVE: u32 = 0x400000;
+const _ASPECT_ITERATIVE: u32 = 0x800000;
+const _ASPECT_FREQUENTIVE: u32 = 0x1000000;
+const _ASPECT_EXPERENTIAL: u32 = 0x2000000;
+const _ASPECT_INTENTIONAL: u32 = 0x4000000;
+const _ASPECT_ACCIDENTAL: u32 = 0x8000000;
+const _ASPECT_INTENSIVE: u32 = 0x10000000;
+const _ASPECT_MODERATIVE: u32 = 0x20000000;
+const _ASPECT_ATTENUATIVE: u32 = 0x40000000;
+const _ASPECT_SEGMENTATIVE: u32 = 0x80000000;
 // Aspects End
 // Moods Start
-const MOOD_INDICATIVE: u32 = 0x1;
-const MOOD_ENERGETIC: u32 = 0x2;
-const MOOD_DECLARATIVE: u32 = 0x4;
-const MOOD_SUBJUNCTIVE: u32 = 0x8;
-const MOOD_CONDITIONAL: u32 = 0x10;
-const MOOD_OPTATIVE: u32 = 0x20;
-const MOOD_JUSSIVE: u32 = 0x40;
-const MOOD_POTENTIAL: u32 = 0x80;
-const MOOD_IMPERATIVE: u32 = 0x100;
-const MOOD_PROHIBITIVE: u32 = 0x200;
-const MOOD_DESIDERATIVE: u32 = 0x400;
-const MOOD_DUBITATIVE: u32 = 0x800;
-const MOOD_HYPOTHETICAL: u32 = 0x1000;
-const MOOD_PRESUMPTIVE: u32 = 0x2000;
-const MOOD_PERMISSIVE: u32 = 0x4000;
-const MOOD_ADMIRATIVE: u32 = 0x8000;
-const MOOD_HORTATIVE: u32 = 0x10000;
-const MOOD_PRECATIVE_VOLITIVE: u32 = 0x20000;
-const MOOD_INFERENTIAL: u32 = 0x40000;
-const MOOD_NECESSITATIVE: u32 = 0x80000;
-const MOOD_INTERROGATIVE: u32 = 0x100000;
-const MOOD_BENEDICTIVE: u32 = 0x200000;
-const MOOD_CONCESSIVE: u32 = 0x400000;
-const MOOD_PRESCRIPTIVE: u32 = 0x800000;
+const _MOOD_INDICATIVE: u32 = 0x1;
+const _MOOD_ENERGETIC: u32 = 0x2;
+const _MOOD_DECLARATIVE: u32 = 0x4;
+const _MOOD_SUBJUNCTIVE: u32 = 0x8;
+const _MOOD_CONDITIONAL: u32 = 0x10;
+const _MOOD_OPTATIVE: u32 = 0x20;
+const _MOOD_JUSSIVE: u32 = 0x40;
+const _MOOD_POTENTIAL: u32 = 0x80;
+const _MOOD_IMPERATIVE: u32 = 0x100;
+const _MOOD_PROHIBITIVE: u32 = 0x200;
+const _MOOD_DESIDERATIVE: u32 = 0x400;
+const _MOOD_DUBITATIVE: u32 = 0x800;
+const _MOOD_HYPOTHETICAL: u32 = 0x1000;
+const _MOOD_PRESUMPTIVE: u32 = 0x2000;
+const _MOOD_PERMISSIVE: u32 = 0x4000;
+const _MOOD_ADMIRATIVE: u32 = 0x8000;
+const _MOOD_HORTATIVE: u32 = 0x10000;
+const _MOOD_PRECATIVE_VOLITIVE: u32 = 0x20000;
+const _MOOD_INFERENTIAL: u32 = 0x40000;
+const _MOOD_NECESSITATIVE: u32 = 0x80000;
+const _MOOD_INTERROGATIVE: u32 = 0x100000;
+const _MOOD_BENEDICTIVE: u32 = 0x200000;
+const _MOOD_CONCESSIVE: u32 = 0x400000;
+const _MOOD_PRESCRIPTIVE: u32 = 0x800000;
 // Moods End
 // Number Start
-const NUM_SINGULAR: u8 = 0x1;
-const NUM_DUAL: u8 = 0x2;
-const NUM_TRIAL: u8 = 0x4;
-const NUM_PAUCAL: u8 = 0x8;
-const NUM_PLURAL: u8 = 0x10;
-const NUM_QUADRAL: u8 = 0x20;
-const NUM_SUPERPLURAL: u8 = 0x40;
-const NUM_DISTRIBUTIVE_PLURAL: u8 = 0x80;
+const _NUM_SINGULAR: u8 = 0x1;
+const _NUM_DUAL: u8 = 0x2;
+const _NUM_TRIAL: u8 = 0x4;
+const _NUM_PAUCAL: u8 = 0x8;
+const _NUM_PLURAL: u8 = 0x10;
+const _NUM_QUADRAL: u8 = 0x20;
+const _NUM_SUPERPLURAL: u8 = 0x40;
+const _NUM_DISTRIBUTIVE_PLURAL: u8 = 0x80;
 // Number End
 // Finitivity Start
-const FINITIVITY_HAS_ARTICLES: u8 = 0x1;
-const FINITIVITY_DEFINITE: u8 = 0x2;
-const FINITIVITY_INDEFINITE: u8 = 0x4;
-const FINITIVITY_PARTITIVE: u8 = 0x8;
-const FINITIVITY_NEGATIVE: u8 = 0x10;
+const _FINITIVITY_HAS_ARTICLES: u8 = 0x1;
+const _FINITIVITY_DEFINITE: u8 = 0x2;
+const _FINITIVITY_INDEFINITE: u8 = 0x4;
+const _FINITIVITY_PARTITIVE: u8 = 0x8;
+const _FINITIVITY_NEGATIVE: u8 = 0x10;
 // Finitivity End
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

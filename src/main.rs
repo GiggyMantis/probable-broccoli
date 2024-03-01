@@ -39,6 +39,7 @@ trait TreeNodeTrait {
     fn left(&self) -> Option<TreeNodeRef>;
     fn year(&self) -> i32;
     fn check_for_loops(&self) -> bool;
+    fn is_family(&self) -> bool;
 }
 
 impl TreeNodeTrait for TreeNodeRef {
@@ -58,6 +59,7 @@ impl TreeNodeTrait for TreeNodeRef {
     fn year(&self) -> i32 {
         <RefCell<TreeNode> as Clone>::clone(self).into_inner().year
     }
+
     /// Returns true if the TreeNodeRef is recursive at any point in its branch.
     /// This helps prevent memory leaks.
     fn check_for_loops(&self) -> bool {
@@ -70,6 +72,15 @@ impl TreeNodeTrait for TreeNodeRef {
             }
         }
         false
+    }
+
+    /// Returns true i the TreeNodeRef is a family, false if it is a lone languoid. 
+    fn is_family(&self) -> bool {
+        if self.val.is_some() {
+            false
+        } else {
+            true
+        }
     }
 
 }

@@ -22,7 +22,7 @@ const PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES : f64 = 1.0;
 const PHONOLOGY_MULTIPLIER_CONSONANTS : f64 = 1.0;
 const PHONOLOGY_MULTIPLIER_ACCENT : f64 = 1.0;
 
-
+/// Compares two individual languoids.
 fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     if lect_a.as_ref() == lect_b.as_ref() {
         return 0;
@@ -102,7 +102,9 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     return (lexicon_distance + grammar_distance + phonological_distance) as u16;
 }
 
-pub(crate) fn compare(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {
+/// Compares two TreeNodeRefs.
+/// Returns the distance away from each other they are, __not__ a similarity.
+pub fn compare(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {
     if lect_a.val().is_some() && lect_b.val().is_some() {
         return compare_individual(lect_a.val().unwrap(), lect_b.val().unwrap());
     }
@@ -116,6 +118,7 @@ pub(crate) fn compare(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {
     return compare_fam_and_fam(lect_a, lect_b);
 }
 
+/// Compares two language families.
 fn compare_fam_and_fam(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {
     let left_distance = compare(lect_a.left().unwrap(), lect_b.clone());
     let right_distance = compare(lect_a.right().unwrap(), lect_b.clone());
@@ -123,10 +126,20 @@ fn compare_fam_and_fam(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {
     (left_distance + right_distance) / 2
 }
 
+/// Compares a language family and a single language.
 fn compare_languoid_and_fam(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {
-    let left_distance = compare(lect_a.clone(), lect_b.left().unwrap());
-    let right_distance = compare(lect_a.clone(), lect_b.right().unwrap());
+    let mut fam: &TreeNodeRef;
+    let mut lang: &TreeNodeRef; 
+    if lect_a.is_family() {
+        fam = &lect_a;
+        lang = &lect_b;
+    } else {
+        fam = &lect_b;
+        lang = &lect_a;
+    }
 
-    (left_distance + right_distance) / 2
+      ( compare(lang.clone(), fam.left().unwrap()) + 
+        compare(lang.clone(), fam.right().unwrap()) )
+        / 2u16
 }
 

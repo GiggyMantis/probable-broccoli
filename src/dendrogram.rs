@@ -19,7 +19,13 @@ trait DendrogramDocumentTrait {
 }
 
 impl DendrogramDocumentTrait for DendrogramDocument {
+    /// Creates a new connection in the DendrogramDocument according to the ConnectionTuple supplied.
     fn connect(&mut self, connection: ConnectionTuple) -> () {
         // TODO: add line(s) connecting the two nodes in the DendrogramDocument
+    }
+
+    /// Populates the starting nodes into the DendrogramDocument.
+    fn populate(&mut self, nodes: Vec<(Sting, i32)>) -> () {
+        // TODO: Populate the DendrogramDocument with the original nodes
     }
 }

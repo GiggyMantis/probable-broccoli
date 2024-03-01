@@ -9,12 +9,11 @@ use crate::dendrogram::ConnectionTuple;
 
 const RATE_OF_LANGUAGE_CHANGE: f32 = 1.0;
 
-#[derive(Debug)]
 pub struct BinaryTree {
     pub(crate) val: Vec<TreeNodeRef>,
 }
 impl BinaryTree {
-    /// 
+    /// Creates a new Binary Tree by importing all of the specified languages from a given folder.
     pub fn from(folder: &str, filepaths: Vec<&str>) -> BinaryTree {
         let mut v = Vec::<TreeNodeRef>::new();
         for fp in filepaths.iter() {
@@ -25,6 +24,7 @@ impl BinaryTree {
         };
     }
 
+    /// 
     pub fn get_debug_representation(&self) -> String {
         return Self::get_debug_representation_of_node(self.val.first().unwrap());
     }
@@ -46,18 +46,18 @@ impl BinaryTree {
 
     pub fn get_languoid_names_and_years(&self) -> Vec<(String, i32)> {
         let mut ret: Vec<(String, i32)> = Vec::new();
-        let mut todo_list: Vec<TreeNodeRef> = Vec::new();
-        todo_list.push(self.val[0].clone());
-        while (todo_list.len() > 0) {
-            let tuple = get_children(todo_list.pop().unwrap());
+        let mut stack: Vec<TreeNodeRef> = Vec::new();
+        stack.push(self.val[0].clone());
+        while (stack.len() > 0) {
+            let tuple = stack.pop().unwrap().get_children();
             if tuple.0.is_some() {
                 ret.push(tuple.0.unwrap());
             }
             if tuple.1.is_some() {
-                todo_list.push(tuple.1.unwrap());
+                stack.push(tuple.1.unwrap());
             }
             if tuple.2.is_some() {
-                todo_list.push(tuple.2.unwrap());
+                stack.push(tuple.2.unwrap());
             }
         } 
 
@@ -160,6 +160,12 @@ impl BinaryTree {
 
 }
 
+impl std::fmt::Debug for BinaryTree {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_fmt(self.get_debug_representation())
+    }
+}
+
 // TODO: Fix... this *waves hands*
 fn age_of_common_ancestor(distance: u16, age_a: i32, age_b: i32) -> i32 {
     let min = cmp::min(age_a, age_b);
@@ -170,13 +176,3 @@ fn age_of_common_ancestor(distance: u16, age_a: i32, age_b: i32) -> i32 {
     cmp::min(min, (RATE_OF_LANGUAGE_CHANGE * -(distance as f32) + (min as f32) - (f32::abs((age_a - age_b) as f32))) as i32)
 }
 
-fn get_children(t: TreeNodeRef) -> (Option<(String, i32)>, Option<TreeNodeRef>, Option<TreeNodeRef>) {
-    (
-        if t.val().is_some() {
-            Some((t.val().unwrap().languoid_name, t.val().unwrap().year))
-        } else {
-            None
-        },
-        t.left(), t.right()
-    )
-}

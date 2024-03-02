@@ -4,6 +4,7 @@ use std::fs::read_to_string;
 use std::time::Duration;
 use indicatif;
 use indicatif::{ProgressBar, ProgressDrawTarget, ProgressFinish, ProgressStyle};
+use serde::Serializer;
 use crate::*; // TODO: Fix this unecessary all import
 use crate::dendrogram::ConnectionTuple;
 
@@ -37,10 +38,10 @@ impl BinaryTree {
         }
     }
 
-    pub fn get_svg_representation(&self, connections: Vec<ConnectionTuple>) -> svg::Document {
+    pub fn get_svg_representation(&self, mut connections: Vec<ConnectionTuple>) -> svg::Document {
         dendrogram::generate(
             self.get_languoid_names_and_years(),
-            connections
+            connections.as_mut()
         )
     }
 
@@ -162,7 +163,7 @@ impl BinaryTree {
 
 impl std::fmt::Debug for BinaryTree {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(self.get_debug_representation())
+        f.serialize_str(&*self.get_debug_representation())
     }
 }
 

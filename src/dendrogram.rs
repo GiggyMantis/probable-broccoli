@@ -1,13 +1,13 @@
 use svg::node::element::{Path, path::Data};
 
 type DendrogramDocument = svg::Document;
-pub(crate) type ConnectionTuple = (usize, usize, i32); // First Index (in stack), Second Index (in stack), Year they should be connected at
+pub type ConnectionTuple = (usize, usize, i32); // First Index (in stack), Second Index (in stack), Year they should be connected at
 
-pub fn generate(languoids: Vec<(String, i32)>, connections: mut Vec<ConnectionTuple>) -> DendrogramDocument {
+pub fn generate(languoids: Vec<(String, i32)>, connections: &mut Vec<ConnectionTuple>) -> DendrogramDocument {
     let mut ret = DendrogramDocument::new();
 
     while connections.len() != 0 {
-        ret.connect(connections.pop());
+        ret.connect(connections.pop().unwrap());
     }
     
     ret
@@ -15,7 +15,7 @@ pub fn generate(languoids: Vec<(String, i32)>, connections: mut Vec<ConnectionTu
 
 trait DendrogramDocumentTrait {
     fn connect(&mut self, connection: ConnectionTuple) -> ();
-    fn populate(&mut self, Vec<(String, i32)>) -> ();
+    fn populate(&mut self, nodes: Vec<(String, i32)>) -> ();
 }
 
 impl DendrogramDocumentTrait for DendrogramDocument {
@@ -25,7 +25,7 @@ impl DendrogramDocumentTrait for DendrogramDocument {
     }
 
     /// Populates the starting nodes into the DendrogramDocument.
-    fn populate(&mut self, nodes: Vec<(Sting, i32)>) -> () {
+    fn populate(&mut self, nodes: Vec<(String, i32)>) -> () {
         // TODO: Populate the DendrogramDocument with the original nodes
     }
 }

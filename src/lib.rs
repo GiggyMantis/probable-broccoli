@@ -7,11 +7,12 @@ pub mod dendrogram;
 
 use serde::{Serialize, Deserialize};
 use serde_arrays;
-use std::{cell::RefCell, rc::Rc, fs, fs::read_to_string, collections::HashMap};
+use std::{cell::RefCell, rc::Rc, fs, fs::read_to_string, collections::HashMap, collections};
+use std::hash::{Hash, Hasher};
 use crate::model::BinaryTree;
 use crate::dendrogram::ConnectionTuple;
 
-#[derive(Debug, Clone, Hash)]
+#[derive(Debug, Clone)]
 pub struct TreeNode {
     val: Option<Box<Languoid>>,
     left: Option<TreeNodeRef>,
@@ -51,20 +52,13 @@ impl TreeNodeTrait for TreeNodeRef {
     /// Returns true if the TreeNodeRef is recursive at any point in its branch.
     /// This helps prevent memory leaks.
     fn check_for_loops(&self) -> bool {
-        let mut tree_search_stack: Vec<TreeNodeRef> = Vec::new().push(self.clone());
-        let mut all_nodes = collections::HashMap::new();
-        while tree_search_stack.len() != 0 {
-            let ns = tree_search_stack.pop();
-            if all_nodes.insert(ns, true).is_some() {
-                return true;
-            }
-        }
+       // TODO: Implement this
         false
     }
 
     /// Returns true i the TreeNodeRef is a family, false if it is a lone languoid. 
     fn is_family(&self) -> bool {
-        if self.val.is_some() {
+        if self.val().is_some() {
             false
         } else {
             true
@@ -95,7 +89,7 @@ fn get_node_from_languoid(l: Box<Languoid>) -> TreeNodeRef {
     }));
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 struct Languoid {
     languoid_name: String,
     year: i32,
@@ -105,7 +99,7 @@ struct Languoid {
     phonology: Phonology,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Grammar {
     predicate_word_order: String,
     adjective_before_noun: bool,
@@ -140,7 +134,7 @@ pub struct Grammar {
     evidentials: i32,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Phonology {
     tone_count: u8,
     vowel_length: bool,

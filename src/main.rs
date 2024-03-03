@@ -15,6 +15,6 @@ fn main() {
     svg::save("image.svg", &doc).unwrap();
 
 
-    //println!("{}", _ASPECT_IMPERFECT | _ASPECT_PERFECTIVE)
+    // println!("{}", _MOOD_INDICATIVE | _MOOD_CONDITIONAL)
 }
 

@@ -355,51 +355,51 @@
       0
     ],
     [
-      "TO SEE - break",
+      "vˈiɟjec",
       0
     ],
     [
-      "ˈslatkɨː",
+      "slˈadkiː",
       0
     ],
     [
-      "pˈoʋraz",
+      "pˈɔvras",
       3
     ],
     [
-      "scˈiːn",
+      "cjˈɛɲ",
       3
     ],
     [
-      "ptaːk",
+      "ftaːk",
       2
     ],
     [
-      "soːl",
+      "sɔʎ",
       1
     ],
     [
-      "mˈaɫɨː",
+      "mˈaliː",
       0
     ],
     [
-      "ʃˈirokɨː",
+      "ʃˈirɔkiː",
       0
     ],
     [
-      "ˈɣʋjɛzda",
+      "ɦvjˈezda",
       1
     ],
     [
-      "ʋ",
+      "v",
       0
     ],
     [
-      "tʋrdɨː",
+      "tvˈrdiː",
       0
     ],
     [
-      "mlˈɛːci",
+      "mʎjec",
       0
     ]
   ],
@@ -407,8 +407,8 @@
     "predicate_word_order": "SVO",
     "adjective_before_noun": true,
     "prepositions": true,
-    "pronominal_cases": 72145606541312032,
-    "nominal_cases": 72145606541312032,
+    "pronominal_cases": 88012503384096,
+    "nominal_cases": 88012503384096,
     "pronominal_numbers": 17,
     "nominal_numbers": 17,
     "numeric_base": 10,
@@ -470,14 +470,14 @@
     "personal_conjugation": true,
     "third_person_personal_pronouns": true,
     "formality": false,
-    "contraction": true,
+    "contraction": false,
     "obligate_contraction": false,
-    "explicit_copula": false,
+    "explicit_copula": true,
     "ser_estar_distinction": false,
     "part_of_speech_morphology": true,
     "tenses": 3,
     "aspect": 65,
-    "mood": 257,
+    "mood": 17,
     "has_verbal_voice": true,
     "double_negatives_are_positive": true,
     "reduplication": false,
@@ -494,15 +494,15 @@
     "back_unrounded_vowels": false,
     "schwa": false,
     "reduction": false,
-    "accent_system": "ContrastiveStress",
+    "accent_system": "SystemicStress",
     "plosive_series_count": 4,
     "fricative_voicedness_distinction": true,
     "nasal_voicedness_distinction": false,
     "has_laterals": true,
     "has_phonemic_diphthongs": true,
-    "has_phonetic_diphthongs": false,
-    "basic_vowel_count": 5,
-    "has_glottal": false,
+    "has_phonetic_diphthongs": true,
+    "basic_vowel_count": 6,
+    "has_glottal": true,
     "has_uvular": false,
     "has_labiodental": true,
     "has_linguodental": false,

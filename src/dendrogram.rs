@@ -12,8 +12,10 @@ type DendrogramDocument = Document;
 pub type ConnectionTuple = (usize, usize, i32); // First Index (in stack), Second Index (in stack), Year they should be connected at
 
 pub fn generate(nodes: Vec<(String, i32)>, nodes_in_order: Vec<(String, i32)>, connections: &mut Vec<(usize, usize, i32)>) -> DendrogramDocument {
-    let mut ret: DendrogramDocument = Document::new().set("viewBox", (0, 0, 100.0 + (model::RATE_OF_LANGUAGE_CHANGE / 3.5), 250 + (nodes.len()+5) * 10)).add(Style::new(
-        ".small {
+    let height = 10 + ((nodes.len()+1) * 20);
+    let width = 10.0 + (model::RATE_OF_LANGUAGE_CHANGE / 3.5);
+    let mut ret: DendrogramDocument = Document::new().set("viewBox", (0, 0, width, height)).add(Style::new(
+        "   .s {
         font: bold 3.0px sans-serif;
         }"
     ));
@@ -24,8 +26,7 @@ pub fn generate(nodes: Vec<(String, i32)>, nodes_in_order: Vec<(String, i32)>, c
         let i = nodes_in_order.iter().position(|r| r == node).unwrap();
         let cord = ((100 + (i * 10)) as f64, get_y_from_year(nodes_in_order[i].1));
         let s = &nodes_in_order[i].0;
-        let length = f64::min(1.0 * (s.len() as f64), 13.0);
-        ret = ret.add(Comment::new(s)).add(Circle::new().set("cy", cord.0).set("cx", cord.1).set("r", 1.2)).add(element::Text::new(s).set("y", cord.0 - (length/2.0)).set("x", cord.1 - 2.0).set("class", "small").set("textLength", length));
+        ret = ret.add(Comment::new(s)).add(Circle::new().set("cy", cord.0).set("cx", cord.1).set("r", 1.2)).add(element::Text::new(s).set("y", cord.0 + 1.0).set("x", cord.1 + 2.0).set("class", "s"));
         data = data.move_to((i, node.1));
         stack.push(cord);
     }
@@ -62,10 +63,24 @@ pub fn generate(nodes: Vec<(String, i32)>, nodes_in_order: Vec<(String, i32)>, c
         stack.push(new_cord);
     }
 
+    let s = stack.pop().unwrap();
+
+    let d = Data::new()
+        .move_to((s.1, s.0))
+        .line_to((0.0, s.0));
+
+    let p = Path::new()
+        .set("fill", "none")
+        .set("stroke", "black")
+        .set("stroke-width", 0.5)
+        .set("d", d);
+
+    ret = ret.add(p);
+
     ret
 }
 
 #[inline(always)]
 fn get_y_from_year(year: i32) -> f64 {
-    ((2500 - year) as f64) / 50.0
+    (((6000 + year) as f64) / 75.0) + 75.0
 }

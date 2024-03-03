@@ -12,9 +12,9 @@ type DendrogramDocument = Document;
 pub type ConnectionTuple = (usize, usize, i32); // First Index (in stack), Second Index (in stack), Year they should be connected at
 
 pub fn generate(nodes: Vec<(String, i32)>, nodes_in_order: Vec<(String, i32)>, connections: &mut Vec<(usize, usize, i32)>) -> DendrogramDocument {
-    let mut ret: DendrogramDocument = Document::new().set("viewBox", (0, 0, 250 + (nodes.len()+5) * 10, model::RATE_OF_LANGUAGE_CHANGE / 3.5)).add(Style::new(
+    let mut ret: DendrogramDocument = Document::new().set("viewBox", (0, 0, 100.0 + (model::RATE_OF_LANGUAGE_CHANGE / 3.5), 250 + (nodes.len()+5) * 10)).add(Style::new(
         ".small {
-        font: bold 2.0px sans-serif;
+        font: bold 3.0px sans-serif;
         }"
     ));
     let mut data = Data::new();
@@ -25,7 +25,7 @@ pub fn generate(nodes: Vec<(String, i32)>, nodes_in_order: Vec<(String, i32)>, c
         let cord = ((100 + (i * 10)) as f64, get_y_from_year(nodes_in_order[i].1));
         let s = &nodes_in_order[i].0;
         let length = f64::min(1.0 * (s.len() as f64), 13.0);
-        ret = ret.add(Comment::new(s)).add(Circle::new().set("cx", cord.0).set("cy", cord.1).set("r", 1.2)).add(element::Text::new(s).set("x", cord.0 - (length/2.0)).set("y", cord.1 - 2.0).set("class", "small").set("textLength", length));
+        ret = ret.add(Comment::new(s)).add(Circle::new().set("cy", cord.0).set("cx", cord.1).set("r", 1.2)).add(element::Text::new(s).set("y", cord.0 - (length/2.0)).set("x", cord.1 - 2.0).set("class", "small").set("textLength", length));
         data = data.move_to((i, node.1));
         stack.push(cord);
     }
@@ -45,11 +45,11 @@ pub fn generate(nodes: Vec<(String, i32)>, nodes_in_order: Vec<(String, i32)>, c
         let new_cord = ((left.0 + right.0) / 2.0, get_y_from_year(ct.2));
 
         let d = Data::new()
-            .move_to(left)
-            .line_to((left.0, new_cord.1))
-            .line_to(new_cord)
-            .line_to((right.0, new_cord.1))
-            .line_to(right);
+            .move_to((left.1, left.0))
+            .line_to((new_cord.1, left.0))
+            .line_to((new_cord.1, new_cord.0))
+            .line_to((new_cord.1, right.0))
+            .line_to((right.1, right.0));
 
         let p = Path::new()
             .set("fill", "none")

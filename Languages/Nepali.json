@@ -462,7 +462,7 @@
     "back_unrounded_vowels": true,
     "schwa": false,
     "reduction": false,
-    "accent_system": "ContrastiveStress",
+    "accent_system": "SystemicStress",
     "plosive_series_count": 4,
     "fricative_voicedness_distinction": true,
     "nasal_voicedness_distinction": false,

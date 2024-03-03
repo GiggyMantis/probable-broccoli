@@ -14,7 +14,7 @@ pub struct BinaryTree {
     pub(crate) val: Vec<TreeNodeRef>,
 }
 impl BinaryTree {
-    /// Creates a new Binary Tree by importing all of the specified languages from a given folder.
+    /// Creates a new Binary Tree by importing all the specified languages from a given folder.
     pub fn from(folder: &str, filepaths: Vec<&str>) -> BinaryTree {
         let mut v = Vec::<TreeNodeRef>::new();
         for fp in filepaths.iter() {
@@ -25,7 +25,25 @@ impl BinaryTree {
         };
     }
 
-    /// 
+    /// Creates a new Binary Tree by importing every language in the specified folder.
+    pub fn from_folder(folder: &str) -> BinaryTree {
+        let mut v = Vec::<TreeNodeRef>::new();
+        let paths = fs::read_dir(folder).unwrap();
+
+        for path in paths {
+            v.push(get_node_from_languoid(Box::new(serde_json::from_str(&*read_to_string(path.unwrap().path()).unwrap()).unwrap())));
+        }
+        return BinaryTree {
+            val: v,
+        };
+    }
+
+    /// Joins two BinaryTrees.
+    pub fn join(a: BinaryTree, b: BinaryTree) -> BinaryTree {
+        BinaryTree { val: [a.val, b.val].concat() }
+    }
+
+    /// Returns the simple debug representation of the tree.
     pub fn get_debug_representation(&self) -> String {
         return Self::get_debug_representation_of_node(self.val.first().unwrap());
     }

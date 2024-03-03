@@ -71,6 +71,7 @@ Refrain from using diacritics whenever possible. The following common diacritica
 - ◌̯
 - ◌̹ and ◌̜
 - ◌̮
+- ◌̩
 - ◌ˑ
 - ◌̆
 - ◌̬
@@ -86,7 +87,7 @@ The following comon diacritical forms are allowed:
 Every other diacritic is discouraged.
 
 **Stress Marking**
-Stress diacritics go **immediately** *before* the vowel they modify. 
+Stress diacritics go **immediately** *before* the vowel they modify. Do *not* mark stress on one-syllable words.
 
 **Affricates**
 Tie-bar forms of affricates are not implemented. Please use the ligature forms. If you need to copy-paste those, here is a list:
@@ -188,3 +189,6 @@ Emphatics are uvularized/pharyngealized/epiglottalized consonants found mostly i
 
 ### "mora_timed"
 This is a famously hard feature to analyze for languages, especially of one's own dialect. If you are unsure, put *false*.
+
+# Congratulations
+After all that hard work, you are done. Please note that this is subject to change as the program evolves.

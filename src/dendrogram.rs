@@ -1,47 +1,62 @@
-use svg::node::element::{Path, path::Data};
+use std::cell::RefCell;
+use std::rc::Rc;
+use svg::Document;
+use svg::node::element::{Circle, Path, path::Data};
+use crate::model::age_of_common_ancestor;
+use crate::{model, TreeNode};
 
-type DendrogramDocument = svg::Document;
+type DendrogramDocument = Document;
 pub type ConnectionTuple = (usize, usize, i32); // First Index (in stack), Second Index (in stack), Year they should be connected at
 
-pub fn generate(languoids: Vec<(String, i32)>, connections: &mut Vec<ConnectionTuple>) -> DendrogramDocument {
-    let mut ret = DendrogramDocument::populate(languoids);
+pub fn generate(nodes: Vec<(String, i32)>, nodes_in_order: Vec<(String, i32)>, connections: &mut Vec<(usize, usize, i32)>) -> DendrogramDocument {
+    let mut ret: DendrogramDocument = Document::new().set("viewBox", (0, 0, (nodes.len()+5) * 10, model::RATE_OF_LANGUAGE_CHANGE / 3.5));
+    let mut data = Data::new();
+    let mut stack: Vec<(f64, f64)> = Vec::new();
 
-    /*
-    while connections.len() != 0 {
-        ret.connect(connections.pop().unwrap());
-    }
-    */
-    
-    ret.to_owned()
-}
-
-trait DendrogramDocumentTrait {
-    fn connect(&mut self, connection: ConnectionTuple) -> ();
-    fn populate(nodes: Vec<(String, i32)>) -> Self;
-}
-
-impl DendrogramDocumentTrait for DendrogramDocument {
-    /// Creates a new connection in the DendrogramDocument according to the ConnectionTuple supplied.
-    fn connect(&mut self, connection: ConnectionTuple) -> () {
-        // TODO: add line(s) connecting the two nodes in the DendrogramDocument
+    for (_, &ref node) in nodes.iter().enumerate() {
+        let i = nodes_in_order.iter().position(|r| r == node).unwrap();
+        let cord = ((5 + (i * 10)) as f64, get_y_from_year(nodes_in_order[i].1));
+        ret = ret.add(Circle::new().set("cx", cord.0).set("cy", cord.1).set("r", 1.2));
+        data = data.move_to((i, node.1));
+        stack.push(cord);
     }
 
-    /// Populates the starting nodes into the DendrogramDocument.
-    fn populate(nodes: Vec<(String, i32)>) -> Self {
+    for ct in connections.iter() {
+        let left: (f64, f64);
+        let right: (f64, f64);
 
-        let data = Data::new()
-            .move_to((10, 10))
-            .line_by((0, 50))
-            .line_by((50, 0))
-            .line_by((0, -50))
-            .close();
+        if ct.0 < ct.1 {
+            left = stack.remove(ct.1);
+            right = stack.remove(ct.0);
+        } else {
+            left = stack.remove(ct.0);
+            right = stack.remove(ct.1);
+        }
 
-        let path = Path::new()
+        let new_cord = ((left.0 + right.0) / 2.0, get_y_from_year(ct.2));
+
+        let d = Data::new()
+            .move_to(left)
+            .line_to((left.0, new_cord.1))
+            .line_to(new_cord)
+            .line_to((right.0, new_cord.1))
+            .line_to(right);
+
+        let p = Path::new()
             .set("fill", "none")
             .set("stroke", "black")
-            .set("stroke-width", 3)
-            .set("d", data);
+            .set("stroke-width", 0.3)
+            .set("d", d);
 
-       svg::Document::new().set("viewBox", (0, 0, 70, 70)).add(path)
+        ret = ret.add(p);
+
+        stack.push(new_cord);
     }
+
+    ret
+}
+
+#[inline(always)]
+fn get_y_from_year(year: i32) -> f64 {
+    ((2500 - year) as f64) / 50.0
 }

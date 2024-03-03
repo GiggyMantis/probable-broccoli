@@ -8,7 +8,7 @@ use serde::Serializer;
 use crate::*; // TODO: Fix this unecessary all import
 use crate::dendrogram::ConnectionTuple;
 
-const RATE_OF_LANGUAGE_CHANGE: f32 = 1.0;
+pub const RATE_OF_LANGUAGE_CHANGE: f64 = 1000.0;
 
 pub struct BinaryTree {
     pub(crate) val: Vec<TreeNodeRef>,
@@ -38,11 +38,9 @@ impl BinaryTree {
 
 
         }
-        return (
-            BinaryTree {
-                val: v,
-            }, v2
-        );
+        (BinaryTree {
+            val: v,
+        }, v2)
     }
 
     /// Joins two BinaryTrees.
@@ -63,18 +61,11 @@ impl BinaryTree {
         }
     }
 
-    pub fn get_svg_representation(&self, mut connections: Vec<ConnectionTuple>) -> svg::Document {
-        dendrogram::generate(
-            self.get_languoid_names_and_years(),
-            connections.as_mut()
-        )
-    }
-
     pub fn get_languoid_names_and_years(&self) -> Vec<(String, i32)> {
         let mut ret: Vec<(String, i32)> = Vec::new();
         let mut stack: Vec<TreeNodeRef> = Vec::new();
         stack.push(self.val[0].clone());
-        while (stack.len() > 0) {
+        while stack.len() > 0 {
             let tuple = stack.pop().unwrap().get_children();
             if tuple.0.is_some() {
                 ret.push(tuple.0.unwrap());
@@ -97,7 +88,7 @@ impl BinaryTree {
             right: Some(self.val[b].clone()),
             year: new_year,
         };
-        if a > b { // This if statement prevents having to check if the location of language b was moved when a was removed or vice versa.
+        if a > b { // This if statement prevents having to check if the location of language B was moved when A was removed or vice versa.
             self.val.remove(a);
             self.val.remove(b);
         } else {
@@ -110,7 +101,7 @@ impl BinaryTree {
 
     // Iterates one time on the binary tree using the minimum distance model.
     // The two closest languages are joined and returned back to the tree.
-    pub fn iterate_minimum_distance_model(&mut self) -> ConnectionTuple {
+    pub fn iterate_minimum_distance_model(&mut self) -> (usize, usize, i32) {
         let matchups: u64 = ((0.5) * (self.val.len() as f64) * ((self.val.len() - 1) as f64)) as u64;
         let pb = ProgressBar::new(matchups).with_position(0);
         pb.set_style(
@@ -148,8 +139,8 @@ impl BinaryTree {
     // this approach assumes all languages are related, which may be false in the case of conlangs and is debated in the case of natural languages.
     // https://en.wikipedia.org/wiki/Minimum-distance_estimation
     // Does not allow for this: https://en.wikipedia.org/wiki/Language_isolate
-    pub fn naive_minimum_distance_model(&mut self) -> Vec<ConnectionTuple> {
-        let mut ret: Vec<ConnectionTuple> = Vec::new();
+    pub fn naive_minimum_distance_model(&mut self) -> Vec<(usize, usize, i32)> {
+        let mut ret: Vec<(usize, usize, i32)> = Vec::new();
         let original_length = self.val.len();
         while self.val.len() > 1 {
             println!("Working... Step {} / {}", original_length - self.val.len() + 1, original_length - 1);
@@ -193,12 +184,14 @@ impl std::fmt::Debug for BinaryTree {
 }
 
 // TODO: Fix... this *waves hands*
-fn age_of_common_ancestor(distance: u16, age_a: i32, age_b: i32) -> i32 {
+pub fn age_of_common_ancestor(distance: u16, age_a: i32, age_b: i32) -> i32 {
     let min = cmp::min(age_a, age_b);
     if distance == 0 {
         return min;
     }
-    
-    cmp::min(min, (RATE_OF_LANGUAGE_CHANGE * -(distance as f32) + (min as f32) - (f32::abs((age_a - age_b) as f32))) as i32)
+
+    let delta_time = (((((u16::MAX - distance) as f64 / (u16::MAX as f64)).ln()) * 1000.0 * RATE_OF_LANGUAGE_CHANGE) as i32);
+    // println!("{}", i);
+    min + delta_time
 }
 

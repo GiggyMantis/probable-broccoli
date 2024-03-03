@@ -26,16 +26,23 @@ impl BinaryTree {
     }
 
     /// Creates a new Binary Tree by importing every language in the specified folder.
-    pub fn from_folder(folder: &str) -> BinaryTree {
+    pub fn from_folder(folder: &str) -> (BinaryTree, Vec<(String, i32)>) {
         let mut v = Vec::<TreeNodeRef>::new();
+        let mut v2 = Vec::<(String, i32)>::new();
         let paths = fs::read_dir(folder).unwrap();
 
         for path in paths {
-            v.push(get_node_from_languoid(Box::new(serde_json::from_str(&*read_to_string(path.unwrap().path()).unwrap()).unwrap())));
+            let l: Languoid = serde_json::from_str(&*read_to_string(path.unwrap().path()).unwrap()).unwrap();
+            v.push(get_node_from_languoid(Box::new(l.clone())));
+            v2.push((l.languoid_name, l.year));
+
+
         }
-        return BinaryTree {
-            val: v,
-        };
+        return (
+            BinaryTree {
+                val: v,
+            }, v2
+        );
     }
 
     /// Joins two BinaryTrees.

@@ -167,7 +167,7 @@ pub struct Phonology {
     velarization: bool,
     labialization: bool,
     emphatics: bool,
-    pub mora_timed: bool,
+    mora_timed: bool,
 }
 
 fn array_str_to_nongendered_array_string(a: [&str; 100]) -> [(String, usize); 100] {
@@ -331,6 +331,14 @@ enum Accent {
     ContrastiveStress,
     SystemicPitch,
     SystemicStress,
+}
+
+impl Accent {
+
+    #[inline(Always)]
+    pub fn distance(a: Self, b: Self) -> f64 {
+        usize::abs(a as usize - b as usize) as f64
+    }
 }
 
 pub type NounClass = Vec<NounClassCatergories>;

@@ -20,6 +20,7 @@ const PHONOLOGY_MULTIPLIER_TONE : f64 = 1.0;
 const PHONOLOGY_MULTIPLIER_VOWEL_MODIFIERS : f64 = 1.0;
 const PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES : f64 = 1.0;
 const PHONOLOGY_MULTIPLIER_CONSONANTS : f64 = 1.0;
+const PHONOLOGY_MULTIPLIER_CONSONANT_MODIFIERS : f64 = 1.0;
 const PHONOLOGY_MULTIPLIER_ACCENT : f64 = 1.0;
 
 /// Compares two individual languoids.
@@ -92,11 +93,39 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.front_rounded_vowels ^ lect_b.phonology.front_rounded_vowels) as u8 as f64;
     phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.back_unrounded_vowels ^ lect_b.phonology.back_unrounded_vowels) as u8 as f64;
     phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.schwa ^ lect_b.phonology.schwa) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.reduction ^ lect_b.phonology.reduction) as u8 as f64;
     phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (i16::abs(lect_a.phonology.basic_vowel_count as i16 - lect_b.phonology.basic_vowel_count as i16) as f64);
+
+    phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.has_phonemic_diphthongs ^ lect_b.phonology.has_phonemic_diphthongs) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.has_phonetic_diphthongs ^ lect_b.phonology.has_phonetic_diphthongs) as u8 as f64; 
 
     phonological_distance += PHONOLOGY_MULTIPLIER_TONE * (i16::abs(lect_a.phonology.tone_count as i16 - lect_b.phonology.tone_count as i16));
 
-    // TODO: More Phonological Comparison
+    phonological_distance += PHONOLOGY_MULTIPLIER_ACCENT * Accent::distance(lect_a.phonology.accent_system, lect_b.phonology.accent_system);
+    phonological_distance += PHONOLOGY_MULTIPLIER_ACCENT * (lect_a.phonology.mora_timed ^ lect_b.phonology.mora_timed) as u8 as f64;
+
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (i16::abs(lect_a.phonology.plosive_series_count as i16 - lect_b.phonology.plosive_series_count as i16) as f64);
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.fricative_voicedness_distinction ^ lect_a.phonology.fricative_voicedness_distinction) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.nasal_voicedness_distinction ^ lect_b.phonology.nasal_voicedness_distinction) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_laterals ^ lect_b.phonology.has_laterals) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_glottal ^ lect_b.phonology.has_glottal) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_uvular ^ lect_b.phonology.has_uvular) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_labiodental ^ lect_b.phonology.has_labiodental) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_linguodental ^ lect_b.phonology.has_linguodental) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_retroflex_or_postalveolar ^ lect_b.phonology.has_retroflex_or_postalveolar) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_palatal ^ lect_b.phonology.has_palatal) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_labial ^ lect_b.phonology.has_labial) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_velar ^ lect_b.phonology.has_velar) as u8 as f64
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_pharyngeal_or_epiglottal ^ lect_b.phonology.has_pharyngeal_or_epiglottal) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_vibrants ^ lect_b.phonology.has_vibrants) as u8 as f64;
+
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANT_MODIFIERS * (lect_a.phonology.gemination ^ lect_b.phonology.gemination) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANT_MODIFIERS * (lect_a.phonology.palatalization ^ lect_b.phonology.palatalization) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANT_MODIFIERS * (lect_a.phonology.velarization ^ lect_b.phonology.velarization) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANT_MODIFIERS * (lect_a.phonology.labialization ^ lect_b.phonology.labialization) as u8 as f64;
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANT_MODIFIERS * (lect_a.phonology.emphatics ^ lect_b.phonology.emphatics) as u8 as f64;
+
+    // TODO: More Comparison
     
 
     grammar_distance *= GRAMMAR_MULTIPLIER;

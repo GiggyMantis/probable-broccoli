@@ -1,9 +1,9 @@
 {
-  "languoid_name": "Bulgarian",
-  "year": 1500,
+  "languoid_name": "Macedonian",
+  "year": 1900,
   "leipzig_jakarta_list": [
     [
-      "ˈɔɡɐn",
+      "ˈɔɡan",
       2
     ],
     [
@@ -11,27 +11,27 @@
       2
     ],
     [
-      "otˈidɐ",
+      "ˈɔdi",
       0
     ],
     [
-      "vodˈa",
+      "vˈɔda",
       1
     ],
     [
-      "ostˈa",
+      "ˈusta",
       1
     ],
     [
-      "ɛzˈik",
+      "jˈazik",
       2
     ],
     [
-      "krɤf",
+      "krf",
       1
     ],
     [
-      "kɔst",
+      "kˈɔska",
       1
     ],
     [
@@ -39,23 +39,23 @@
       0
     ],
     [
-      "kˈɔrɛn",
+      "kˈɔɾɛn",
       2
     ],
     [
-      "ˈidvɐm",
+      "dˈɔaɟa",
       0
     ],
     [
-      "ɡrɤt",
+      "ɡrˈada",
       1
     ],
     [
-      "dɤʃt",
+      "dɔʃt",
       2
     ],
     [
-      "as",
+      "jas",
       0
     ],
     [
@@ -63,31 +63,31 @@
       3
     ],
     [
-      "vˈɤʃkɐ",
+      "vˈɔʃka",
       1
     ],
     [
-      "kriɫˈɔ",
+      "krˈiɫɔ",
       3
     ],
     [
-      "mɛsˈɔ",
+      "mˈɛsɔ",
       3
     ],
     [
-      "rɐkˈa",
+      "rˈaka",
       1
     ],
     [
-      "moxˈa",
+      "mˈuva",
       1
     ],
     [
-      "nɔʃt",
+      "nɔc",
       1
     ],
     [
-      "oxˈɔ",
+      "ˈuvɔ",
       3
     ],
     [
@@ -95,103 +95,103 @@
       2
     ],
     [
-      "dɐlˈɛʧɛn",
+      "dˈalɛʧɛn",
       0
     ],
     [
-      "nɐprˈavʲɐ",
+      "nˈapravi",
       0
     ],
     [
-      "dɔm",
-      2
-    ],
-    [
-      "kˈamɐk",
-      2
-    ],
-    [
-      "ɡorʧˈif",
-      0
-    ],
-    [
-      "kˈazvɐm",
-      0
-    ],
-    [
-      "zɤp",
-      2
-    ],
-    [
-      "kosˈa",
+      "kˈuca",
       1
     ],
     [
-      "ɡolʲˈam",
+      "kˈamɛn",
+      2
+    ],
+    [
+      "ɡˈɔrʧlif",
       0
     ],
     [
-      "ɛdnˈɔ",
-      3
+      "kˈaʒuva",
+      0
+    ],
+    [
+      "zap",
+      2
+    ],
+    [
+      "kˈɔsa",
+      1
+    ],
+    [
+      "ɡˈɔlɛm",
+      0
+    ],
+    [
+      "ˈɛdɛn",
+      0
     ],
     [
       "kɔj",
       0
     ],
     [
-      "tɔ",
+      "tˈɔa",
       3
     ],
     [
-      "ˈudrʲɐm",
+      "ˈudiɾa",
       0
     ],
     [
-      "krak",
-      2
+      "nˈɔɡa",
+      1
     ],
     [
       "rɔk",
       2
     ],
     [
-      "tovˈa",
+      "ˈɔva",
       0
     ],
     [
-      "rˈibɐ",
+      "rˈiba",
       1
     ],
     [
-      "fʧˈɛrɐ",
+      "fʧˈɛɾa",
       0
     ],
     [
-      "pˈijɐ",
+      "pˈijɛ",
       0
     ],
     [
-      "ʧˈɛrɛn",
+      "ʦrn",
       0
     ],
     [
-      "pɤp",
+      "pˈapɔk",
       2
     ],
     [
-      "stojˈɤ",
+      "stˈɔi",
       0
     ],
     [
-      "xˈapʲɐ",
+      "ɡrˈizɛ",
       0
     ],
     [
-      "ɡrɤp",
+      "ɡrp",
       2
     ],
     [
-      "vʲˈatɐr",
+      "vˈɛtɛr",
       2
     ],
     [
@@ -199,19 +199,19 @@
       2
     ],
     [
-      "kɐkˈɤf",
+      "ʃtɔ",
       0
     ],
     [
-      "dɛtˈɛ",
+      "dˈɛtɛ",
       3
     ],
     [
-      "jɐjʦˈɛ",
+      "jˈajʦɛ",
       3
     ],
     [
-      "dˈavɐm",
+      "dˈava",
       0
     ],
     [
@@ -219,7 +219,7 @@
       0
     ],
     [
-      "ɡorʲˈɤ",
+      "ɡˈɔɾi",
       0
     ],
     [
@@ -227,71 +227,71 @@
       0
     ],
     [
-      "dobˈɤr",
+      "dˈɔbar",
       0
     ],
     [
-      "znˈajɐ",
+      "znˈaɛ",
       0
     ],
     [
-      "kolʲˈano",
+      "kˈɔlɛnɔ",
       3
     ],
     [
-      "pʲˈasɐk",
+      "pˈɛsɔk",
       2
     ],
     [
-      "smˈɛjɐ",
+      "smˈɛɛ",
       0
     ],
     [
-      "sɫˈuʃɐm",
+      "sɫˈuʃa",
       0
     ],
     [
-      "zɛmʲˈa",
+      "zˈɛmja",
       1
     ],
     [
-      "listˈɔ",
-      3
-    ],
-    [
-      "ʧɛrvˈɛn",
-      0
-    ],
-    [
-      "drɔp",
+      "list",
       2
     ],
     [
-      "krˈijɐ",
+      "ʦˈrvɛn",
       0
     ],
     [
-      "kˈɔʒɐ",
+      "ʦrndrˈɔp",
+      2
+    ],
+    [
+      "krˈijɛ",
+      0
+    ],
+    [
+      "kˈɔʒa",
       1
     ],
     [
-      "sˈuʧɐ",
+      "ʦˈiʦa",
       0
     ],
     [
-      "nˈɔsʲɐ",
+      "nˈɔsi",
       0
     ],
     [
-      "mrˈafkɐ",
+      "mrˈafka",
       1
     ],
     [
-      "tˈɛʒɐk",
+      "tˈɛʒɔk",
       0
     ],
     [
-      "xvˈaʃtɐm",
+      "fˈaca",
       0
     ],
     [
@@ -299,39 +299,39 @@
       0
     ],
     [
-      "jam",
+      "jˈadɛ",
       0
     ],
     [
-      "bɛdrˈɔ",
+      "bˈɛdrɔ",
       3
     ],
     [
-      "pɫˈɤtɛn",
+      "dˈɛbɛɫ",
       0
     ],
     [
-      "dˈɤɫɐk",
+      "dɔɫk",
       0
     ],
     [
-      "dˈuxɐm",
+      "dˈuva",
       0
     ],
     [
-      "dɐrvˈɔ",
+      "dˈrvɔ",
       3
     ],
     [
-      "bʲˈaɡɐm",
+      "tˈrʧa",
       0
     ],
     [
-      "pˈadɐm",
+      "pˈaɟa",
       0
     ],
     [
-      "okˈɔ",
+      "ˈɔkɔ",
       3
     ],
     [
@@ -339,39 +339,39 @@
       1
     ],
     [
-      "opˈaʃkɐ",
+      "ˈɔpaʃka",
       1
     ],
     [
-      "kˈuʧɛ",
+      "pɛs",
+      2
+    ],
+    [
+      "pɫˈaʧɛ",
+      0
+    ],
+    [
+      "vˈrzuva",
+      0
+    ],
+    [
+      "ɡlˈɛda",
+      0
+    ],
+    [
+      "sɫˈatka",
+      0
+    ],
+    [
+      "jˈaʒɛ",
       3
     ],
     [
-      "pɫˈaʧɐ",
-      0
-    ],
-    [
-      "vrˈɤzvɐm",
-      0
-    ],
-    [
-      "vˈiʒdɐm",
-      0
-    ],
-    [
-      "sɫˈadɐk",
-      0
-    ],
-    [
-      "vɐʒˈɛ",
-      3
-    ],
-    [
-      "sʲˈaŋkɐ",
+      "sˈɛŋka",
       1
     ],
     [
-      "ptˈiʦɐ",
+      "ptˈiʦa",
       1
     ],
     [
@@ -379,35 +379,35 @@
       1
     ],
     [
-      "mˈaɫɐk",
+      "maɫ",
       0
     ],
     [
-      "ʃirˈɔk",
+      "ʃˈiɾɔk",
       0
     ],
     [
-      "zvɛzdˈa",
+      "ʣvˈɛzda",
       1
     ],
     [
-      "v",
+      "vɔ",
       0
     ],
     [
-      "tvɤrt",
+      "tˈɛʃkɔ",
       0
     ],
     [
-      "mˈaʧkɐm",
+      "mˈɛlɛ",
       0
     ]
   ],
   "grammar": {
-    "predicate_word_order": "XXX",
+    "predicate_word_order": "SVO",
     "adjective_before_noun": true,
     "prepositions": true,
-    "pronominal_cases": 34393292800,
+    "pronominal_cases": 17626579337216,
     "nominal_cases": 72057628397666304,
     "pronominal_numbers": 17,
     "nominal_numbers": 17,
@@ -462,16 +462,16 @@
     "obligate_contraction": false,
     "explicit_copula": false,
     "ser_estar_distinction": false,
-    "part_of_speech_morphology": true,
-    "tenses": 3,
-    "aspect": 69,
-    "mood": 265,
+    "part_of_speech_morphology": false,
+    "tenses": 2,
+    "aspect": 65,
+    "mood": 273,
     "has_verbal_voice": true,
     "double_negatives_are_positive": false,
     "reduplication": false,
     "has_augmentative": false,
     "has_diminutive": true,
-    "evidentials": 4
+    "evidentials": 0
   },
   "phonology": {
     "tone_count": 0,
@@ -479,17 +479,17 @@
     "nasal_vowels": false,
     "rhotic_vowels": false,
     "front_rounded_vowels": false,
-    "back_unrounded_vowels": true,
+    "back_unrounded_vowels": false,
     "schwa": false,
-    "reduction": true,
-    "accent_system": "ContrastiveStress",
+    "reduction": false,
+    "accent_system": "SystemicStress",
     "plosive_series_count": 4,
     "fricative_voicedness_distinction": true,
     "nasal_voicedness_distinction": false,
     "has_laterals": true,
     "has_phonemic_diphthongs": true,
     "has_phonetic_diphthongs": false,
-    "basic_vowel_count": 6,
+    "basic_vowel_count": 5,
     "has_glottal": false,
     "has_uvular": false,
     "has_labiodental": true,

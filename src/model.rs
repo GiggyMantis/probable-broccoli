@@ -48,7 +48,7 @@ impl BinaryTree {
         BinaryTree { val: [a.val, b.val].concat() }
     }
 
-    /// Returns the simple debug representation of the tree.
+    /// Returns the simple debug representation of the tree (as a string).
     pub fn get_debug_representation(&self) -> String {
         return Self::get_debug_representation_of_node(self.val.first().unwrap());
     }
@@ -61,6 +61,7 @@ impl BinaryTree {
         }
     }
 
+    /// Returns a binary-orderded list of all of the names and years of languages. This is used for the SVG generation.
     pub fn get_languoid_names_and_years(&self) -> Vec<(String, i32)> {
         let mut ret: Vec<(String, i32)> = Vec::new();
         let mut stack: Vec<TreeNodeRef> = Vec::new();
@@ -99,8 +100,9 @@ impl BinaryTree {
         self.val.push(Rc::new(RefCell::new(new_node)));
     }
 
-    // Iterates one time on the binary tree using the minimum distance model.
-    // The two closest languages are joined and returned back to the tree.
+    /// Iterates one time on the binary tree using the minimum distance model.
+    /// The two closest languages are joined and returned back to the tree.
+    /// The return value is the index of the two joined languages and the year they are joined to.
     pub fn iterate_minimum_distance_model(&mut self) -> (usize, usize, i32) {
         let matchups: u64 = ((0.5) * (self.val.len() as f64) * ((self.val.len() - 1) as f64)) as u64;
         let pb = ProgressBar::new(matchups).with_position(0);
@@ -134,11 +136,11 @@ impl BinaryTree {
         best
     }
 
-    // Naive Minimum Distance Model
-    // tries to join *all* languages using the minimum distance model.
-    // this approach assumes all languages are related, which may be false in the case of conlangs and is debated in the case of natural languages.
-    // https://en.wikipedia.org/wiki/Minimum-distance_estimation
-    // Does not allow for this: https://en.wikipedia.org/wiki/Language_isolate
+    /// Naive Minimum Distance Model
+    /// tries to join *all* languages using the minimum distance model.
+    /// this approach assumes all languages are related, which may be false in the case of conlangs and is debated in the case of natural languages.
+    /// https://en.wikipedia.org/wiki/Minimum-distance_estimation
+    /// Does not allow for this: https://en.wikipedia.org/wiki/Language_isolate
     pub fn naive_minimum_distance_model(&mut self) -> Vec<(usize, usize, i32)> {
         let mut ret: Vec<(usize, usize, i32)> = Vec::new();
         let original_length = self.val.len();
@@ -183,15 +185,21 @@ impl std::fmt::Debug for BinaryTree {
     }
 }
 
-// TODO: Fix... this *waves hands*
+/// Given the ages of two languages and the distance between them, computes the mathematically expected year of the NCA.
 pub fn age_of_common_ancestor(distance: u16, age_a: i32, age_b: i32) -> i32 {
+    swadesh_method_age(distance, age_a, age_b)
+}
+
+fn swadesh_method_age(distance: u16, age_a: i32, age_b: i32) -> i32 {
     let min = cmp::min(age_a, age_b);
     if distance == 0 {
         return min;
     }
 
     let delta_time = (((((u16::MAX - distance) as f64 / (u16::MAX as f64)).ln()) * 1000.0 * RATE_OF_LANGUAGE_CHANGE) as i32);
-    // println!("{}", i);
     min + delta_time
 }
 
+fn starostin_method_age(distance: u16, age_a: i32, age_b: i32) -> i32 {
+    0 // TODO: Starostin Method for calculating the age of NCA
+}

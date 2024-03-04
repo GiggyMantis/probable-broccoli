@@ -178,7 +178,7 @@ fn array_str_to_gendered_array_string(a: [(&str, usize); 100]) -> [(String, usiz
     a.iter().map(|&x| (x.0.to_string(), x.1)).collect::<Vec<(String, usize)>>().try_into().unwrap()
 }
 
-// #Constants
+// Constants
 
 // Cases Start
 pub const _CASE_ADESSIVE: u64 = 0x1;

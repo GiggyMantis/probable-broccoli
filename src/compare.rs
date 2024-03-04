@@ -126,7 +126,6 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANT_MODIFIERS * (lect_a.phonology.emphatics ^ lect_b.phonology.emphatics) as u8 as f64;
 
     // TODO: More Comparison
-    
 
     grammar_distance *= GRAMMAR_MULTIPLIER;
     phonological_distance *= PHONOLOGY_MULTIPLIER;

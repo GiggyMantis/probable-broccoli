@@ -94,6 +94,8 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.schwa ^ lect_b.phonology.schwa) as u8 as f64;
     phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (i16::abs(lect_a.phonology.basic_vowel_count as i16 - lect_b.phonology.basic_vowel_count as i16) as f64);
 
+    phonological_distance += PHONOLOGY_MULTIPLIER_TONE * (i16::abs(lect_a.phonology.tone_count as i16 - lect_b.phonology.tone_count as i16));
+
     // TODO: More Phonological Comparison
     
 

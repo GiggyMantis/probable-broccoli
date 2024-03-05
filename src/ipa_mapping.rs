@@ -1,10 +1,11 @@
 use std::cmp;
-use simple_matrix::Matrix;
 use regex::{Regex};
 use strsim::{normalized_damerau_levenshtein, normalized_levenshtein};
 
+// /ҩ/ is an ad hoc character being used to represent the post-palatal approximant /j˗/
+
 pub(crate) fn to_broccoli_sampa(s: &String) -> String {
-    let mut formatted_string: String = geminate(&s.replace("r̝̊", "ʃ˞").replace("r̝", "ʒ˞"));
+    let mut formatted_string: String = geminate(&s.replace("ɥ̠", "ҩʷ").replace("ɥ˗", "ҩʷ").replace("j̠", "ҩ").replace("j˗", "ҩ").replace("ɰ̟", "ҩ").replace("ɨ̞", "ᵻ").replace("ʉ̞", "ᵿ").replace("r̝̊", "ʃ˞").replace("r̝", "ʒ˞"));
 
     let mut ret = String::new();
     for c in formatted_string.chars() {
@@ -75,6 +76,7 @@ pub(crate) fn to_broccoli_sampa(s: &String) -> String {
             'ɹ' => ret.push_str("CtwvR"),
             'ɻ' => ret.push_str("CʈwvR"),
             'j' => ret.push_str("Dcwv"),
+            'ҩ' => ret.push_str("Dckwv"),
             'ɰ' => ret.push_str("Dkwv"),
             'ɬ' => ret.push_str("Ctɸfl"),
             'ɮ' => ret.push_str("Ctɸvl"),
@@ -122,12 +124,14 @@ pub(crate) fn to_broccoli_sampa(s: &String) -> String {
 
             'i' => ret.push_str("Dcwv@+"),
             'y' => ret.push_str("DcwvW+"),
-            'ɨ' => ret.push_str("DXwv@+"),
-            'ʉ' => ret.push_str("DXwvW+"),
+            'ɨ' => ret.push_str("Dckwv@+"),
+            'ʉ' => ret.push_str("DckwvW+"),
             'ɯ' => ret.push_str("Dkwv@+"),
             'u' => ret.push_str("DkwvW+"),
             'ɪ' => ret.push_str("Dcwv@-"),
             'ʏ' => ret.push_str("DcwvW-"),
+            'ᵻ' => ret.push_str("Dckwv@-"),
+            'ᵿ' => ret.push_str("DckwvW-"),
             'ʊ' => ret.push_str("DkwvW-"),
             'e' => ret.push_str("Dqwv@+"),
             'ø' => ret.push_str("DqwvW+"),

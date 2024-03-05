@@ -335,9 +335,16 @@ enum Accent {
 
 impl Accent {
 
-    #[inline(Always)]
+    #[inline(always)]
     pub fn distance(a: Self, b: Self) -> f64 {
-        usize::abs(a as usize - b as usize) as f64
+        if a == b {
+            0.0
+        } else if (a == Accent::None) | (b == Accent::None) {
+            2.5
+        } else {
+            i8::abs(a as i8 - b as i8) as f64
+        }
+
     }
 }
 

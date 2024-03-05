@@ -99,7 +99,7 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.has_phonemic_diphthongs ^ lect_b.phonology.has_phonemic_diphthongs) as u8 as f64;
     phonological_distance += PHONOLOGY_MULTIPLIER_VOWEL_QUALITIES * (lect_a.phonology.has_phonetic_diphthongs ^ lect_b.phonology.has_phonetic_diphthongs) as u8 as f64; 
 
-    phonological_distance += PHONOLOGY_MULTIPLIER_TONE * (i16::abs(lect_a.phonology.tone_count as i16 - lect_b.phonology.tone_count as i16));
+    phonological_distance += PHONOLOGY_MULTIPLIER_TONE * (i16::abs(lect_a.phonology.tone_count as i16 - lect_b.phonology.tone_count as i16) as f64);
 
     phonological_distance += PHONOLOGY_MULTIPLIER_ACCENT * Accent::distance(lect_a.phonology.accent_system, lect_b.phonology.accent_system);
     phonological_distance += PHONOLOGY_MULTIPLIER_ACCENT * (lect_a.phonology.mora_timed ^ lect_b.phonology.mora_timed) as u8 as f64;
@@ -115,7 +115,7 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_retroflex_or_postalveolar ^ lect_b.phonology.has_retroflex_or_postalveolar) as u8 as f64;
     phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_palatal ^ lect_b.phonology.has_palatal) as u8 as f64;
     phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_labial ^ lect_b.phonology.has_labial) as u8 as f64;
-    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_velar ^ lect_b.phonology.has_velar) as u8 as f64
+    phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_velar ^ lect_b.phonology.has_velar) as u8 as f64;
     phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_pharyngeal_or_epiglottal ^ lect_b.phonology.has_pharyngeal_or_epiglottal) as u8 as f64;
     phonological_distance += PHONOLOGY_MULTIPLIER_CONSONANTS * (lect_a.phonology.has_vibrants ^ lect_b.phonology.has_vibrants) as u8 as f64;
 

@@ -30,6 +30,7 @@ pub fn generate(nodes: Vec<(String, i32)>, nodes_in_order: Vec<(String, i32)>, c
         data = data.move_to((i, node.1));
         stack.push(cord);
     }
+    ret = ret.add(Comment::new("Lines"));
 
     for ct in connections.iter() {
         let left: (f64, f64);

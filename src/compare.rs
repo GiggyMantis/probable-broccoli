@@ -1,9 +1,8 @@
-use indicatif::ProgressBar;
 use strsim::{normalized_levenshtein, normalized_damerau_levenshtein};
 use crate::*;
 
-// This Module (compare) compares two languages and returns a "distance" score.
-// The higher a distance score is, the more *distantly* two languages are related.
+/// This Module (compare) compares two languages and returns a "distance" score.
+/// The higher a distance score is, the more *distantly* two languages are related.
 
 const LEXICON_MULTIPLIER : f64 = 1.0;
 const GRAMMAR_MULTIPLIER : f64 = 1.0;

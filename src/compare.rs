@@ -5,6 +5,7 @@ use crate::*;
 /// The higher a distance score is, the more *distantly* two languages are related.
 
 const LEXICON_MULTIPLIER : f64 = 1.0;
+const LEXICON_MULTIPLIER_GENDER_ONLY : f64 = 1.0; 
 const GRAMMAR_MULTIPLIER : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_WORD_ORDER : f64 = 1.0;
 const GRAMMAR_MULTIPLIER_COPULA : f64 = 1.0;
@@ -35,10 +36,10 @@ fn compare_individual(lect_a: Box<Languoid>, lect_b: Box<Languoid>) -> u16 {
     // Loops over every word in the Leipzig-Jakarta List
     for n in 0..100 {
         normalized_levenshtein_distance += 1.0 - normalized_levenshtein(&*ipa_mapping::to_broccoli_sampa(&lect_a.leipzig_jakarta_list[n].0), &*ipa_mapping::to_broccoli_sampa(&lect_b.leipzig_jakarta_list[n].0))
-        //normalized_levenshtein_distance += ipa_mapping::compare(&lect_a.leipzig_jakarta_list[n].0, &lect_b.leipzig_jakarta_list[n].0);
+        lexicon_distance += LEXICON_MULTIPLIER_GENDER_ONLY * gender_distance(lect_a.leipzig_jakarta_list[n].1, lect_b.leipzig_jakarta_list[n].1);
         // TODO: Add in distance for differing noun classes
     }
-    let lexicon_distance = LEXICON_MULTIPLIER * (normalized_levenshtein_distance as f64);
+    let lexicon_distance += LEXICON_MULTIPLIER * (normalized_levenshtein_distance as f64);
 
     // Word Order
     grammar_distance += 1.0 - normalized_damerau_levenshtein(&lect_a.grammar.predicate_word_order, &lect_b.grammar.predicate_word_order);
@@ -172,3 +173,19 @@ fn compare_languoid_and_fam(lect_a: TreeNodeRef, lect_b: TreeNodeRef) -> u16 {
         / 2u16
 }
 
+/// Returns the difference of grammatical gender between two noun classes
+fn gender_distance(a: NounClass, b: NounClass) -> f64 {
+    if a.contains(NounClassCatergories::None) | b.contains(NounClassCatergories::None) {
+        return 0.0;
+    }
+
+    let mut diff = 0.0;
+
+    for cat in a {
+        if !b.contains(cat) {
+            diff -= 1.0;
+        }
+    }
+
+    return diff;
+}

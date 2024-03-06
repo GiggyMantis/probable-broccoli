@@ -321,7 +321,7 @@
     [
       "ku˥ɔ˩ks",
       2
-    ]
+    ],
     [
       "skri˧ɛ˧t",
       0
@@ -371,35 +371,35 @@
       1
     ],
     [
-      "BIRD - break",
+      "putns",
       2
     ],
     [
-      "sɔʎ",
+      "sa˥a˩ls",
       1
     ],
     [
-      "mˈaliː",
+      "masː",
       0
     ],
     [
-      "ʃˈirɔkiː",
+      "plats",
       0
     ],
     [
-      "ɦvjˈezda",
+      "zva˥a˩jɡznɛ",
       1
     ],
     [
-      "v",
+      "i˧ɛ˧kʃ",
       0
     ],
     [
-      "tvˈrdiː",
+      "ɡru˧u˧ts",
       0
     ],
     [
-      "mʎjec",
+      "malt",
       0
     ]
   ],
@@ -407,12 +407,12 @@
     "predicate_word_order": "SVO",
     "adjective_before_noun": true,
     "prepositions": true,
-    "pronominal_cases": 88012503384096,
-    "nominal_cases": 88012503384096,
+    "pronominal_cases": 72145606541312032,
+    "nominal_cases": 72145606541312032,
     "pronominal_numbers": 17,
     "nominal_numbers": 17,
     "numeric_base": 10,
-    "finitivity": 0,
+    "finitivity": 6,
     "determiner_before_noun": true,
     "noun_classes": [
       [
@@ -428,23 +428,6 @@
       [
         {
           "t": "Masculine"
-        },
-        {
-          "t": "Animate"
-        }
-      ],
-      [
-        {
-          "t": "Masculine"
-        },
-        {
-          "t": "Inanimate"
-        }
-      ],
-      [
-
-        {
-          "t": "Neuter"
         }
       ]
     ],
@@ -457,11 +440,6 @@
       [
         {
           "t": "Masculine"
-        }
-      ],
-      [
-        {
-          "t": "Neuter"
         }
       ]
     ],
@@ -476,8 +454,8 @@
     "ser_estar_distinction": false,
     "part_of_speech_morphology": true,
     "tenses": 3,
-    "aspect": 65,
-    "mood": 17,
+    "aspect": 20,
+    "mood": 50331921,
     "has_verbal_voice": true,
     "double_negatives_are_positive": true,
     "reduplication": false,
@@ -486,7 +464,7 @@
     "evidentials": 0
   },
   "phonology": {
-    "tone_count": 0,
+    "tone_count": 3,
     "vowel_length": true,
     "nasal_vowels": false,
     "rhotic_vowels": false,
@@ -494,15 +472,15 @@
     "back_unrounded_vowels": false,
     "schwa": false,
     "reduction": false,
-    "accent_system": "SystemicStress",
-    "plosive_series_count": 4,
+    "accent_system": "SystemicAccent",
+    "plosive_series_count": 3,
     "fricative_voicedness_distinction": true,
     "nasal_voicedness_distinction": false,
     "has_laterals": true,
     "has_phonemic_diphthongs": true,
     "has_phonetic_diphthongs": true,
     "basic_vowel_count": 6,
-    "has_glottal": true,
+    "has_glottal": false,
     "has_uvular": false,
     "has_labiodental": true,
     "has_linguodental": false,
@@ -513,10 +491,10 @@
     "has_pharyngeal_or_epiglottal": false,
     "has_vibrants": true,
     "gemination": true,
-    "palatalization": true,
+    "palatalization": false,
     "velarization": false,
     "labialization": false,
     "emphatics": false,
-    "mora_timed": false
+    "mora_timed": true
   }
 }

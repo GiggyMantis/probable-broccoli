@@ -305,6 +305,8 @@ pub const _MOOD_INTERROGATIVE: u32 = 1048576;
 pub const _MOOD_BENEDICTIVE: u32 = 2097152;
 pub const _MOOD_CONCESSIVE: u32 = 4194304;
 pub const _MOOD_PRESCRIPTIVE: u32 = 8388608;
+pub const _MOOD_RENARARATIVE_OR_QUOTATIVE: u32 = 16777216;
+pub const _MOOD_DEBITIVE: u32 = 33554432;
 // Moods End
 // Number Start
 pub const _NUM_SINGULAR: u8 = 1;

@@ -1,7 +1,6 @@
 [package]
 name = "probable-broccoli"
-version = "0.1.0"
-edition = "2021"
+version = "0.0.0"
 repository = "https://github.com/GiggyMantis/probable-broccoli"
 license = "GPL-3.0-or-later"
 

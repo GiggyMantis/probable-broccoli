@@ -51,8 +51,10 @@ For example, the *Common* gender in Dutch is written as
     }
 ]
 ```
+The `Other(u8)` value is for use in noun classes with no particular themes. It should be avoided whenever possible, but if not, that's okay.
+The `None` class avoids all distance comparison. It should be used for nongendered objects (such as verbs) as well as in languages where there is not enough information to determine noun class (see Tocharian). 
 
-I reccomend making value 0 (the first value in the array) a `None` class, but the order is actually up to you. Just make sure you remember which index refers to which noun class, and you're golden.
+I reccomend making value 0 (the first value in the array) a `None` class, but the order is actually up to you. Just make sure you remember which index refers to which noun class, and you're golden. 
 You will do the same process for the noun classes used in pronouns, if any.
 You will us these noun classes in a very simple way. If you wish to refer to the first defined noun class, your index is `0`, the second is `1`, and so on. You will use these to mark what noun class each term in the Leipzig-Jakrata list belongs to. If it is not a noun, or if it is the neutral term of any other class, please use the `None` class.
 
@@ -118,19 +120,104 @@ Examples of nonstandard word orders:
 "XXX" - for "completely free"
 
 ### "pronominal_cases"
-This is a *bitflag* field. 
+This is a *bitflag* field.
+```rust
+pub const _CASE_ADESSIVE: u64 = 1;
+pub const _CASE_ANTESSIVE: u64 = 2;
+pub const _CASE_ADUPESSIVE: u64 = 4;
+pub const _CASE_INESSIVE: u64 = 8;
+pub const _CASE_INTRATIVE: u64 = 16;
+pub const _CASE_LOCATIVE: u64 = 32;
+pub const _CASE_PERTINGENT: u64 = 64;
+pub const _CASE_POSTESSIVE: u64 = 128;
+pub const _CASE_SUBESSIVE: u64 = 256;
+pub const _CASE_SUPERESSIVE: u64 = 512;
+pub const _CASE_ABLATIVE: u64 = 1024;
+pub const _CASE_ADELATIVE: u64 = 2048;
+pub const _CASE_DELATIVE: u64 = 4096;
+pub const _CASE_EGRESSIVE: u64 = 8192;
+pub const _CASE_ELATIVE: u64 = 16384;
+pub const _CASE_INITIATIVE: u64 = 32768;
+pub const _CASE_POSTELATIVE: u64 = 65536;
+pub const _CASE_ALLATIVE: u64 = 131072;
+pub const _CASE_ILLATIVE: u64 = 262144;
+pub const _CASE_LATIVE: u64 = 524288;
+pub const _CASE_SUBLATIVE: u64 = 1048576;
+pub const _CASE_SUPERLATIVE: u64 = 2097152;
+pub const _CASE_TERMINATIVE: u64 = 4194304;
+pub const _CASE_PERLATIVE: u64 = 8388608;
+pub const _CASE_PROLATIVE: u64 = 16777216;
+pub const _CASE_ACCUSATIVE: u64 = 33554432;
+pub const _CASE_ESSIVE: u64 = 67108864;
+pub const _CASE_LIMITATIVE: u64 = 134217728;
+pub const _CASE_TEMPORAL: u64 = 268435456;
+pub const _CASE_ABSOLUTIVE: u64 = 536870912;
+pub const _CASE_AGENTIVE: u64 = 1073741824;
+pub const _CASE_DIRECT: u64 = 2147483648;
+pub const _CASE_ERGATIVE: u64 = 4294967296;
+pub const _CASE_INSTRUCTIVE: u64 = 8589934592;
+pub const _CASE_INSTRUMENTAL: u64 = 17179869184;
+pub const _CASE_NOMINATIVE: u64 = 34359738368;
+pub const _CASE_OBLIQUE: u64 = 68719476736;
+pub const _CASE_INTRANSITIVE: u64 = 137438953472;
+pub const _CASE_PEGATIVE: u64 = 274877906944;
+pub const _CASE_AVERSISVE: u64 = 549755813888;
+pub const _CASE_BENEFACTIVE: u64 = 1099511627776;
+pub const _CASE_CARITATIVE: u64 = 2199023255552;
+pub const _CASE_CAUSAL: u64 = 4398046511104;
+pub const _CASE_COMITATIVE: u64 = 8796093022208;
+pub const _CASE_DATIVE: u64 = 17592186044416;
+pub const _CASE_DISTRIBUTIVE: u64 = 35184372088832;
+pub const _CASE_GENITIVE: u64 = 70368744177664;
+pub const _CASE_ORNATIVE: u64 = 140737488355328;
+pub const _CASE_POSSESSED: u64 = 281474976710656;
+pub const _CASE_POSSESSIVE: u64 = 562949953421312;
+pub const _CASE_ABESSIVE: u64 = 1125899906842624;
+pub const _CASE_SEMBLATIVE: u64 = 2251799813685248;
+pub const _CASE_SOCIATIVE: u64 = 4503599627370496;
+pub const _CASE_SUBSTITUTIVE: u64 = 9007199254740992;
+pub const _CASE_PARTITIVE: u64 = 18014398509481984;
+pub const _CASE_ADPOSITIONAL: u64 = 36028797018963968;
+pub const _CASE_VOCATIVE_OR_EMPHATIC: u64 = 72057594037927936;
+pub const _CASE_ADVERBIAL: u64 = 144115188075855872;
+pub const _CASE_COMPARATIVE: u64 = 288230376151711744;
+pub const _CASE_EXESSIVE: u64 = 576460752303423488;
+pub const _CASE_ORIENTATIVE: u64 = 1152921504606846976;
+pub const _CASE_REVERTIVE: u64 = 2305843009213693952;
+pub const _CASE_TRANSLATIVE: u64 = 4611686018427387904;
+pub const _CASE_REFLEXIVE: u64 = 9223372036854775808;
+```
 
 ### "nominal_cases"
 This is a *bitflag* field.
+See [### "pronominal_cases"](###-"pronominal_cases") for the case list.
 
 ### "pronominal_numbers"
 This is a *bitflag* field.
+```rust
+pub const _NUM_SINGULAR: u8 = 1;
+pub const _NUM_DUAL: u8 = 2;
+pub const _NUM_TRIAL: u8 = 4;
+pub const _NUM_PAUCAL: u8 = 8;
+pub const _NUM_PLURAL: u8 = 16;
+pub const _NUM_QUADRAL: u8 = 32;
+pub const _NUM_SUPERPLURAL: u8 = 64;
+pub const _NUM_DISTRIBUTIVE_PLURAL: u8 = 128;
+```
 
 ### "nominal_numbers"
 This is a *bitflag* field.
+See [### "pronominal_numbers"](###-"pronominal_numbers") for the case list.
 
 ### "finitivity"
 This is a *bitflag* field.
+```rust
+pub const _FINITIVITY_HAS_ARTICLES: u8 = 1;
+pub const _FINITIVITY_DEFINITE: u8 = 2;
+pub const _FINITIVITY_INDEFINITE: u8 = 4;
+pub const _FINITIVITY_PARTITIVE: u8 = 8;
+pub const _FINITIVITY_NEGATIVE: u8 = 16;
+```
 
 ### "declensions"
 This is if the language is typically analyzed as having distinct declension groups. For example, Latin is while English is not.
@@ -143,9 +230,69 @@ This is a *count* field.
 
 ### "aspect"
 This is a *bitflag* field.
+```rust
+pub const _ASPECT_PERFECTIVE: u32 = 1;
+pub const _ASPECT_MOMENTANE: u32 = 2;
+pub const _ASPECT_PERFECT: u32 = 4;
+pub const _ASPECT_RECENT_PERFECT: u32 = 8;
+pub const _ASPECT_IMPERFECT: u32 = 16;
+pub const _ASPECT_PROSPECTIVE: u32 = 32;
+pub const _ASPECT_IMPERFECTIVE: u32 = 64;
+pub const _ASPECT_HABITUAL: u32 = 128;
+pub const _ASPECT_CONTINUOUS: u32 = 256;
+pub const _ASPECT_PROGRESSIVE: u32 = 512;
+pub const _ASPECT_STATIVE: u32 = 1024;
+pub const _ASPECT_GNOMIC: u32 = 2048;
+pub const _ASPECT_EPISODIC: u32 = 4096;
+pub const _ASPECT_CONTINUATIVE: u32 = 8192;
+pub const _ASPECT_INGRESSIVE: u32 = 16384;
+pub const _ASPECT_INCHOACTIVE: u32 = 32768;
+pub const _ASPECT_CESSATIVE: u32 = 65536;
+pub const _ASPECT_DEFECTIVE: u32 = 131072;
+pub const _ASPECT_PAUSATIVE: u32 = 262144;
+pub const _ASPECT_RESUMPTIVE: u32 = 524288;
+pub const _ASPECT_PUNCTUAL: u32 = 1048576;
+pub const _ASPECT_DURATIVE: u32 = 2097152;
+pub const _ASPECT_PROTRACTIVE: u32 = 4194304;
+pub const _ASPECT_ITERATIVE: u32 = 8388608;
+pub const _ASPECT_FREQUENTIVE: u32 = 16777216;
+pub const _ASPECT_EXPERENTIAL: u32 = 33554432;
+pub const _ASPECT_INTENTIONAL: u32 = 67108864;
+pub const _ASPECT_ACCIDENTAL: u32 = 134217728;
+pub const _ASPECT_INTENSIVE: u32 = 268435456;
+pub const _ASPECT_MODERATIVE: u32 = 536870912;
+pub const _ASPECT_ATTENUATIVE: u32 = 1073741824;
+pub const _ASPECT_SEGMENTATIVE: u32 = 2147483648;
+```
 
 ### "mood"
 This is a *bitflag* field.
+```rust
+pub const _MOOD_INDICATIVE: u32 = 1;
+pub const _MOOD_ENERGETIC: u32 = 2;
+pub const _MOOD_DECLARATIVE: u32 = 4;
+pub const _MOOD_SUBJUNCTIVE: u32 = 8;
+pub const _MOOD_CONDITIONAL: u32 = 16;
+pub const _MOOD_OPTATIVE: u32 = 32;
+pub const _MOOD_JUSSIVE: u32 = 64;
+pub const _MOOD_POTENTIAL: u32 = 128;
+pub const _MOOD_IMPERATIVE: u32 = 256;
+pub const _MOOD_PROHIBITIVE: u32 = 512;
+pub const _MOOD_DESIDERATIVE: u32 = 1024;
+pub const _MOOD_DUBITATIVE: u32 = 2048;
+pub const _MOOD_HYPOTHETICAL: u32 = 4096;
+pub const _MOOD_PRESUMPTIVE: u32 = 8192;
+pub const _MOOD_PERMISSIVE: u32 = 16384;
+pub const _MOOD_ADMIRATIVE: u32 = 32768;
+pub const _MOOD_HORTATIVE: u32 = 65536;
+pub const _MOOD_PRECATIVE_VOLITIVE: u32 = 131072;
+pub const _MOOD_INFERENTIAL: u32 = 262144;
+pub const _MOOD_NECESSITATIVE: u32 = 524288;
+pub const _MOOD_INTERROGATIVE: u32 = 1048576;
+pub const _MOOD_BENEDICTIVE: u32 = 2097152;
+pub const _MOOD_CONCESSIVE: u32 = 4194304;
+pub const _MOOD_PRESCRIPTIVE: u32 = 8388608;
+```
 
 ### "evidentials"
 This is a *count* field.

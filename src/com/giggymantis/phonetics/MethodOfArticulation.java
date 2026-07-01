@@ -28,7 +28,7 @@ public enum MethodOfArticulation {
 	private final short packed_value;
 
 	private MethodOfArticulation(int x, int y) {
-		packed_value = (short)(((byte)x << 8) + (byte)y);
+		this((byte)x, (byte)y);
 	}
 	
 	private MethodOfArticulation(byte x, byte y) {
@@ -43,14 +43,14 @@ public enum MethodOfArticulation {
 		return (byte)packed_value;
 	}
 	
-	public static int distanceSquared(MethodOfArticulation a, MethodOfArticulation b) {
-		int x_dist = a.getX() - b.getX();
-		int y_dist = a.getY() - b.getY();
+	public int distanceSquared(MethodOfArticulation q) {
+		int x_dist = getX() - q.getX();
+		int y_dist = getY() - q.getY();
 		return (x_dist * x_dist) + (y_dist * y_dist);
 	}
 	
-	public static double distance(MethodOfArticulation a, MethodOfArticulation b) {
-		return Math.sqrt((double)distanceSquared(a, b));
+	public double distance(MethodOfArticulation q) {
+		return Math.sqrt((double)distanceSquared(q));
 	}
 	
 	public static boolean validate(MethodOfArticulation q) {

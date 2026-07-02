@@ -1,4 +1,4 @@
-package com.giggymantis.phonetics;
+package com.giggymantis.linguistics;
 
 // Interfaced to allow for multiple modes of comparison.
 //TODO: Create phonetic mode.

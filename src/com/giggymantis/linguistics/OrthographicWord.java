@@ -1,13 +1,18 @@
-package com.giggymantis.phonetics;
+package com.giggymantis.linguistics;
 
 public class OrthographicWord implements Word {
 	// Should be replaced with phone array once that is implemented.
 	private String stringform;
 	private String gloss;
 	
-	public void Word(String stringform, String gloss) {
+	public OrthographicWord(String stringform, String gloss) {
 		this.stringform = stringform;
 		this.gloss = gloss;
+	}
+	
+	public OrthographicWord(String stringform) {
+		this.stringform = stringform;
+		this.gloss = "";
 	}
 
 	@Override

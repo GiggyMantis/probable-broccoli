@@ -10,6 +10,24 @@ public class OrthographicWord implements Word {
 		this.gloss = gloss;
 	}
 	
+	public OrthographicWord(Object[] units, String gloss) { 
+		this.gloss = gloss;
+		String[] strArray = new String[units.length];
+		for (int i = 0; i < units.length; i++) {
+			strArray[i] = units[i].toString();
+		}
+		stringform = String.join("", strArray);
+	}
+	
+	public OrthographicWord(Object[] units) { 
+		this.gloss = "";
+		String[] strArray = new String[units.length];
+		for (int i = 0; i < units.length; i++) {
+			strArray[i] = units[i].toString();
+		}
+		stringform = String.join("", strArray);
+	}
+	
 	public OrthographicWord(String stringform) {
 		this.stringform = stringform;
 		this.gloss = "";
@@ -27,7 +45,7 @@ public class OrthographicWord implements Word {
 
 	@Override
 	public String[] getUnits() {
-		return stringform.split(" ");
+		return stringform.split("");
 	}
 
 	@Override
@@ -59,6 +77,11 @@ public class OrthographicWord implements Word {
 	@Override
 	public void setGloss(String newGloss) {
 		gloss = newGloss;		
+	}
+
+	@Override
+	public OrthographicWord withNewUnits(Object[] units) {
+		return new OrthographicWord(units, gloss);
 	}
 	
 	public static int levenshtein(String p, String q) {

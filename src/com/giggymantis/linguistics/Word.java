@@ -8,6 +8,7 @@ public interface Word {
 	
 	public Object getUnit(int index);
 	public void setUnit(int index, Object object);
+	public Word withNewUnits(Object[] units);
 	
 	public double distance(Word q);
 	

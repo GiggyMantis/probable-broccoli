@@ -1,2 +1,4 @@
 eclipse.preferences.version=1
-encoding//src/com/giggymantis/linguistics/SimpleSoundChange.java=UTF-8
+encoding//src/com/giggymantis/linguistics/SimplePostconditionedSoundChange.java=UTF-8
+encoding//src/com/giggymantis/linguistics/SimplePreconditionedSoundChange.java=UTF-8
+encoding//src/com/giggymantis/linguistics/SimpleUnconditionedSoundChange.java=UTF-8

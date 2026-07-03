@@ -1,5 +1,7 @@
 package com.giggymantis.linguistics;
 
+import java.util.Objects;
+
 public class OrthographicWord implements Word {
 	// Should be replaced with phone array once that is implemented.
 	private String stringform;
@@ -109,4 +111,17 @@ public class OrthographicWord implements Word {
 		}
 		return dist;
 	}
+	
+    @Override
+    public int hashCode() {
+        return Objects.hash(stringform, gloss);
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+    	if (this == o) { return true; }
+    	if (o == null || !(o instanceof Word)) { return false; }
+    	Word wo = (Word) o;
+    	return (stringform.equals(wo.toString()) && gloss.equals(wo.getGloss()));
+    }
 }
